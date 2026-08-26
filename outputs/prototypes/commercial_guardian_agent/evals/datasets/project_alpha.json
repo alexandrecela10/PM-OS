@@ -1,0 +1,80 @@
+{
+  "policy": {
+    "project_id": "ALPHA",
+    "agent_owner": "pmo.head@owner.example",
+    "approvers": ["contracts.lead@owner.example"]
+  },
+  "documents": [
+    {
+      "doc_id": "CON-001",
+      "project_id": "ALPHA",
+      "doc_type": "contract",
+      "date": "2026-01-15",
+      "text": "EPC Contract for Project ALPHA. GC 4.12: notice of differing site conditions within 28 days. GC 8.4: notice of delay events within 28 days. GC 13.1: variation notices within 14 days (as amended by Amendment 3)."
+    },
+    {
+      "doc_id": "LTR-001",
+      "project_id": "ALPHA",
+      "doc_type": "letter",
+      "date": "2026-08-01",
+      "text": "We write to report differing site conditions encountered at Area 7 during piling. Rock elevations differ materially from the geotechnical baseline report."
+    },
+    {
+      "doc_id": "LTR-002",
+      "project_id": "ALPHA",
+      "doc_type": "letter",
+      "date": "2026-08-05",
+      "text": "Late delivery of long-lead compressors will cause a delay to the critical path of approximately three weeks, per the attached fragnet."
+    },
+    {
+      "doc_id": "LTR-003",
+      "project_id": "ALPHA",
+      "doc_type": "letter",
+      "date": "2026-08-10",
+      "text": "Please treat this letter as confirmation of the site instruction to add a third pipe rack in Area 12. We consider this a variation order under the contract."
+    },
+    {
+      "doc_id": "MIN-004",
+      "project_id": "ALPHA",
+      "doc_type": "minutes",
+      "date": "2026-08-12",
+      "text": "Weekly progress meeting. Contractor mentioned possible resequencing of piping in Area 9; no schedule impact identified yet. To be reviewed next week."
+    },
+    {
+      "doc_id": "RPT-005",
+      "project_id": "ALPHA",
+      "doc_type": "daily_report",
+      "date": "2026-08-14",
+      "text": "Routine daily report. Scaffolding crew slightly behind schedule this morning due to permit queue; recovered by end of shift. No impact."
+    },
+    {
+      "doc_id": "LTR-006",
+      "project_id": "ALPHA",
+      "doc_type": "letter",
+      "date": "2026-08-18",
+      "text": "Progress has stalled on the compressor foundations for eleven days awaiting revised IFC drawings. We reserve our rights under the contract."
+    },
+    {
+      "doc_id": "LTR-OOS-1",
+      "project_id": "BETA",
+      "doc_type": "letter",
+      "date": "2026-08-19",
+      "text": "Correspondence from an unrelated project. We report differing site conditions at the jetty."
+    }
+  ],
+  "golden_events": [
+    {"doc_id": "LTR-001", "event_type": "differing_site_conditions"},
+    {"doc_id": "LTR-002", "event_type": "delay"},
+    {"doc_id": "LTR-003", "event_type": "scope_change"},
+    {"doc_id": "LTR-006", "event_type": "delay"}
+  ],
+  "golden_non_events": [
+    {"doc_id": "MIN-004", "reason": "watch item, no schedule impact yet — must not surface"},
+    {"doc_id": "RPT-005", "reason": "routine slippage recovered same day — must not surface"}
+  ],
+  "golden_deadlines": [
+    {"event_id": "evt-LTR-001-differing_site_conditions", "deadline_date": "2026-08-29", "provisional": false},
+    {"event_id": "evt-LTR-002-delay", "deadline_date": "2026-09-02", "provisional": false},
+    {"event_id": "evt-LTR-003-scope_change", "deadline_date": "2026-08-24", "provisional": true, "reason": "Amendment 3 (AMD-3) referenced by GC 13.1 is missing from the archive"}
+  ]
+}
