@@ -1,0 +1,12 @@
+construction_intelligence:
+  superhive:
+    url: "https://ai71.ai/superhive?wvideo=usjquwo9kc"
+    description: "SuperHive by ai71 - Construction Intelligence"
+
+pitch_decks:
+  revolut: https://www.instagram.com/p/Dcd_w4aiD2k/?utm_source=ig_web_copy_link&igsi=NTc4MTIwNjQ2YQ==
+  description: "Revolut pitch deck"
+
+previous_assignment:
+  liquidity: https://alexandrecela10.github.io/liquidity-project-nights-watch/web/index.html
+  description: "A previous prototype assignment, some components of which can be reused, especially the data lineage but any useful reusable component"
