@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Asset Nova — Commercial Guardian</title>
+<style>
+  :root{
+    --bg:#0a0e14; --panel:#11161f; --panel2:#161d29; --line:#1f2937;
+    --txt:#e5eaf2; --dim:#8b95a7; --faint:#5b6474;
+    --accent:#4f8ef7; --green:#34d399; --amber:#fbbf24; --red:#f87171;
+    --purple:#a78bfa; --cyan:#22d3ee;
+    --mono:'SF Mono',ui-monospace,Menlo,monospace;
+    --sans:-apple-system,'Inter',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--txt);font-family:var(--sans);font-size:14px;overflow:hidden;height:100vh}
+  .top{display:flex;align-items:center;gap:14px;padding:10px 18px;border-bottom:1px solid var(--line);background:var(--panel)}
+  .logo{font-weight:700;letter-spacing:.5px}
+  .logo span{color:var(--accent)}
+  .crumb{color:var(--dim);font-size:12.5px}
+  .badge{font-size:11px;padding:2px 8px;border-radius:10px;background:#1a2333;color:var(--accent);border:1px solid #24344f}
+  .top .right{margin-left:auto;display:flex;gap:10px;align-items:center;font-size:12px;color:var(--dim)}
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--green);display:inline-block;margin-right:5px;animation:pulse 2s infinite}
+  @keyframes pulse{50%{opacity:.4}}
+  .layout{display:grid;grid-template-columns:290px 1fr;height:calc(100vh - 45px)}
+  /* left: agent stream */
+  .stream{border-right:1px solid var(--line);background:var(--panel);display:flex;flex-direction:column;overflow:hidden}
+  .stream h3{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--faint);padding:14px 16px 8px}
+  .stat-row{display:flex;gap:8px;padding:0 16px 12px}
+  .stat{flex:1;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:8px}
+  .stat b{display:block;font-size:16px}
+  .stat i{font-style:normal;font-size:10px;color:var(--faint)}
+  .feed{flex:1;overflow-y:auto;padding:4px 12px 12px}
+  .ev{display:flex;gap:8px;padding:7px 6px;border-radius:6px;font-size:12px;color:var(--dim);opacity:0;transform:translateY(6px);transition:all .4s}
+  .ev.show{opacity:1;transform:none}
+  .ev .t{font-family:var(--mono);font-size:10px;color:var(--faint);white-space:nowrap;padding-top:1px}
+  .ev.hit{background:#1c1710;border:1px solid #3a2f1a;color:var(--amber)}
+  /* main */
+  .main{overflow-y:auto;padding:20px 26px}
+  .stage{display:none}
+  .stage.active{display:block;animation:fade .5s}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .alert-card{background:linear-gradient(135deg,#1a1207,#141210);border:1px solid #4a3416;border-radius:12px;padding:20px 22px;margin-bottom:18px}
+  .alert-head{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+  .sev{background:var(--amber);color:#000;font-weight:700;font-size:11px;padding:3px 9px;border-radius:6px}
+  .alert-head h2{font-size:17px}
+  .kpis{display:flex;gap:26px;margin:14px 0 6px}
+  .kpi b{display:block;font-size:22px;font-family:var(--mono)}
+  .kpi i{font-style:normal;font-size:11px;color:var(--dim)}
+  .kpi .warn{color:var(--red)}
+  .kpi .money{color:var(--amber)}
+  .section-title{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--faint);margin:20px 0 10px}
+  .chain{position:relative;padding-left:22px}
+  .chain::before{content:'';position:absolute;left:7px;top:8px;bottom:8px;width:1.5px;background:var(--line)}
+  .doc{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-bottom:10px;cursor:default}
+  .doc::before{content:'';position:absolute;left:-19px;top:16px;width:9px;height:9px;border-radius:50%;background:var(--accent);border:2px solid var(--bg)}
+  .doc .meta{display:flex;gap:10px;font-family:var(--mono);font-size:10.5px;color:var(--faint);margin-bottom:5px;flex-wrap:wrap}
+  .doc .meta .src{color:var(--cyan)}
+  .doc p{font-size:12.5px;color:var(--dim);line-height:1.5}
+  .doc mark{background:#2b2410;color:var(--amber);padding:0 3px;border-radius:3px}
+  .doc.clause::before{background:var(--purple)}
+  .btnrow{display:flex;gap:10px;margin-top:18px}
+  button{font-family:var(--sans);font-size:13px;font-weight:600;padding:10px 18px;border-radius:8px;border:1px solid var(--line);background:var(--panel2);color:var(--txt);cursor:pointer}
+  button.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+  button.primary:hover{background:#3b7ded}
+  button:hover{border-color:var(--accent)}
+  /* notice draft */
+  .notice{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:22px 26px;font-size:13px;line-height:1.7;color:var(--dim);max-width:760px}
+  .notice h4{color:var(--txt);margin-bottom:12px;font-size:14px}
+  .notice .cite{font-family:var(--mono);font-size:10.5px;color:var(--cyan);background:#0d1b22;border:1px solid #143240;padding:1px 6px;border-radius:5px;white-space:nowrap}
+  .approval{display:flex;align-items:center;gap:12px;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:12px 16px;margin-top:14px;max-width:760px;font-size:12.5px}
+  .avatar{width:30px;height:30px;border-radius:50%;background:#2a3548;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700}
+  /* orchestration canvas */
+  .canvas{position:relative;background:radial-gradient(circle at 30% 20%,#0e1420,#0a0e14);border:1px solid var(--line);border-radius:14px;height:430px;overflow:hidden}
+  .grid-bg{position:absolute;inset:0;background-image:radial-gradient(#1a2333 1px,transparent 1px);background-size:26px 26px;opacity:.5}
+  .node{position:absolute;width:210px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:11px 13px;opacity:.35;transition:all .6s}
+  .node.on{opacity:1;border-color:var(--accent);box-shadow:0 0 24px rgba(79,142,247,.15)}
+  .node.done{opacity:1;border-color:var(--green)}
+  .node h5{font-size:12.5px;display:flex;align-items:center;gap:7px}
+  .node .tag{font-size:9px;padding:1px 6px;border-radius:5px;background:#1a2333;color:var(--dim);margin-left:auto}
+  .node.reuse .tag{color:var(--purple);background:#1e1a2e}
+  .node p{font-size:11px;color:var(--dim);margin-top:6px;line-height:1.45}
+  .node .status{font-family:var(--mono);font-size:10px;margin-top:7px;color:var(--faint)}
+  .node.on .status{color:var(--accent)}
+  .node.done .status{color:var(--green)}
+  svg.wires{position:absolute;inset:0;pointer-events:none}
+  svg.wires path{stroke:#243146;stroke-width:1.5;fill:none;transition:stroke .5s}
+  svg.wires path.live{stroke:var(--accent);stroke-dasharray:6 5;animation:flow 1s linear infinite}
+  @keyframes flow{to{stroke-dashoffset:-11}}
+  .gov{display:flex;gap:14px;margin-top:16px;flex-wrap:wrap}
+  .gov .g{flex:1;min-width:200px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-size:11.5px;color:var(--dim)}
+  .gov .g b{display:block;color:var(--txt);font-size:11px;text-transform:uppercase;letter-spacing:.7px;margin-bottom:5px}
+  .stepper{display:flex;gap:6px;margin-bottom:18px}
+  .step{font-size:11px;padding:5px 12px;border-radius:14px;border:1px solid var(--line);color:var(--faint);cursor:pointer}
+  .step.cur{background:var(--accent);border-color:var(--accent);color:#fff}
+  .step.done{color:var(--green);border-color:#1d3b30}
+  .toast{position:fixed;bottom:24px;right:24px;background:var(--green);color:#04110b;font-weight:600;padding:12px 18px;border-radius:10px;transform:translateY(80px);opacity:0;transition:all .5s}
+  .toast.show{transform:none;opacity:1}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="logo">◆ Asset <span>Nova</span></div>
+  <span class="crumb">Commercial Guardian · Jubail Gas Processing Expansion · $4.8B · EPC Package 3</span>
+  <span class="badge">Built on NovaOS</span>
+  <div class="right">
+    <span><span class="dot"></span>Agent live</span>
+    <span>Sovereign VPC · KSA</span>
+  </div>
+</div>
+
+<div class="layout">
+  <!-- LEFT: agent activity -->
+  <div class="stream">
+    <h3>Agent activity — last cycle</h3>
+    <div class="stat-row">
+      <div class="stat"><b id="ndocs">0</b><i>docs read</i></div>
+      <div class="stat"><b style="color:var(--amber)">3</b><i>watch items</i></div>
+      <div class="stat"><b style="color:var(--red)">1</b><i>alert</i></div>
+    </div>
+    <div class="feed" id="feed"></div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main">
+    <div class="stepper">
+      <div class="step cur" id="s1" onclick="go(1)">1 · Detection</div>
+      <div class="step" id="s2" onclick="go(2)">2 · Evidence chain</div>
+      <div class="step" id="s3" onclick="go(3)">3 · Draft notice</div>
+      <div class="step" id="s4" onclick="go(4)">4 · Agent orchestration</div>
+    </div>
+
+    <!-- STAGE 1: DETECTION -->
+    <div class="stage active" id="stage1">
+      <div class="alert-card">
+        <div class="alert-head">
+          <span class="sev">EVENT EV-047</span>
+          <h2>Differing site conditions — Area 7 pipe rack foundations</h2>
+        </div>
+        <p style="color:var(--dim);font-size:13px;line-height:1.6">
+          Correlating 6 documents across correspondence, daily reports and the schedule, the agent identified an
+          unrecorded compensable event. Rock encountered at 2.1m vs 4.5m per the geotechnical baseline report.
+          The event is <b style="color:var(--txt)">not in the change register</b>, and the contractual notice window is closing.
+        </p>
+        <div class="kpis">
+          <div class="kpi"><b class="money">$42.3M</b><i>schedule + cost exposure</i></div>
+          <div class="kpi"><b class="warn">6 days</b><i>until notice bar — GC 4.12, 28-day limit</i></div>
+          <div class="kpi"><b>11 wks</b><i>critical path impact if unmitigated</i></div>
+          <div class="kpi"><b>96%</b><i>evidence confidence</i></div>
+        </div>
+      </div>
+      <div class="btnrow">
+        <button class="primary" onclick="go(2)">Review evidence chain →</button>
+        <button>Dismiss as duplicate</button>
+      </div>
+    </div>
+
+    <!-- STAGE 2: EVIDENCE -->
+    <div class="stage" id="stage2">
+      <div class="section-title">Evidence chain — every claim links to a source document</div>
+      <div class="chain">
+        <div class="doc clause">
+          <div class="meta"><span class="src">CONTRACT · GC 4.12</span><span>EPC Agreement Rev 4 · p.88</span></div>
+          <p>"…the Contractor shall give notice to the Owner <mark>within twenty-eight (28) days</mark> of encountering physical conditions… failing which the Contractor <mark>shall not be entitled</mark> to additional cost or time."</p>
+        </div>
+        <div class="doc">
+          <div class="meta"><span class="src">DAILY REPORT · DR-2210</span><span>04 Aug 2026 · Site — Area 7</span></div>
+          <p>"Excavation crews stopped at grid E7-E9. <mark>Rock encountered at approx. 2.1m</mark>, rig refusal on 3 piles. Awaiting instruction."</p>
+        </div>
+        <div class="doc">
+          <div class="meta"><span class="src">BASELINE · GEOTECH RPT</span><span>App. C, FEED package · p.214</span></div>
+          <p>"Weathered rock horizon anticipated at <mark>4.5m below grade</mark> across Areas 6–8 (boreholes BH-112 to BH-131)."</p>
+        </div>
+        <div class="doc">
+          <div class="meta"><span class="src">LETTER · C-1187</span><span>08 Aug 2026 · Contractor → Owner</span></div>
+          <p>"…we advise of unforeseen ground conditions in Area 7 and <mark>reserve our rights</mark>… revised methodology under assessment." <i style="color:var(--faint)">— informal reservation, does not satisfy GC 4.12 notice requirements</i></p>
+        </div>
+        <div class="doc">
+          <div class="meta"><span class="src">SCHEDULE · XER DIFF · Jul→Aug</span><span>P6 update 26</span></div>
+          <p>Activities A7-2210…A7-2265 <mark>re-sequenced, +54 days</mark>; float on pipe rack erection path reduced from 21d to <mark>−12d</mark>. Change not annotated in narrative.</p>
+        </div>
+        <div class="doc">
+          <div class="meta"><span class="src">MINUTES · WPM-31</span><span>12 Aug 2026 · Weekly progress mtg</span></div>
+          <p>"Contractor raised Area 7 ground conditions; Owner PM requested <mark>'formal substantiation'</mark>. No event logged in change register as of 22 Aug."</p>
+        </div>
+      </div>
+      <div class="btnrow">
+        <button class="primary" onclick="go(3)">Generate notice draft →</button>
+        <button onclick="go(1)">← Back</button>
+      </div>
+    </div>
+
+    <!-- STAGE 3: NOTICE -->
+    <div class="stage" id="stage3">
+      <div class="section-title">Draft notice — prepared by agent, owned by humans</div>
+      <div class="notice">
+        <h4>NOTICE UNDER GC 4.12 — DIFFERING SITE CONDITIONS, AREA 7 <span style="float:right;font-family:var(--mono);font-size:10px;color:var(--faint)">REF: JGX-NTC-0047 · DRAFT v1</span></h4>
+        <p>Pursuant to Clause 4.12 of the EPC Agreement <span class="cite">GC 4.12 p.88</span>, we hereby give formal notice of physical conditions encountered at Area 7 pipe rack foundations which differ materially from the baseline conditions set out in the Geotechnical Report <span class="cite">App.C p.214</span>.</p>
+        <p style="margin-top:10px">Rock refusal was encountered at approximately 2.1m below grade on 04 August 2026 <span class="cite">DR-2210</span>, against an anticipated horizon of 4.5m. The condition affects activities A7-2210 through A7-2265 with a present critical-path impact of 54 days <span class="cite">P6 U26 diff</span>. The matter was raised without formal notice on 08 August <span class="cite">C-1187</span> and at WPM-31 <span class="cite">Minutes 12 Aug</span>.</p>
+        <p style="margin-top:10px">A detailed particulars submission including cost substantiation will follow within the period prescribed by GC 4.12(b). All rights are reserved.</p>
+      </div>
+      <div class="approval">
+        <div class="avatar">RK</div>
+        <div><b>Approval required — Rania Khalid, Contracts Lead</b><br>
+        <span style="color:var(--faint)">Agent cannot send. Deadline: 30 Aug 2026 (6 days). Evidence pack auto-attached (6 documents).</span></div>
+      </div>
+      <div class="btnrow">
+        <button class="primary" onclick="approve()">✓ Approve & route</button>
+        <button>Edit draft</button>
+        <button onclick="go(2)">← Evidence</button>
+      </div>
+    </div>
+
+    <!-- STAGE 4: ORCHESTRATION -->
+    <div class="stage" id="stage4">
+      <div class="section-title">NovaOS orchestration — approval triggered three agents</div>
+      <div class="canvas">
+        <div class="grid-bg"></div>
+        <svg class="wires" width="100%" height="100%">
+          <path id="w1" d="M 250 90 C 330 90 330 60 410 60"/>
+          <path id="w2" d="M 250 100 C 340 110 340 200 410 205"/>
+          <path id="w3" d="M 250 110 C 330 130 330 340 410 345"/>
+          <path id="w4" d="M 620 60 C 700 60 700 200 770 200"/>
+          <path id="w5" d="M 620 205 C 700 205 700 205 770 205"/>
+          <path id="w6" d="M 620 345 C 700 345 700 215 770 210"/>
+        </svg>
+        <div class="node done" style="left:40px;top:60px" id="n0">
+          <h5>◆ Commercial Guardian <span class="tag">ASSET NOVA</span></h5>
+          <p>EV-047 notice approved by R. Khalid</p>
+          <div class="status">✓ complete · audit #8842</div>
+        </div>
+        <div class="node reuse" style="left:410px;top:20px" id="n1">
+          <h5>◆ ComplyNova Agent <span class="tag">REUSED</span></h5>
+          <p>Assembling defensible evidence pack; mapping event to audit controls & approvals trail</p>
+          <div class="status">idle</div>
+        </div>
+        <div class="node reuse" style="left:410px;top:170px" id="n2">
+          <h5>◆ FlowNova Agent <span class="tag">REUSED</span></h5>
+          <p>Tracing downstream impact: pile rig availability, pipe steel call-offs, logistics window at Jubail port</p>
+          <div class="status">idle</div>
+        </div>
+        <div class="node" style="left:410px;top:310px" id="n3">
+          <h5>◆ Schedule Interrogator <span class="tag">ASSET NOVA</span></h5>
+          <p>Re-scoring P6 update 26 with EV-047 confirmed; drafting owner challenge questions</p>
+          <div class="status">idle</div>
+        </div>
+        <div class="node" style="left:770px;top:160px" id="n4">
+          <h5>◆ Manager Review <span class="tag">HUMAN GATE</span></h5>
+          <p>Consolidated brief to PMO Director before Monday stewardship meeting</p>
+          <div class="status">waiting on agents</div>
+        </div>
+      </div>
+      <div class="gov">
+        <div class="g"><b>Who owns decisions</b>R. Khalid (Contracts Lead) approved the notice. Agent owner: PMO Director. Every action attributable, logged, reversible.</div>
+        <div class="g"><b>Out of scope → escalate</b>Anything beyond registered project scope is refused and escalated. No silent drops: low-confidence items queue for triage.</div>
+        <div class="g"><b>Value, not activity</b>Scoreboard: $42.3M exposure preserved · 0 deadlines missed · 3 validated events this month. Docs processed is not a KPI.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast">✓ Notice approved — orchestrating downstream agents</div>
+
+<script>
+// ---- left feed animation ----
+const feedItems = [
+  ["09:02","Ingested 1,204 new documents from Aconex weekly export",0],
+  ["09:04","Parsed P6 update 26 · diffed vs update 25 · 412 logic changes",0],
+  ["09:06","Watch: compressor vendor slippage signals in expediting report",0],
+  ["09:07","Cross-referenced DR-2210 rock refusal vs geotech baseline",0],
+  ["09:07","Letter C-1187 classified: informal reservation, not GC 4.12 notice",0],
+  ["09:08","⚠ EV-047 created — differing site conditions · notice bar in 6 days",1],
+  ["09:09","Drafted notice JGX-NTC-0047 · routed to R. Khalid",0],
+  ["09:11","Watch: payment application PA-19 references unbooked trend",0]
+];
+const feed=document.getElementById('feed');
+let count=0, docTarget=1204;
+feedItems.forEach((it,i)=>{
+  const d=document.createElement('div');
+  d.className='ev'+(it[2]?' hit':'');
+  d.innerHTML=`<span class="t">${it[0]}</span><span>${it[1]}</span>`;
+  feed.appendChild(d);
+  setTimeout(()=>d.classList.add('show'), 500+i*600);
+});
+// doc counter
+const nd=document.getElementById('ndocs');
+const iv=setInterval(()=>{count+=37;if(count>=docTarget){count=docTarget;clearInterval(iv)}nd.textContent=count.toLocaleString()},30);
+
+// ---- stages ----
+function go(n){
+  for(let i=1;i<=4;i++){
+    document.getElementById('stage'+i).classList.toggle('active',i===n);
+    const s=document.getElementById('s'+i);
+    s.classList.toggle('cur',i===n);
+    s.classList.toggle('done',i<n);
+  }
+  if(n===4) runOrchestration();
+}
+function approve(){
+  const t=document.getElementById('toast');
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2600);
+  setTimeout(()=>go(4),900);
+}
+let ran=false;
+function runOrchestration(){
+  if(ran) return; ran=true;
+  const seq=[
+    ()=>{wire('w1');wire('w2');wire('w3')},
+    ()=>{on('n1','Reading event record · assembling pack…')},
+    ()=>{on('n2','Querying procurement & logistics graph…')},
+    ()=>{on('n3','Re-scoring schedule risk…')},
+    ()=>{done('n1','✓ Evidence pack EP-047 ready · 6 docs · controls mapped')},
+    ()=>{done('n2','✓ Impact: re-book pile rig +2wks · hold steel call-off saves $1.8M')},
+    ()=>{done('n3','✓ 9 challenge questions drafted for stewardship review')},
+    ()=>{wire('w4');wire('w5');wire('w6');on('n4','Brief compiled · awaiting PMO Director')},
+  ];
+  seq.forEach((f,i)=>setTimeout(f,600+i*1100));
+}
+function wire(id){document.getElementById(id).classList.add('live')}
+function on(id,msg){const n=document.getElementById(id);n.classList.add('on');n.querySelector('.status').textContent=msg}
+function done(id,msg){const n=document.getElementById(id);n.classList.remove('on');n.classList.add('done');n.querySelector('.status').textContent=msg}
+</script>
+</body>
+</html>
