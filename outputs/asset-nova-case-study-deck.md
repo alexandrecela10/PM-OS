@@ -55,8 +55,10 @@ Commercial intelligence for capital megaprojects
 
 This isn't a technology problem. The data already exists — in contracts, letters, schedules, meeting minutes. The problem is that no human team can read 400,000 documents and connect every clause to every event to every deadline.
 
-> *"I spent three weeks rebuilding the correspondence trail for a single $28M variation claim. We had the evidence — it was scattered across 4,000 transmittals. By the time we assembled it, two notice windows had already lapsed."*
-> — Contracts Manager, GCC EPC megaproject (published interview, Construction Law International, 2024) [Note: source or substitute a real quote before presenting]
+> Over 75% of respondents reported the PM or Engineer's conduct was "always or very often at the heart of how the dispute crystallized" — most commonly "a lack of understanding of the procedural aspects of the contract." And **over 60% said proper contract administration would have the single largest impact in avoiding the disputes they were involved in.**
+> — Arcadis, Global Construction Disputes Report (real, verifiable source)
+
+The people living these disputes say the fix is contract administration — reading, procedure, deadlines. Exactly the work agents can do.
 
 Until now.
 
@@ -92,6 +94,7 @@ The failure mode is **inter-party, cross-silo, and unstructured**. Previous soft
 | Document Crunch (acq. Trimble) | Contract clause extraction | Live project record against the contract |
 | OpenSpace / Buildots / Doxel | Camera-based progress tracking | Cost, compliance, commercial |
 | Procore | Construction management + agents | Process-industry megaprojects, owner-side |
+| SuperHive (AI71) | Sovereign-AI construction studios: design validation, permits, site monitoring | Contract mechanics, correspondence, claims. Buildings ICP, not process-industry owners |
 
 **The gap:** everyone builds **single-silo, construction-phase, contractor-side** tools. Nobody serves the **owner PMO reading across all systems, across the full lifecycle, on process-industry megaprojects.**
 
@@ -267,7 +270,7 @@ Ran five sub-agent reviewers (engineer, skeptic, executive, legal, customer-voic
 
 **Days 1-30: Validate**
 - Customer discovery: 5-8 interviews with owner PMO leads and contracts managers in KSA (via Orbitron's existing relationships)
-- Competitor deep-dive: SuperHive (AI71), Sypro, Nodes & Links, CLM vendors — map precise capabilities
+- Competitor deep-dive done — SuperHive (AI71), Nodes & Links, CLM vendors mapped (`outputs/analyses/competitive-analysis-asset-nova-2026-08-26.md`); refresh quarterly, watch SuperHive's schedule-intelligence studio
 - Define v0.1 agent scope: one contract form (FIDIC Yellow + Aramco amendments), one document source (Aconex export)
 
 **Days 31-60: Build & backtest**
@@ -316,7 +319,7 @@ Ran five sub-agent reviewers (engineer, skeptic, executive, legal, customer-voic
 | OpenSpace / Buildots / Doxel | Vision-based progress | Construction-phase only, no FEL, no commercial |
 | Procore | Construction platform + agents | Commercial construction focus, not process-industry megaprojects |
 | Trunk Tools | Field Q&A agents | Narrow scope, contractor-side |
-| SuperHive (AI71) | Construction intelligence, Abu Dhabi sovereign AI (MGX-backed) | Same region + sovereign positioning; focused on construction ops intelligence, not cross-system commercial/claims. KEY COMPETITOR — must research deeply before presenting. [ACTION: spend 2 hours on SuperHive before interview] |
+| SuperHive (AI71) | ATRC-backed (Falcon LLMs) construction-intelligence studios: Design Studio (live, IFC/code validation), AiComply (permits), site monitoring, digital twins. Schedule intelligence in development | Buildings/urban ICP (developers, municipalities), design/site-phase. No contract mechanics, correspondence, notices, or claims. UAE-first, no KSA/IKTVA posture. Most credible future competitor — see `outputs/analyses/competitive-analysis-asset-nova-2026-08-26.md` |
 
 ### A3 — Full PRD
 See: `outputs/prds/commercial-guardian-solution-review.md`
