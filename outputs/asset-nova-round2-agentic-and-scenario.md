@@ -25,7 +25,7 @@ Everything below is illustrative for a case study. Clause numbers, code referenc
 | Tom Beckett | Project director, Jebel Nasr | Product 3, the sponsor |
 | Layla Haddad | Lead estimator, capital projects | Product 3, the user who gets challenged |
 
-**Day one, the only setup Faisal does: three read-only connections.** No migration, no new system of record.
+**Day one, the only setup Faisal does: five read-only connections.** No migration, no new system of record.
 
 | Source | What it is | Volume at connection |
 |---|---|---|

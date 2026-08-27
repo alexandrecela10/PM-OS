@@ -83,12 +83,12 @@ The design manager sees the cited pass or fail list on one screen. Findings are 
 
 ### Gate 0: Reading is trustworthy
 
-| What we measure | Pass mark |
-|---|---|
-| Documents read and correctly typed | 98% or better |
-| Dates extracted correctly | 99.5% or better |
-| Documents refused and queued for human | Reported, not hidden; under 5% of volume |
-| Invented facts | Zero. Any occurrence blocks the gate |
+| What we measure | Pass mark | Why this number |
+|---|---|---|
+| Documents read and correctly typed | 98% or better | Below this, the record has holes and every later number is suspect |
+| Dates extracted correctly | 99.5% or better | A wrong date is a wrong deadline, which is the one error the product cannot survive |
+| Documents refused and queued for human | Reported, not hidden; under 5% of volume | Abstaining is allowed. Guessing is not. |
+| Invented facts | Zero. Any occurrence blocks the gate | This is a legal record. |
 
 ### Gate 1: Findings are worth a person's attention
 

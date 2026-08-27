@@ -114,7 +114,7 @@ The greyed items are the roadmap. Each one reuses the same reading layer, so the
 | Tom Beckett | Project director, Jebel Nasr | Product 3, the sponsor |
 | Layla Haddad | Lead estimator, capital projects | Product 3, the user who gets challenged |
 
-**Day one, the only setup Faisal does: three read-only connections.** No migration, no new system of record.
+**Day one, the only setup Faisal does: five read-only connections.** No migration, no new system of record.
 
 | Source | What it is | Volume at connection |
 |---|---|---|
@@ -437,12 +437,12 @@ Four gates, in order. Nothing moves to the next gate until the previous one pass
 
 **Gate 0. Reading is trustworthy (offline, closed project archive)**
 
-| What we measure | Pass mark |
+| What we measure | Pass mark | Why this number |
 |---|---|---|
 | Documents read and correctly typed | 98% or better | Below this, the record has holes and every later number is suspect |
 | Dates extracted correctly | 99.5% or better | A wrong date is a wrong deadline, which is the one error the product cannot survive |
-| Documents refused and queued for human | Reported, not hidden; under 5% of volume |
-| Invented facts | Zero. Any occurrence blocks the gate |
+| Documents refused and queued for human | Reported, not hidden; under 5% of volume | Abstaining is allowed. Guessing is not. |
+| Invented facts | Zero. Any occurrence blocks the gate | This is a legal record. |
 
 **Gate 1. Findings are worth a person's attention (offline, against a specialist's own conclusions)**
 
