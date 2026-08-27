@@ -1,0 +1,8 @@
+activity_id,activity_name,area,orig_dur_days,rem_dur_days,start,finish,total_float_days,critical,pct_complete
+A7-PIL-010,Area 7 pipe rack piling grids E12-E22,Area 7,55,48,2026-07-28,2026-10-19,0,Y,13
+A7-PIL-020,Area 7 pile caps & grade beams,Area 7,40,40,2026-10-20,2026-12-08,0,Y,0
+A7-STL-010,Area 7 pipe rack steel erection,Area 7,70,70,2026-12-09,2027-03-16,0,Y,0
+A7-STL-005,Area 7 steel call-off & fabrication,Area 7,90,34,2026-05-18,2026-09-30,12,N,62
+A6-PIL-010,Area 6 piling,Area 6,45,20,2026-06-15,2026-09-15,28,N,55
+A7-MEC-010,Area 7 pipe installation,Area 7,120,120,2027-03-17,2027-09-01,0,Y,0
+MS-070,Mechanical completion Package 3,All,0,0,2028-02-15,2028-02-15,0,Y,0

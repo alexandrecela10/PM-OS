@@ -57,6 +57,13 @@
   .steps .s b{display:block;font-family:var(--mono);color:var(--accent);font-size:12px;margin-bottom:8px}
   .steps .s p{font-size:13.5px;color:var(--dim);line-height:1.5}
   .appendix-tag{position:absolute;top:22px;right:84px;font-family:var(--mono);font-size:11px;color:var(--purple);letter-spacing:2px}
+  @media print{
+    @page{size:338.7mm 190.5mm;margin:0}
+    html,body{overflow:visible;height:auto}
+    .slide{display:flex !important;position:relative;inset:auto;width:338.7mm;height:190.5mm;page-break-after:always;animation:none}
+    .nav-hint,.progress{display:none}
+    .foot{position:absolute}
+  }
 </style>
 </head>
 <body>
@@ -422,7 +429,8 @@ document.addEventListener('keydown',e=>{
   else if(e.key==='f'||e.key==='F')document.documentElement.requestFullscreen?.();
 });
 document.addEventListener('click',e=>{if(e.target.closest('a'))return;show(cur+1)});
-show(0);
+const m=location.hash.match(/slide=(\d+)/);show(m?+m[1]:0);
+if(location.hash.includes('export'))document.querySelector('.nav-hint').style.display='none';
 </script>
 </body>
 </html>
