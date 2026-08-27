@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Validation quotes — by opportunity, persona, JTBD &amp; impact</title>
+<style>
+  :root{
+    --ink:#141a1f;--ink-soft:#44525d;--paper:#f4f2ec;--panel:#fff;--line:#ded8cc;
+    --steel:#1f4e5f;--steel-soft:#e2edef;--amber:#b5651d;--amber-soft:#f5e7d5;
+    --hazard:#8a3a12;--pay:#2f6b4f;--pay-soft:#e6f0ea;
+    --o1:#7a4a86;--o1-soft:#efe6f2;--o1-ink:#5c2f6b;
+    --o2:#b5651d;--o2-soft:#f5e7d5;--o2-ink:#8a3a12;
+    --og:#1d7a6b;--og-soft:#e0f0ec;--og-ink:#0f5648;
+    --grass:#2f6b4f;--inst:#1f4e5f;
+  }
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{margin:0;background:var(--paper);color:var(--ink);
+    font-family:-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    line-height:1.55;font-size:16px;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:880px;margin:0 auto;padding:0 20px 80px;}
+
+  header.mast{margin:0 -20px;padding:34px 22px 26px;background:var(--steel);color:#f4f2ec;}
+  .eyebrow{text-transform:uppercase;letter-spacing:.2em;font-size:11px;font-weight:700;
+    color:#9ec6cf;margin:0 0 12px;}
+  header.mast h1{font-size:25px;line-height:1.2;margin:0 0 10px;font-weight:700;letter-spacing:-.01em;}
+  header.mast p{font-size:13px;line-height:1.5;color:#cfe0e4;margin:0;max-width:700px;}
+  .legend{display:flex;gap:16px;flex-wrap:wrap;margin:14px 0 0;font-size:12px;color:#cfe0e4;}
+  .legend span{display:flex;align-items:center;gap:6px;}
+  .legend i{width:22px;height:4px;border-radius:2px;display:inline-block;}
+
+  .opp{border-radius:10px;padding:16px 18px;margin:30px 0 4px;}
+  .opp.one{background:var(--o1-soft);border-left:5px solid var(--o1);}
+  .opp.two{background:var(--o2-soft);border-left:5px solid var(--o2);}
+  .opp.g{background:var(--og-soft);border-left:5px solid var(--og);}
+  .opp.contractor{background:#eceae3;border-left:5px solid #888780;}
+  .opp.contractor .tag{color:#5f5e5a;}
+  .opp.contractor h2{color:#444441;}
+  .opp.contractor .jtbd{color:#444441;}
+  .opp .tag{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;
+    display:block;margin-bottom:4px;}
+  .opp.one .tag{color:var(--o1-ink);} .opp.two .tag{color:var(--o2-ink);} .opp.g .tag{color:var(--og-ink);}
+  .opp h2{margin:0 0 6px;font-size:20px;}
+  .opp.one h2{color:var(--o1-ink);} .opp.two h2{color:var(--o2-ink);} .opp.g h2{color:var(--og-ink);}
+  .opp .jtbd{font-size:14px;line-height:1.5;}
+  .opp.one .jtbd{color:var(--o1-ink);} .opp.two .jtbd{color:var(--o2-ink);} .opp.g .jtbd{color:var(--og-ink);}
+  .opp .jtbd b{font-weight:700;}
+
+  .impact{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 2px;}
+  .impact .m{background:var(--panel);border:1px solid var(--line);border-radius:10px;
+    padding:9px 13px;flex:1;min-width:130px;}
+  .impact .m .n{font-size:19px;font-weight:800;line-height:1.1;color:var(--hazard);}
+  .impact .m .l{font-size:11.5px;color:var(--ink-soft);margin-top:3px;line-height:1.35;}
+
+  .persona{display:flex;align-items:baseline;gap:8px;margin:22px 0 2px;
+    padding-bottom:7px;border-bottom:2px solid var(--ink);flex-wrap:wrap;}
+  .persona h3{margin:0;font-size:16px;font-weight:700;}
+  .persona .role{font-size:12px;color:var(--ink-soft);font-weight:600;}
+  .persona .side{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;
+    padding:2px 8px;border-radius:20px;background:var(--steel-soft);color:var(--steel);}
+  .persona .side.tgt{background:var(--pay-soft);color:var(--pay);}
+
+  .jtbdline{font-size:13px;color:var(--ink-soft);font-style:italic;margin:8px 0 2px;}
+  .jtbdline b{font-style:normal;color:var(--ink);}
+
+  .q{background:var(--panel);border:1px solid var(--line);border-radius:8px;
+    padding:14px 16px;margin:12px 0;}
+  .q.grass{border-left:4px solid var(--grass);border-radius:0 8px 8px 0;}
+  .q.inst{border-left:4px solid var(--inst);border-radius:0 8px 8px 0;}
+  .q.hero{border:2px solid var(--steel);}
+  .srcflag{display:inline-block;font-size:10px;font-weight:700;text-transform:uppercase;
+    letter-spacing:.05em;padding:2px 8px;border-radius:20px;margin-bottom:7px;}
+  .srcflag.grass{background:var(--pay-soft);color:var(--pay);}
+  .srcflag.inst{background:var(--steel-soft);color:var(--steel);}
+  .q blockquote{margin:0 0 8px;font-size:16px;line-height:1.45;
+    font-family:"Iowan Old Style",Georgia,serif;}
+  .q .src{font-size:12px;color:var(--ink-soft);}
+  .q .src a{color:var(--steel);word-break:break-word;}
+  .q .pull{font-size:12.5px;color:var(--hazard);font-weight:600;margin-top:6px;}
+
+  .note{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--amber);
+    border-radius:0 8px 8px 0;padding:13px 16px;margin:18px 0;font-size:13px;line-height:1.5;color:var(--ink-soft);}
+  .note b{color:var(--hazard);}
+
+  footer{margin-top:36px;padding-top:16px;border-top:1px solid var(--line);
+    font-size:12px;color:var(--ink-soft);line-height:1.55;}
+
+  @media (max-width:520px){
+    header.mast h1{font-size:21px;}.q blockquote{font-size:15px;}.impact .m .n{font-size:17px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="mast">
+  <p class="eyebrow">Validation quotes · by opportunity → persona → job → impact</p>
+  <h1>Who says it, what it's worth, and proof they'll pay</h1>
+  <p>Real, sourced quotes for the three owner-side wedges — claims/entitlement (1), FID red-team (2), and the design-feasibility gate (G) — organised by opportunity, then by the exact <b>owner</b> persona and the job they're doing, each with the pain sized in money and time. Contractor use cases are kept in mind but placed last, at the end. Every quote links to its source.</p>
+  <div class="legend">
+    <span><i style="background:#2f6b4f"></i>Grassroots — practitioner / community / customer</span>
+    <span><i style="background:#1f4e5f"></i>Institutional — firm / body / owner / regulator</span>
+  </div>
+</header>
+
+<div class="note" style="border-left-color:var(--steel);">
+  <b>Owner-first prioritisation.</b> Scored from the owner's seat on value × delivery confidence × low owner effort: <b>lead with Opportunity 1 (claims-defence) and G (design-feasibility gate)</b> — both high-value, buildable now, and running mostly on data the owner already holds. <b>Opportunity 2 (FID red-team)</b> is the highest-value prize but a harder first sale (needs the owner's own historical data, unwelcome message at the sanction gate) — the ideal second move. Contractor use cases are kept last.
+</div>
+
+<!-- ============ OPPORTUNITY 1 ============ -->
+<div class="opp one">
+  <span class="tag">Opportunity 1</span>
+  <h2>Claims-defence &amp; entitlement-recovery agent</h2>
+  <p class="jtbd"><b>Job to be done (owner-side):</b> contractors claim <em>up</em> to us and routinely for ~2× what they settle for — so defend against inflated claims, catch where the <em>contractor</em> missed its own notice deadline, and rigorously pursue our own liquidated damages and back-charges, off a record we control. (The mirror-image contractor job — recovering under-claimed entitlement — sits in the contractors section at the end.)</p>
+  <div class="impact">
+    <div class="m"><div class="n">~2×</div><div class="l">contractors claim roughly double what they settle for (IPA)</div></div>
+    <div class="m"><div class="n">33.4%</div><div class="l">of the average contract budget ends in dispute (HKA)</div></div>
+    <div class="m"><div class="n">$60.1M</div><div class="l">average US dispute, ~12.5 months to resolve (Arcadis 2025)</div></div>
+  </div>
+</div>
+
+<div class="persona"><h3>Owner Contracts / Commercial Manager</h3><span class="role">defends against claims, recovers LDs &amp; back-charges</span><span class="side tgt">Owner · target</span></div>
+<p class="jtbdline"><b>Their job:</b> assess incoming contractor claims fast, rebut the unsupported ones, and pursue the owner's own entitlements before deadlines lapse.</p>
+
+<div class="q inst">
+  <span class="srcflag inst">Institutional · IPA · the owner-side proof</span>
+  <blockquote>The difference between the amount submitted for a claim versus the amount actually paid at settlement… is as much as half. … The owner too must ensure profitability of his project by defending unsupportable claims by a "low ball" contractor.</blockquote>
+  <p class="src">IPA (Independent Project Analysis) via National Academies · <a href="https://www.nationalacademies.org/read/11846/chapter/9">nationalacademies.org</a> · &amp; Long International · <a href="https://www.long-intl.com/articles/why-claims-occur/">long-intl.com</a></p>
+  <p class="pull">Impact: contractors claim ~2× what they settle for. The owner's win is <em>defending</em> against that gap and <em>recovering</em> its own LDs/back-charges — quantified, unambiguously owner-side.</p>
+</div>
+
+<div class="q inst">
+  <span class="srcflag inst">Institutional · claims advisory</span>
+  <blockquote>What most projects lose to poor claims management is not a dispute they should have won, but entitlement they never assembled the evidence to claim.</blockquote>
+  <p class="src">Kairos, <em>Construction Claims Management</em>, 2026 · <a href="https://www.wearekairos.com/insights/construction-claims-management/">wearekairos.com</a></p>
+  <p class="pull">The core failure mode named exactly — money lost for want of evidence assembled in time. Cuts both ways: owners lose defensible positions the same way.</p>
+</div>
+
+<div class="q inst">
+  <span class="srcflag inst">Institutional · practitioner training body</span>
+  <blockquote>Failure to send notices in the correct form is one of the biggest mistakes that the parties to the FIDIC contracts make.</blockquote>
+  <p class="src">Institute of Construction Claims Practitioners, FIDIC notices webinar (8,145 views) · via <a href="https://www.lawinsider.com/dictionary/construction-claims">lawinsider.com</a></p>
+  <p class="pull">Confirms the pain is procedural and universal — and cuts both ways: the agent flags where the <em>contractor</em> missed its deadline, handing the owner a defence.</p>
+</div>
+
+<!-- ============ OPPORTUNITY 2 ============ -->
+<div class="opp two">
+  <span class="tag">Opportunity 2</span>
+  <h2>FID red-team agent</h2>
+  <p class="jtbd"><b>Job to be done:</b> before the board commits billions, pressure-test the budget and schedule against how comparable past projects actually turned out, and surface where the estimate is optimistic or the design under-defined — so we sanction on a realistic number, not a hopeful one.</p>
+  <div class="impact">
+    <div class="m"><div class="n">~79%</div><div class="l">average cost overrun vs initial budget (McKinsey, 532 projects)</div></div>
+    <div class="m"><div class="n">59% / 23%</div><div class="l">avg O&amp;G overrun vs original / even after FID (EY)</div></div>
+    <div class="m"><div class="n">0.5%</div><div class="l">of megaprojects hit budget, time AND benefits (Flyvbjerg)</div></div>
+  </div>
+</div>
+
+<div class="persona"><h3>Cost Engineer / Estimator</h3><span class="role">builds the estimate, owns the contingency</span><span class="side tgt">Owner · target</span></div>
+<p class="jtbdline"><b>Their job:</b> produce an estimate that survives contact with reality — and defend the contingency.</p>
+
+<div class="q grass">
+  <span class="srcflag grass">Grassroots · project-management course material</span>
+  <blockquote>All too often it is concluded by senior management that the contingency estimate itself must be wrong. Clearly, they reason, the planners have put in excessive contingencies by making pessimistic assumptions that the problems on the last project will happen again.</blockquote>
+  <p class="src">Penn State World Campus, Project Budgeting (MANGT 515) · <a href="https://courses.worldcampus.psu.edu/welcome/mangt515/001/content/lesson05/lesson05_24.html">psu.edu</a></p>
+  <p class="pull">The estimator's lived pain: realistic numbers stripped out as "pessimistic" — the bias Opportunity 2 makes defensible with data.</p>
+</div>
+
+<div class="q inst">
+  <span class="srcflag inst">Institutional · NASA cost-analysis paper</span>
+  <blockquote>Project planners and advocates often deliberately underestimate costs to help gain project approval… A better method is to base the estimate on the actual costs of a large group of similar projects.</blockquote>
+  <p class="src">NASA Technical Reports Server, <em>Underestimation of Project Costs</em> · <a href="https://ntrs.nasa.gov/citations/20160001191">ntrs.nasa.gov</a></p>
+  <p class="pull">Independently prescribes Opportunity 2's exact method (reference-class forecasting) as the cure.</p>
+</div>
+
+<div class="persona"><h3>Capital Projects Director / Investment Committee</h3><span class="role">accountable to the board for the FID promise</span><span class="side tgt">Owner · target</span></div>
+<p class="jtbdline"><b>Their job:</b> only sanction projects whose numbers will hold — protect portfolio value.</p>
+
+<div class="q inst">
+  <span class="srcflag inst">Institutional · McKinsey owner case</span>
+  <blockquote>[The] capital-projects portfolio had yielded only minimal net present value, with more than half of its potential lost to underperformance… all shared a root cause — bias.</blockquote>
+  <p class="src">McKinsey, <em>Don't cancel or coddle at-risk capital projects</em>, 2025 · <a href="https://www.mckinsey.com/capabilities/operations/our-insights/dont-cancel-or-coddle-at-risk-capital-projects-challenge-them">mckinsey.com</a></p>
+  <p class="pull">Director-level pain: bias at sanction quietly destroys half the value. Opportunity 2 attacks it head-on.</p>
+</div>
+
+<div class="q inst">
+  <span class="srcflag inst">Institutional · MENA giga-project audit</span>
+  <blockquote>Delays and budget overruns [are] plaguing the project… the new cost projected by the audit reaches $8.8 trillion, compared to the initial $500 billion.</blockquote>
+  <p class="src">NEOM internal audit, WSJ / Middle East Monitor, 2025 · <a href="https://www.middleeastmonitor.com/20250314-saudi-megacity-neom-to-cost-almost-9-trillion-take-over-50-years-to-build-internal-audit-warns/">middleeastmonitor.com</a></p>
+  <p class="pull">In-region, the most vivid proof that the number sanctioned at the start was catastrophically optimistic.</p>
+</div>
+
+<div class="q inst">
+  <span class="srcflag inst">Institutional · willingness to pay · reference-class AI</span>
+  <blockquote>nPlan's AI is already in use on more than $500 billion worth of live projects… The Transpennine Route Upgrade has gone further, contractualising the use of nPlan.</blockquote>
+  <p class="src">nPlan Series B, Oct 2025; Chevron Technology Ventures co-invested; customers incl. Bechtel · <a href="https://www.nplan.io/press-releases/nplan-raises-16m-series-b-to-scale-its-ai-led-transformation-of-capital-project-delivery">nplan.io</a></p>
+  <p class="pull">Owners pay for reference-class forecasting — to the point of writing it into contracts.</p>
+</div>
+
+<!-- ============ OPPORTUNITY G ============ -->
+<div class="opp g">
+  <span class="tag">Opportunity G</span>
+  <h2>Design-feasibility gate</h2>
+  <p class="jtbd"><b>Job to be done:</b> on every design revision during FEED, check in minutes that it's compliant (vs the building code), within cost, and buildable — so scope errors are caught while they cost thousands, not the tens of millions they become in the field.</p>
+  <div class="impact">
+    <div class="m"><div class="n">~5%</div><div class="l">of project cost is rework on average (CII IR-153; 90th-pct 12.4%)</div></div>
+    <div class="m"><div class="n">70–80%</div><div class="l">of cost deviations trace to design, not execution</div></div>
+    <div class="m"><div class="n">10× / 100×</div><div class="l">cheaper to fix an error in design vs construction vs post-handover</div></div>
+  </div>
+</div>
+
+<div class="persona"><h3>Design / Engineering Manager (FEED)</h3><span class="role">owns the design-to-budget promise on the owner side</span><span class="side tgt">Owner · target</span></div>
+<p class="jtbdline"><b>Their job:</b> issue designs that are compliant, affordable and buildable — before they harden into rework.</p>
+
+<div class="q hero inst">
+  <span class="srcflag inst">Institutional · regulator building it (the demand signal)</span>
+  <blockquote>A fully integrated digital system capable of issuing building permits automatically and without human intervention by reading submitted drawings and documents, verifying compliance with the Dubai Building Code.</blockquote>
+  <p class="src">Dubai Municipality, AI permit system (26-week rollout), 2026 · <a href="https://www.zawya.com/en/press-release/government-news/dubai-redefines-the-future-of-building-permits-with-an-ai-system-that-issues-licences-automatically-425918">zawya.com</a></p>
+  <p class="pull">When the regulator automates the check, every developer must arrive pre-compliant — that <em>is</em> the demand for the owner-side version.</p>
+</div>
+
+<div class="q grass">
+  <span class="srcflag grass">Grassroots · Gulf customer · quantified</span>
+  <blockquote>We reduced our SBC compliance review cycle from 6 weeks to 3 days. The AI caught two fire environmental gaps that would have delayed our building permit by months.</blockquote>
+  <p class="src">Customer testimonial, WhiteHelmet (Saudi construction intelligence), 2026 · <a href="https://www.whitehelmet.sa/products/ai-compliance-analysis">whitehelmet.sa</a></p>
+  <p class="pull">Impact: ~90% faster review (6 wks → 3 days) and a permit delay of "months" prevented — on the exact Saudi Building Code.</p>
+</div>
+
+<div class="q grass">
+  <span class="srcflag grass">Grassroots · paying design-review user</span>
+  <blockquote>What used to take us weeks is now done in days… Every coordination issue that Buildcheck caught saved us from expensive field modifications and potential delays.</blockquote>
+  <p class="src">Customer testimonial, Buildcheck (AI design review) · <a href="https://buildcheck.ai/">buildcheck.ai</a></p>
+  <p class="pull">Confirms the "catch it in design, not in the field" value from a paying user.</p>
+</div>
+
+<div class="persona"><h3>Project Director / Owner (giga-project)</h3><span class="role">carries the rework and delay on the P&amp;L</span><span class="side tgt">Owner · target</span></div>
+<p class="jtbdline"><b>Their job:</b> keep design-driven rework and permit delay off the critical path and the budget.</p>
+
+<div class="q inst">
+  <span class="srcflag inst">Institutional · independent ROI modelling</span>
+  <blockquote>An RFI resolved at drawing stage costs $200 to $500 in review time; the same RFI resolved in the field costs $2,000 to $8,000… AI plan review investment creates a cost-avoidance ROI of 4:1 to 30:1.</blockquote>
+  <p class="src">Mirage Metrics, AI plan-review analysis, 2026 · <a href="https://miragemetrics.com/blog/ai-construction-plan-review">miragemetrics.com</a></p>
+  <p class="pull">Impact framing a director understands: 4:1–30:1 return, plus 100% of MEP clashes caught vs 40–60% manual.</p>
+</div>
+
+<div class="note">
+  <b>Impact sizing for an Aramco-scale owner (Opportunity G).</b> On a <b>$5bn</b> giga-project, ~5% rework ≈ $250M, of which ~28% (~$70M) is design-caused; catching half of that early avoids <b>~$35M on a single project</b> — before counting schedule/first-oil revenue. On a <b>$20bn</b> project the design-caused rework figure is ~$280M. A value-based price of 0.05–0.1% of project value ($2.5M–$5M on $5bn) is trivial against that. <span style="color:var(--ink-soft)">Sources: CII IR-153 via reworkcost.com; mycomply.net; helonic.com (1-10-100); tommasomariaricci.com.</span>
+</div>
+
+<!-- ============ CONTRACTORS — KEPT IN MIND (LAST) ============ -->
+<div class="opp contractor">
+  <span class="tag">Kept in mind · not the primary target</span>
+  <h2>Contractors — the secondary use case</h2>
+  <p class="jtbd"><b>Why last, not gone:</b> our focus is the owner (the Aramco of the world), who holds the strategic budget, the data, and the multi-year contract. But EPC contractors feel the same pains acutely, buy faster (quarters, not years) and per-project, and can be a useful early wedge or channel. The evidence below shows the appetite and willingness to pay on the contractor side — worth keeping warm.</p>
+</div>
+
+<div class="persona"><h3>Quantity Surveyor / Commercial Manager</h3><span class="role">measures work, prices variations, files claims</span><span class="side">Contractor</span></div>
+<p class="jtbdline"><b>Their job:</b> recover every legitimate variation and claim before the notice window closes (Opportunity 1, contractor side).</p>
+
+<div class="q grass">
+  <span class="srcflag grass">Grassroots · legal case widely shared among QS/PMs</span>
+  <blockquote>Subcontractor's failure to strictly comply with [the] notice provision costs $200,000… "Please, please, please" — exactly what all those attorneys have been telling you for years.</blockquote>
+  <p class="src">JD Supra construction-practice roundup · <a href="https://www.jdsupra.com/authors/matthew-devries/construction-project/page2">jdsupra.com</a></p>
+  <p class="pull">Impact: one missed notice = $200,000 forfeited, on a single event.</p>
+</div>
+
+<div class="persona"><h3>EPC Project / Legal leadership</h3><span class="role">owns delivery margin and commercial risk</span><span class="side">Contractor</span></div>
+<p class="jtbdline"><b>Their job:</b> protect margin and win rate by pricing risk accurately (Opportunity 1, contractor side) — and they already pay for it.</p>
+
+<div class="q inst">
+  <span class="srcflag inst">Institutional · Tier-1 contractor exec · willingness to pay</span>
+  <blockquote>When you understand your risks upfront, you can be more competitive — you're not padding fees just to cover the unknowns.</blockquote>
+  <p class="src">Jeff Brannen, SVP &amp; Chief Legal Officer, Balfour Beatty — on paying for AI contract intelligence; risk-review meetings cut 4 hrs → 2 hrs · <a href="https://www.trimble.com/en/products/document-crunch">trimble.com</a> · <a href="https://www.documentcrunch.com/blog/save-time-enhance-communication-balfour-beatty">documentcrunch.com</a></p>
+  <p class="pull">Impact: 50% less review time; a direct line from contract intelligence to win-rate and margin.</p>
+</div>
+
+<div class="q grass">
+  <span class="srcflag grass">Grassroots · independent tool review · ROI logic</span>
+  <blockquote>Every contractor has a story about a contract clause that cost them — and at $200/month, it pays for itself with a single caught risk.</blockquote>
+  <p class="src">Velocity AI Insights review of Document Crunch, 2026 · <a href="https://insights.velocityaipartners.co/tools/document-crunch">velocityaipartners.co</a></p>
+  <p class="pull">Payback: one caught clause vs $200/month — proof the contractor side already buys this category (Trimble acquired Document Crunch for $246.4M).</p>
+</div>
+
+<div class="note">
+  <b>Honesty note on sources.</b> Institutional quotes (blue) are the firmest evidence and should anchor external use. Grassroots slots (green) use verifiable practitioner, customer and community material with live links — raw Reddit/X threads on these pains exist but are largely walled off from indexing, so I did not paraphrase unverifiable posts. Two named gaps: (1) no on-record Aramco/ADNOC executive quote naming a claims, FID-estimating or design-feasibility tool specifically — owner-persona demand for G is inferred from the Dubai Municipality regulator move and the mandatory Saudi Building Code 2024 reset; (2) some vendor metrics (nPlan savings, WhiteHelmet/Buildcheck testimonials) are self-reported. Validate with primary interviews before external use.
+</div>
+
+<footer>
+  <p>Validation quotes by opportunity → owner persona → job-to-be-done → impact, with contractor use cases kept last. Opportunities 1 (claims), 2 (FID red-team), G (design-feasibility gate). Sources: HKA CRUX, Arcadis 2025, EY, McKinsey, Flyvbjerg, NASA NTRS, Penn State MANGT 515, Kairos, JD Supra, Institute of Construction Claims Practitioners, Balfour Beatty/Trimble, Velocity AI Insights, nPlan, NEOM audit (WSJ/MEM), Dubai Municipality/Zawya, WhiteHelmet, Buildcheck, Mirage Metrics, CII IR-153. Verbatim quotes; grassroots vs institutional flagged per card. Compiled 27 August 2026.</p>
+</footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agentic AI for Capital Project Management — Full Report (plain-English)</title>
+<style>
+  :root{
+    --ink:#14181d;--ink-soft:#41505c;--paper:#f5f3ee;--panel:#fff;--line:#ded8cc;
+    --steel:#1f4e5f;--steel-soft:#e3eef0;--amber:#b5651d;--amber-soft:#f6e8d7;
+    --hazard:#8a3a12;--gloss:#3a6152;--gloss-bg:#e8f0eb;
+  }
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  @media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth;}}
+  body{margin:0;background:var(--paper);color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    line-height:1.62;font-size:17px;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:760px;margin:0 auto;padding:0 20px 96px;}
+
+  header.mast{background:var(--steel);color:#f5f3ee;margin:0 -20px;padding:38px 22px 30px;}
+  .kicker{font-family:"Helvetica Neue",Arial,sans-serif;text-transform:uppercase;
+    letter-spacing:.22em;font-size:11px;font-weight:700;color:#9ec6cf;margin:0 0 14px;}
+  header.mast h1{font-size:27px;line-height:1.2;margin:0 0 14px;font-weight:600;letter-spacing:-.01em;}
+  header.mast p.sub{font-family:"Helvetica Neue",Arial,sans-serif;font-size:13px;
+    line-height:1.55;color:#cfe0e4;margin:0;}
+
+  .howto{background:var(--gloss-bg);border-radius:4px;padding:14px 16px;margin:22px 0;
+    font-size:14.5px;color:var(--ink-soft);font-family:"Helvetica Neue",Arial,sans-serif;line-height:1.5;}
+  .howto b{color:var(--gloss);}
+  .gloss{color:var(--gloss);font-style:italic;}
+
+  nav.toc{background:var(--panel);border:1px solid var(--line);border-radius:4px;
+    padding:18px 20px;margin:24px 0;font-family:"Helvetica Neue",Arial,sans-serif;}
+  nav.toc h2{font-size:11px;text-transform:uppercase;letter-spacing:.18em;color:var(--amber);
+    margin:0 0 10px;font-weight:700;}
+  nav.toc ol{margin:0;padding:0;list-style:none;counter-reset:toc;}
+  nav.toc li{counter-increment:toc;border-top:1px solid var(--line);}
+  nav.toc li:first-child{border-top:none;}
+  nav.toc a{display:block;padding:8px 0 8px 32px;position:relative;color:var(--ink);
+    text-decoration:none;font-size:14px;}
+  nav.toc a::before{content:counter(toc,decimal-leading-zero);position:absolute;left:0;top:8px;
+    color:var(--amber);font-weight:700;font-size:12px;}
+
+  h2.sec{font-size:13px;font-family:"Helvetica Neue",Arial,sans-serif;text-transform:uppercase;
+    letter-spacing:.1em;font-weight:700;color:var(--amber);margin:44px 0 4px;}
+  h2.sec .num{color:var(--line);margin-right:8px;}
+  h3.sectitle{font-size:22px;line-height:1.25;margin:2px 0 16px;font-weight:600;
+    letter-spacing:-.01em;padding-bottom:12px;border-bottom:2px solid var(--ink);}
+  h4{font-size:18px;margin:24px 0 6px;font-weight:600;color:var(--steel);}
+  h5{font-family:"Helvetica Neue",Arial,sans-serif;font-size:13px;letter-spacing:.02em;
+    margin:18px 0 6px;font-weight:700;}
+  p{margin:0 0 14px;}
+  strong{font-weight:700;}
+  a.ext{color:var(--steel);word-break:break-word;}
+  ul,ol{margin:0 0 16px;padding-left:22px;}
+  li{margin:0 0 9px;}
+  li::marker{color:var(--amber);}
+
+  .lede{font-size:18px;line-height:1.55;border-left:3px solid var(--amber);
+    padding:2px 0 2px 18px;margin:0 0 18px;}
+
+  li.ww{list-style:none;margin-left:-22px;padding:8px 12px;border-radius:0 4px 4px 0;font-size:15.5px;}
+  li.ww.who{background:var(--steel-soft);border-left:3px solid var(--steel);}
+  li.ww.why{background:var(--amber-soft);border-left:3px solid var(--amber);}
+  li.ww .tag{font-family:"Helvetica Neue",Arial,sans-serif;font-size:11px;font-weight:700;
+    text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:2px;}
+  li.ww.who .tag{color:#123c49;}
+  li.ww.why .tag{color:var(--hazard);}
+
+  .box{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--steel);
+    border-radius:0 4px 4px 0;padding:14px 16px;margin:18px 0;font-size:15px;}
+  .box.amber{border-left-color:var(--amber);}
+  .box.hazard{border-left-color:var(--hazard);background:#fbf3ee;}
+  .box h5{margin-top:0;}
+
+  /* Quote cards */
+  .quote{background:var(--panel);border:1px solid var(--line);border-radius:6px;
+    padding:18px 20px;margin:18px 0;}
+  .quote blockquote{margin:0 0 10px;font-size:17px;line-height:1.5;color:var(--ink);
+    border:none;padding:0;position:relative;}
+  .quote blockquote::before{content:"\201C";font-size:40px;color:var(--amber);
+    line-height:0;position:absolute;left:-4px;top:14px;opacity:.35;}
+  .quote .src{font-family:"Helvetica Neue",Arial,sans-serif;font-size:13px;
+    color:var(--ink-soft);margin:0 0 10px;}
+  .quote .src a{color:var(--steel);word-break:break-word;}
+  .quote .why{background:var(--amber-soft);border-radius:4px;padding:10px 12px;
+    font-size:14px;color:var(--hazard);font-family:"Helvetica Neue",Arial,sans-serif;line-height:1.45;}
+  .quote .why b{color:var(--hazard);}
+  .quote.hero{border:2px solid var(--steel);}
+  .quote.hero .why{background:var(--steel-soft);color:#123c49;}
+
+  .tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:16px 0;
+    border:1px solid var(--line);border-radius:4px;}
+  table{border-collapse:collapse;width:100%;min-width:480px;font-size:14px;
+    font-family:"Helvetica Neue",Arial,sans-serif;}
+  th{background:var(--steel);color:#f5f3ee;text-align:left;padding:9px 11px;font-weight:600;
+    font-size:12px;text-transform:uppercase;letter-spacing:.04em;}
+  td{padding:9px 11px;border-top:1px solid var(--line);vertical-align:top;}
+  tr:nth-child(even) td{background:#faf8f3;}
+  .scrollhint{font-family:"Helvetica Neue",Arial,sans-serif;font-size:11px;color:var(--ink-soft);
+    text-transform:uppercase;letter-spacing:.1em;margin:0 0 6px;}
+
+  hr.div{border:none;border-top:1px solid var(--line);margin:32px 0;}
+  footer{margin-top:48px;padding-top:20px;border-top:2px solid var(--ink);
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:12.5px;color:var(--ink-soft);line-height:1.6;}
+
+  @media (max-width:520px){
+    body{font-size:16px;}header.mast h1{font-size:23px;}h3.sectitle{font-size:20px;}
+    .lede{font-size:16.5px;}.quote blockquote{font-size:16px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="mast">
+  <p class="kicker">Product Discovery · Deep Dive · Plain-English edition</p>
+  <h1>Agentic AI for Capital Project Management</h1>
+  <p class="sub">Oil &amp; gas, petrochemicals, infrastructure &amp; giga-projects. Every acronym and technical term is explained in plain English inline. Includes real, sourced quotes from industry players validating the pain and the willingness to pay. &mdash; 26 August 2026</p>
+</header>
+
+<div class="howto">
+  <b>How to read this:</b> the first time a technical term or acronym appears, a plain-English translation follows in <span class="gloss">italic green, in brackets</span>. Section 7 collects real quotes from the industry proving the pain and the appetite to pay.
+</div>
+
+<nav class="toc">
+  <h2>Contents</h2>
+  <ol>
+    <li><a href="#s1">The project lifecycle</a></li>
+    <li><a href="#s2">Who does what</a></li>
+    <li><a href="#s3">The tool landscape</a></li>
+    <li><a href="#s4">Pain points ranked</a></li>
+    <li><a href="#s5">Why it's still broken</a></li>
+    <li><a href="#s6">Where agentic AI fits</a></li>
+    <li><a href="#s7">Real quotes: pain &amp; willingness to pay</a></li>
+    <li><a href="#s8">Buying reality (Gulf)</a></li>
+    <li><a href="#s9">Recommendations</a></li>
+    <li><a href="#s10">Caveats</a></li>
+  </ol>
+</nav>
+
+<section>
+  <h2 class="sec"><span class="num">00</span>In one paragraph</h2>
+  <p class="lede">Giant construction projects almost always finish late and over budget — and have done so at roughly the same rate for 70 years.</p>
+  <p>The reason isn't a shortage of software; it's that the information needed to run a project well is scattered across dozens of separate systems, dozens of separate companies, and millions of documents nobody can read fast enough. That's exactly the problem <strong>AI agents</strong> <span class="gloss">(software that can read across systems, reason over documents, and take actions with a human's approval)</span> can now attack. This report maps the pain, the money, the competitors, where agents fit, and how to sell into the Gulf oil companies — backed by real quotes from the people who live it.</p>
+</section>
+
+<section id="s1">
+  <h2 class="sec"><span class="num">01</span>Lifecycle</h2>
+  <h3 class="sectitle">The end-to-end capital project lifecycle</h3>
+  <p>Every mega-project moves through the same funnel of stages, each ending in a <strong>gate</strong> <span class="gloss">(a formal go/no-go decision you must pass to get funding for the next stage)</span>. The industry calls this <strong>stage-gating</strong> or <strong>FEL</strong> <span class="gloss">(Front-End Loading — doing the heavy planning up front, before committing the big money)</span>.</p>
+  <p>Two frameworks govern it: <strong>AACE estimate classes</strong> <span class="gloss">(AACE = Association for the Advancement of Cost Engineering; its "classes" rate how accurate a cost estimate is, 1–5)</span> and <strong>CII/IPA stage-gate models</strong> <span class="gloss">(CII = Construction Industry Institute; IPA = Independent Project Analysis — research bodies that define best practice)</span>.</p>
+
+  <h4>FEL-1 — Appraise / Concept Screening</h4>
+  <ul>
+    <li><strong>What:</strong> Framing the business case; "is this idea worth studying?"</li>
+    <li class="ww who"><span class="tag">Who?</span>The owner's <strong>business-development / strategy lead</strong> (owns the idea), the <strong>corporate finance / investment planner</strong> (owns the economics), and a <strong>subsurface or market specialist</strong> (owns the "is there really oil/demand here?" question).</li>
+    <li class="ww why"><span class="tag">Why?</span>To kill bad ideas cheaply, before anyone spends real money. A wrong "yes" here isn't expensive yet — a wrong "yes" that survives to FID is catastrophic.</li>
+    <li><strong>Estimate:</strong> AACE <strong>Class 5</strong> — the roughest, accuracy about −50% to +100% <span class="gloss">(the real cost could be half, or double)</span>.</li>
+    <li><strong>Gate:</strong> Worth spending money to study further?</li>
+  </ul>
+
+  <h4>FEL-2 — Select / Feasibility ("pre-FEED")</h4>
+  <ul>
+    <li><strong>What:</strong> Comparing options and picking one concept.</li>
+    <li class="ww who"><span class="tag">Who?</span>An emerging <strong>owner project manager</strong> (starts to own the project), a <strong>process / lead engineer</strong> (owns the technical concept), a <strong>cost estimator</strong> (prices each option), and <strong>pre-FEED consultants</strong> (do the studies).</li>
+    <li class="ww why"><span class="tag">Why?</span>To lock in the most irreversible choice — <em>which</em> concept to build — while options are still cheap to change. IPA shows changing the concept after this point is one of the strongest predictors of an overrun; choosing wrong here bakes in cost no execution can undo.</li>
+    <li><strong>Estimate:</strong> AACE <strong>Class 4</strong> — accuracy about −30% to +50%.</li>
+    <li><strong>Gate:</strong> Concept chosen; approval to start FEED.</li>
+  </ul>
+
+  <h4>FEL-3 — Define / FEED</h4>
+  <p><em>FEED = Front-End Engineering Design <span class="gloss">(the detailed design stage that produces the blueprint and the budget the board votes on)</span>.</em></p>
+  <ul>
+    <li><strong>What:</strong> The make-or-break stage. Producing <strong>P&amp;IDs</strong> <span class="gloss">(Piping and Instrumentation Diagrams — schematics of what connects to what)</span>, equipment lists, the build strategy, and the <strong>control estimate</strong> <span class="gloss">(the budget everything is later measured against)</span>.</li>
+    <li class="ww who"><span class="tag">Who?</span>The <strong>owner's project director</strong> (accountable for the budget the board votes on), the <strong>owner's lead estimator</strong> (owns the control estimate), the <strong>FEED contractor's engineering manager</strong> (produces the design), and the <strong>owner's contracts lead</strong> (sets the build strategy).</li>
+    <li class="ww why"><span class="tag">Why?</span>To turn a chosen concept into a defined, priceable project <em>before</em> the board commits billions — so the FID vote rests on a real number, not a hope. This is where cost, schedule and risk are actually determined; done poorly, every downstream overrun traces back to here.</li>
+    <li><strong>Estimate:</strong> AACE <strong>Class 3</strong> — accuracy about −20% to +30%.</li>
+    <li><strong>Scope score:</strong> <strong>PDRI</strong> <span class="gloss">(Project Definition Rating Index — a checklist scoring how completely a project is defined; lower is better)</span>. Under 200 beats over 200 on cost, schedule and changes.</li>
+    <li><strong>Gate:</strong> <strong>FID — Final Investment Decision</strong> <span class="gloss">(the moment the board approves the full budget and commits the billions)</span>. The budget promised here is what every "over-budget" number is later measured against.</li>
+  </ul>
+
+  <h4>EPC contracting / Award</h4>
+  <p><em>EPC = Engineering, Procurement, Construction <span class="gloss">(one firm takes responsibility for designing, buying and building it)</span>.</em></p>
+  <ul>
+    <li><strong>Contract types:</strong> <strong>LSTK</strong> <span class="gloss">(Lump-Sum Turnkey — one fixed price, hands over a working plant; common in the Middle East)</span> or <strong>EPCM / reimbursable</strong> <span class="gloss">(paid costs plus a fee; used when scope is riskier)</span>.</li>
+    <li class="ww who"><span class="tag">Who?</span>The <strong>owner's procurement / contracts manager</strong> (runs the tender, picks the contract type), <strong>owner legal</strong> (owns risk allocation), and the <strong>bidding contractors' commercial teams</strong> (price and shape bids).</li>
+    <li class="ww why"><span class="tag">Why?</span>To decide <em>who</em> builds it, <em>on what terms</em>, and — crucially — <em>who carries the risk</em>. The contract type sets the incentives for the whole multi-year build: a lump-sum deal pushes risk onto the contractor and quietly programs in the future claims war (see pain #3).</li>
+  </ul>
+
+  <h4>Detailed Engineering, Procurement, Construction (Execution)</h4>
+  <ul>
+    <li><strong>What:</strong> Full design, <strong>long-lead procurement</strong> <span class="gloss">(ordering equipment that takes many months to build, like giant compressors)</span>, <strong>expediting</strong> <span class="gloss">(chasing suppliers to deliver on time)</span>, and construction.</li>
+    <li class="ww who"><span class="tag">Who?</span>Contractor side: the <strong>EPC project manager</strong> (owns delivery + profit), <strong>planners</strong>, <strong>quantity surveyors</strong> (commercial/claims), <strong>procurement / expediting</strong>. Owner side: the <strong>PMT</strong> <span class="gloss">(Project Management Team — owner oversight staff)</span> — its <strong>project controls</strong> and <strong>contracts team</strong>.</li>
+    <li class="ww why"><span class="tag">Why?</span>To build the thing while keeping it on the FID budget and schedule. This is where money is <em>spent</em> and overruns <em>become visible</em>, so the real job is early detection — catching a slip, a cost drift, or a claim while it's still cheap to fix. Most software targets here, yet the damage is usually baked in from FEED.</li>
+    <li><strong>How long:</strong> 3–6+ years for a giga-project.</li>
+  </ul>
+
+  <h4>Commissioning, Start-up &amp; Handover</h4>
+  <ul>
+    <li><strong>What:</strong> Testing, switching on safely, and handing over the asset <em>and</em> its data. Tracked at the level of individual <strong>tags</strong> <span class="gloss">(unique ID codes for every valve, pump and instrument — a plant has tens of thousands)</span>.</li>
+    <li class="ww who"><span class="tag">Who?</span>The <strong>commissioning manager</strong> (drives start-up), <strong>completions engineers</strong> (track readiness tag-by-tag), the <strong>handover / document-control team</strong> (assemble the data package), and the <strong>owner's O&amp;M receiving team</strong> <span class="gloss">(Operations &amp; Maintenance — runs the plant for decades)</span> who must accept it.</li>
+    <li class="ww why"><span class="tag">Why?</span>To prove the plant works and hand operations a complete, trustworthy record so they can run it safely for decades. This is when the investment starts earning — so every day of delay is lost revenue at the worst moment: capital fully spent, nothing yet produced.</li>
+    <li><strong>Gates:</strong> Mechanical completion → <strong>RFSU</strong> <span class="gloss">(Ready For Start-Up)</span> → acceptance.</li>
+  </ul>
+
+  <h4>Operations &amp; Maintenance (O&amp;M)</h4>
+  <ul>
+    <li><strong>What:</strong> 20–40 years of running the asset — the reason it was all built.</li>
+    <li class="ww who"><span class="tag">Who?</span>The <strong>operations team</strong> (runs the plant), <strong>maintenance / reliability engineers</strong> (keep it running), and later <strong>brownfield project teams</strong> <span class="gloss">(the people who design upgrades to an existing plant)</span> who inherit the same data.</li>
+    <li class="ww why"><span class="tag">Why?</span>To turn the built asset into decades of safe, efficient production. Good handover data makes maintenance cheap and the next expansion easy; bad data means engineers spend years re-discovering how their own plant is built.</li>
+  </ul>
+
+  <div class="box">
+    <h5>The key takeaway</h5>
+    <p>The budget is <em>decided</em> at the very start (FEED/FID) but the overrun only <em>shows up</em> years later during construction. Most software only helps during construction — by then the damage is already baked in.</p>
+  </div>
+</section>
+
+<section id="s2">
+  <h2 class="sec"><span class="num">02</span>Org chart</h2>
+  <h3 class="sectitle">Who does what</h3>
+  <h4>Owner side (Aramco/ADNOC's own project staff)</h4>
+  <ul>
+    <li><strong>Capital Projects / Project Director</strong> — owns the whole budget and schedule. <em>Bad week:</em> the board asks why the forecast jumped $2bn. <em>Judged on:</em> delivering to the <strong>sanctioned</strong> <span class="gloss">(board-approved)</span> cost/schedule, safety, first-oil date.</li>
+    <li><strong>PMO</strong> <span class="gloss">(Project Management Office — the central reporting team)</span> <strong>/ Project Controls</strong> — maintain the schedule, cost report and <strong>EAC</strong> <span class="gloss">(Estimate At Completion — the live forecast of the final cost)</span>. <em>Bad week:</em> finding the contractor's reported progress is inflated.</li>
+    <li><strong>Cost Engineers</strong> — track <strong>commitments vs actuals</strong> <span class="gloss">(money promised vs money spent)</span>.</li>
+    <li><strong>Contracts &amp; Procurement</strong> — defend against <strong>claims</strong> <span class="gloss">(formal contractor requests for more money/time)</span>. <em>Bad week:</em> a flood of claims arriving faster than they can be assessed.</li>
+    <li><strong>Interface Managers</strong> — manage boundaries between contractors <span class="gloss">(where one firm's work must connect to another's)</span>. <em>Bad week:</em> both assumed the other was building the connection.</li>
+    <li><strong>Commissioning Managers</strong> — drive start-up. <em>Bad week:</em> thousands of <strong>punch items</strong> <span class="gloss">(small unfinished/defective jobs on a snagging list)</span> block switch-on.</li>
+  </ul>
+  <h4>Contractor side (Bechtel, Fluor, Saipem…)</h4>
+  <ul>
+    <li><strong>EPC Project Manager</strong> — owns delivery and <strong>margin</strong> <span class="gloss">(profit)</span>.</li>
+    <li><strong>Planners</strong> — build the schedule in <strong>Primavera P6</strong> <span class="gloss">(the industry-standard scheduling software, by Oracle)</span>; watch the <strong>critical path</strong> <span class="gloss">(the task sequence that sets the finish date)</span>.</li>
+    <li><strong>Quantity Surveyors (QS)</strong> <span class="gloss">(measure work done and price changes — standard in Commonwealth/Middle East contracts)</span>.</li>
+    <li><strong>Document Controllers</strong> — manage <strong>transmittals</strong> <span class="gloss">(formal document hand-offs)</span> in <strong>Aconex</strong> <span class="gloss">(Oracle's document platform, the standard on big projects)</span>.</li>
+  </ul>
+</section>
+
+<section id="s3">
+  <h2 class="sec"><span class="num">03</span>Tools</h2>
+  <h3 class="sectitle">The tool landscape</h3>
+  <ul>
+    <li><strong>Scheduling:</strong> Primavera P6 (~$3,520/user to buy, ~$1,320/user/yr cloud).</li>
+    <li><strong>Cost / forecasting:</strong> <strong>Hexagon EcoSys</strong> <span class="gloss">(a project-controls platform; from ~$40k)</span>, <strong>SAP</strong> <span class="gloss">(the big finance/ERP system holding the owner's commitments and actuals)</span>, and Excel everywhere.</li>
+    <li><strong>Documents:</strong> Aconex, SharePoint, OpenText.</li>
+    <li><strong>Engineering:</strong> Hexagon, AVEVA, Bentley (3D design + engineering data).</li>
+    <li><strong>Construction:</strong> Procore, Autodesk Construction Cloud, InEight.</li>
+    <li><strong>Completions:</strong> WinPCS, Smart Completions, Coreworx.</li>
+    <li><strong>Progress capture:</strong> OpenSpace, Buildots, Doxel, Disperse <span class="gloss">(cameras/lasers that photograph a site and compare it to the plan)</span>.</li>
+  </ul>
+
+  <div class="box">
+    <h5>Why the data is stuck</h5>
+    <p>Each party keeps its own system with its own <strong>coding structure</strong> <span class="gloss">(private numbering — a WBS, the hierarchical to-do list, and a CBS, the matching cost buckets)</span>. Owner SAP doesn't talk to contractor cost systems; the schedule is disconnected from what's ordered and designed; correspondence sits as unstructured PDFs. <strong>KPMG</strong> <span class="gloss">(a Big Four consultancy)</span>: a third of owners haven't connected their project system to accounting. <strong>NIST</strong> <span class="gloss">(US standards institute)</span>: ~$15.8bn/yr lost just to systems not exchanging data. Reporting is <strong>monthly batch</strong> — weeks old before anyone sees a problem.</p>
+  </div>
+
+  <h4>Emerging AI players (2026)</h4>
+  <ul>
+    <li><strong>ALICE Technologies</strong> — AI schedule optimisation; <strong>McKinsey alliance (14 Apr 2026)</strong>; up to 20% schedule cuts; launched a "chat with your schedule" agent.</li>
+    <li><strong>nPlan</strong> — AI schedule-risk forecasting on 750,000+ past schedules; <strong>$16M Series B (Oct 2025)</strong> with Chevron's venture arm; used on HS2, Network Rail, Anglian Water.</li>
+    <li><strong>Document Crunch</strong> — AI contract review; <strong>bought by Trimble for $246.4M (Apr 2026)</strong>; 400+ customers incl. Balfour Beatty, DPR.</li>
+    <li><strong>Procore</strong> — bought Datagrid (Jan 2026); launched a suite of AI agents (May 2026) across specs/drawings/<strong>RFIs</strong> <span class="gloss">(Requests For Information — formal questions from builder to designer)</span>.</li>
+  </ul>
+  <div class="box amber">
+    <h5>The pattern</h5>
+    <p>2026 is a consolidation year — incumbents are buying AI startups. Almost all of it is <strong>contractor-side and construction-phase</strong>. The <strong>owner-side, cross-system, front-end and claims layers stay open</strong> — that's the gap.</p>
+  </div>
+</section>
+
+<section id="s4">
+  <h2 class="sec"><span class="num">04</span>Pain</h2>
+  <h3 class="sectitle">Pain points ranked by severity</h3>
+  <div class="box">
+    <h5>The headline numbers</h5>
+    <p><strong>McKinsey:</strong> ~79% average overrun (532 projects); 98% of megaprojects overrun &gt;30%. <strong>Flyvbjerg</strong> <span class="gloss">(the Oxford professor whose 16,000-project database is definitive)</span>: only 0.5% finish on budget, on time <em>and</em> on benefits — the "Iron Law." <strong>EY:</strong> in 365 oil-and-gas megaprojects, 64% over budget, 73% late, 59% average cost growth, $500bn total — and <strong>the Middle East is the worst region on Earth</strong> (89% over cost).</p>
+  </div>
+  <ul>
+    <li><strong>#1 Cost overruns at/after FID (master pain).</strong> Root cause: <strong>optimism bias &amp; strategic misrepresentation</strong> <span class="gloss">(estimates are systematically too low — partly over-optimism, partly because low numbers win approval)</span>. Cases: Kashagan (~$50bn, ~11 yrs late), Gorgon LNG ($37→54bn), Ichthys ($34→45bn), Channel Tunnel (80% over).</li>
+    <li><strong>#2 Schedule slippage.</strong> <strong>HKA</strong> <span class="gloss">(a claims/disputes consultancy)</span> found contractors sought time extensions averaging 66% of the plan. Old-school <strong>QSRA</strong> <span class="gloss">(the standard statistical schedule-risk method)</span> can't beat the bias.</li>
+    <li><strong>#3 Claims &amp; disputes.</strong> HKA: $95bn claimed, disputes averaging 33% of budget. <strong>Arcadis</strong> <span class="gloss">(publishes an annual disputes report)</span>: average US dispute $60.1M, ~12.5 months. <strong>Entitlement</strong> <span class="gloss">(the legal right to more money/time)</span> is matched to the contract by hand, and deadlines get missed.</li>
+    <li><strong>#4 Interface failures.</strong> <strong>INCOSE</strong> study: 4% cost growth with mature interface management vs 18% without.</li>
+    <li><strong>#5 Handover chaos.</strong> <strong>CFIHOS</strong> <span class="gloss">(the industry standard for what handover data must be delivered)</span> / <strong>ISO 19650</strong> <span class="gloss">(the international standard for managing asset information)</span>: a "six-month bottleneck" of manual cross-referencing.</li>
+    <li><strong>#6 EAC reconciliation.</strong> Only ~25–31% of projects finish within 10% of budget; the monthly forecast is reconciled by hand.</li>
+  </ul>
+</section>
+
+<section id="s5">
+  <h2 class="sec"><span class="num">05</span>Structure</h2>
+  <h3 class="sectitle">Why the industry is still broken</h3>
+  <ol>
+    <li><strong>Fragmented data with bespoke coding</strong> — no shared source of truth.</li>
+    <li><strong>Adversarial fixed-price contracts</strong> — the contract that shifts risk also rewards claiming and hiding bad news. Only ~32% of owners highly trust their contractors.</li>
+    <li><strong>Optimism bias &amp; strategic misrepresentation</strong> — low estimates win approval.</li>
+    <li><strong>Every project is a one-off</strong> — teams disband; lessons evaporate.</li>
+    <li><strong>Thin contractor margins</strong> — Fluor ~0.13% net (2023); no cushion, so contractors must claim to survive.</li>
+    <li><strong>Monthly batch reporting</strong> — problems are weeks old before anyone sees them.</li>
+    <li><strong>Signal buried in unstructured text</strong> — emails and letters, unreadable at scale until now.</li>
+  </ol>
+  <div class="box">
+    <p><strong>The through-line:</strong> the information that could save a project already exists — it's just scattered and unreadable fast enough. That is exactly what AI agents are built to do.</p>
+  </div>
+</section>
+
+<section id="s6">
+  <h2 class="sec"><span class="num">06</span>Opportunity</h2>
+  <h3 class="sectitle">Where agentic AI fits</h3>
+  <ul>
+    <li><strong>A. Claims-defence &amp; entitlement-recovery agent — highest owner value.</strong> In construction, contractors claim <em>up</em> to the owner; the owner's job is to <strong>defend</strong> and to <strong>recover its own entitlements</strong>. So for an owner this agent (1) helps rebut inflated contractor claims — <strong>IPA</strong> <span class="gloss">(Independent Project Analysis — the definitive capital-projects benchmarking body)</span> found contractors claim about <strong>twice</strong> what they settle for; (2) catches where a <em>contractor</em> missed its own <strong>notice</strong> <span class="gloss">(the deadline-bound letter that preserves a right — miss it and the claim can be lost)</span> deadline; and (3) pursues the owner's own <strong>liquidated damages</strong> <span class="gloss">(pre-agreed penalties for the contractor finishing late)</span> and <strong>back-charges</strong> <span class="gloss">(costs recovered from the contractor for defective work)</span> — off a record the owner controls. <em>Wow:</em> "This $40M contractor claim rests on 6 events — for 3 the contractor missed its own deadline, and it's priced ~2× comparable settlements; here's the rebuttal, cited." Possible now because <strong>LLMs</strong> <span class="gloss">(Large Language Models — AI that reads and reasons over ordinary documents)</span> can read thousands of documents against legal language. <em>Note:</em> the loudest quotable pain here is the contractor's (under-claiming); the owner's is <strong>defence + recovery</strong> — pitch it that way, not "you forgot to claim."</li>
+    <li><strong>B. FID red-team agent — highest strategic leverage.</strong> Before the board commits, stress-tests the estimate against a <strong>reference class</strong> <span class="gloss">(comparable past projects and how they actually turned out — Flyvbjerg's proven anti-bias method)</span> and audits the FEED for gaps. <em>Wow:</em> "This resembles projects that overran 60%; here are its 9 weakest scope elements."</li>
+    <li><strong>C. Cost reconciliation (EAC) agent.</strong> Matches owner SAP to contractor cost data despite mismatched coding. <em>Wow:</em> "Your forecast is $180M light — here are the 6 drivers."</li>
+    <li><strong>D. Schedule-truth agent.</strong> Cross-examines each P6 update against what's actually ordered and designed.</li>
+    <li><strong>E. Handover completeness agent.</strong> Validates handover data against CFIHOS/ISO 19650; flags missing certificates.</li>
+    <li><strong>F. Interface agent.</strong> Spots gaps/overlaps between packages before assembly.</li>
+    <li><strong>G. Design-feasibility gate.</strong> On <strong>every design revision</strong> during FEED, runs three checks in minutes and returns a cited pass/fail list: <strong>compliant?</strong> (vs the Saudi/Dubai building code), <strong>within cost?</strong> (vs the budget ceiling), <strong>buildable?</strong> (constructability + long-lead clashes). A "spell-check for feasibility" that catches design errors while they cost thousands, not the tens of millions they become in the field. Possible now because vision/language models can read thousands of pages of drawings and code and reason about conflicts.</li>
+  </ul>
+  <div class="box amber">
+    <h5>Strategic read — owner-first prioritisation</h5>
+    <p>Scored from the <strong>owner's</strong> seat on three axes — value to the owner, delivery confidence today, and how little effort/data the owner must give up. <strong>Lead with A (claims-defence) and G (design-feasibility gate):</strong> both are high-value, buildable now, and run largely on data the owner already holds (contracts &amp; correspondence for A; design files for G), so they cost the owner least to adopt. <strong>B (FID red-team)</strong> is the highest-value prize but a harder first sale — it needs the owner's own historical data and lands an unwelcome message at the highest-stakes gate, so it's the ideal <em>second</em> move. C (cost), D (schedule-truth), E (handover) and F (interface) rank lower: deeper system integration or data the owner can't hand over cheaply. Net: <strong>lead with A and G, follow with B.</strong></p>
+  </div>
+</section>
+
+<section id="s7">
+  <h2 class="sec"><span class="num">07</span>Validation</h2>
+  <h3 class="sectitle">Real quotes: the pain &amp; the willingness to pay</h3>
+  <p>Actual, sourced statements from inside this world — confirming both that the pain is real and that they will spend money to fix it.</p>
+
+  <h4>They confirm the pain is real and expensive</h4>
+
+  <div class="quote">
+    <blockquote>On most complex capital programmes, a significant amount of money that one party is entitled to recover is never recovered… What most projects lose to poor claims management is not a dispute they should have won, but entitlement they never assembled the evidence to claim.</blockquote>
+    <p class="src">— Kairos (capital-projects claims advisory), 2026 · <a class="ext" href="https://www.wearekairos.com/insights/construction-claims-management/">wearekairos.com</a></p>
+    <div class="why"><b>Why it matters:</b> a near-perfect articulation of Opportunity A. Money is left on the table not for lack of a case, but for lack of anyone assembling the evidence in time — the exact job an agent does.</div>
+  </div>
+
+  <div class="quote">
+    <blockquote>The difference between the amount submitted for a claim versus the amount actually paid at settlement… is as much as half. … The owner too must ensure profitability of his project by defending unsupportable claims by a "low ball" contractor.</blockquote>
+    <p class="src">— IPA (Independent Project Analysis) via National Academies · <a class="ext" href="https://www.nationalacademies.org/read/11846/chapter/9">nationalacademies.org</a> · and Long International · <a class="ext" href="https://www.long-intl.com/articles/why-claims-occur/">long-intl.com</a></p>
+    <div class="why"><b>Why it matters — the owner-side proof for A:</b> contractors claim about <em>twice</em> what they settle for, and the owner's real job is <em>defending</em> against inflated claims and <em>recovering its own</em> liquidated damages and back-charges. This makes Opportunity A a quantified, unambiguously owner-side pain — claims-defence and recovery, not "owners forgetting to claim."</div>
+  </div>
+
+  <div class="quote">
+    <blockquote>Company leaders were faced with a startling finding… their world-spanning capital-projects portfolio had yielded only minimal net present value, with more than half of its potential lost to underperformance… all shared a root cause — bias.</blockquote>
+    <p class="src">— McKinsey, <em>Don't cancel or coddle at-risk capital projects</em>, 2025 · <a class="ext" href="https://www.mckinsey.com/capabilities/operations/our-insights/dont-cancel-or-coddle-at-risk-capital-projects-challenge-them">mckinsey.com</a></p>
+    <div class="why"><b>Why it matters:</b> an owner losing half its portfolio value to bias at sanction is exactly the pain Opportunity B (the FID red-team) attacks.</div>
+  </div>
+
+  <div class="quote">
+    <blockquote>For an average size project, even a 10 percent overrun can lead to a $5 million hit to project profitability… By the time you see the project status, it's already outdated, and can be too late to catch a delay or cost overrun.</blockquote>
+    <p class="src">— Deltek, <em>The True Cost of Project Delay</em> · <a class="ext" href="https://www.ceacisp.org/sites/default/files/documents/The-True-Cost-of-Project-Delay-White-Paper.pdf">ceacisp.org (PDF)</a></p>
+    <div class="why"><b>Why it matters:</b> confirms the "monthly reporting is too late" pain behind Opportunity D.</div>
+  </div>
+
+  <h4>An owner (Aramco) states its own pain</h4>
+  <div class="quote">
+    <blockquote>[The customer's] needs are simply a facility with no defects, delivered on time and within the given budget… To address the current challenges in program execution — including severe resource constraints and longer procurement lead times — Saudi Aramco has developed and implemented several innovative procurement and contracting strategies.</blockquote>
+    <p class="src">— Saudi Aramco, via PMI case study on its Quality Management Information System · <a class="ext" href="https://www.pmi.org/learning/library/saudi-aramco-quality-management-information-system-7013">pmi.org</a></p>
+    <div class="why"><b>Why it matters:</b> Aramco itself naming execution pain and actively building systems to fix it — evidence of both need and buying behaviour.</div>
+  </div>
+
+  <h4>They will pay real money</h4>
+
+  <div class="quote hero">
+    <blockquote>ADNOC is on a mission to become the world's most AI-enabled energy company, maximizing the potential of AI to drive efficiency and value creation across our operations.</blockquote>
+    <p class="src">— Musabbeh Al Kaabi, ADNOC Upstream CEO, on a <strong>$340M three-year agentic-AI contract</strong> (after a proof-of-concept), described as "reducing time for essential business processes from months to days." AIQ/Presight, 10 Mar 2025 · <a class="ext" href="https://www.prnewswire.com/news-releases/aiq-announces-340-million-contract-for-large-scale-deployment-of-agentic-ai-across-adnoc-operations-302400274.html">prnewswire.com</a></p>
+    <div class="why"><b>Why it matters — the single most important data point:</b> a Gulf super-major has already paid $340M for agentic AI, <em>after a pilot</em> — proving the appetite, the deal shape (pilot → large multi-year contract), and the price ceiling. It also shows ADNOC prefers to buy through its own JV, AIQ — a channel consideration for us.</div>
+  </div>
+
+  <div class="quote">
+    <blockquote>With Document Crunch, we can safely and confidently bid more jobs than before. When you understand your risks upfront, you can be more competitive — you're not padding fees just to cover the unknowns.</blockquote>
+    <p class="src">— Jeff Brannen, SVP &amp; Chief Legal Officer, <strong>Balfour Beatty</strong> · <a class="ext" href="https://www.trimble.com/en/products/document-crunch">trimble.com</a>. He also reports risk-review meetings "gone down from four hours… to two hours" · <a class="ext" href="https://www.documentcrunch.com/blog/save-time-enhance-communication-balfour-beatty">documentcrunch.com</a></p>
+    <div class="why"><b>Why it matters:</b> a Tier-1 contractor executive putting hard commercial value on AI contract intelligence — the exact category as Opportunity A.</div>
+  </div>
+
+  <div class="quote">
+    <blockquote>Every contractor has a story about a contract clause that cost them — and at $200/month, Document Crunch pays for itself with a single caught risk.</blockquote>
+    <p class="src">— Velocity AI Insights review, 2026 · <a class="ext" href="https://insights.velocityaipartners.co/tools/document-crunch">velocityaipartners.co</a></p>
+    <div class="why"><b>Why it matters:</b> the ROI logic of Opportunity A stated plainly — one caught risk pays for the tool many times over.</div>
+  </div>
+
+  <div class="quote">
+    <blockquote>nPlan's AI is already in use on more than $500 billion worth of live projects… To date, nPlan has saved its customers well over $1.2B. The Transpennine Route Upgrade has gone further, contractualising the use of nPlan.</blockquote>
+    <p class="src">— nPlan Series B announcement, 17 Oct 2025 · <a class="ext" href="https://www.nplan.io/press-releases/nplan-raises-16m-series-b-to-scale-its-ai-led-transformation-of-capital-project-delivery">nplan.io</a></p>
+    <div class="why"><b>Why it matters:</b> a customer writing an AI tool <em>into its contracts</em> is the strongest possible willingness-to-pay signal — the tool is now mandatory, not optional. Chevron's venture arm co-led the round.</div>
+  </div>
+
+  <div class="box">
+    <h5>Bottom line on validation</h5>
+    <p>The pain (bias at FID, lost entitlement, late detection) is confirmed by McKinsey, Aramco and specialist claims advisors; the willingness to pay is proven by a $340M ADNOC contract, a Tier-1 contractor's CLO crediting the tool for competitive bidding, and a customer writing AI into its contracts. The two owner-side opportunities we favour (A and B) are the least served by today's vendors.</p>
+  </div>
+
+  <h4>Validating Opportunity G — the design-feasibility gate</h4>
+  <p>The pain and value here are unusually well-quantified, and the strongest signal is that a <strong>government is building this itself</strong>.</p>
+
+  <div class="quote hero">
+    <blockquote>A fully integrated digital system capable of issuing building permits automatically and without human intervention by reading submitted drawings and documents, verifying compliance with the Dubai Building Code.</blockquote>
+    <p class="src">— Dubai Municipality, on its AI permit system (26-week rollout), 2026 · <a class="ext" href="https://www.zawya.com/en/press-release/government-news/dubai-redefines-the-future-of-building-permits-with-an-ai-system-that-issues-licences-automatically-425918">zawya.com</a></p>
+    <div class="why"><b>Why it matters:</b> when the <em>regulator</em> automates the compliance check, every developer and consultant must arrive pre-compliant — that is the demand for the private, owner-side version. It also confirms the three-discipline scope (plot, architecture, MEP, structural) is technically doable now.</div>
+  </div>
+
+  <div class="quote">
+    <blockquote>We reduced our SBC compliance review cycle from 6 weeks to 3 days. The AI caught two fire environmental gaps that would have delayed our building permit by months.</blockquote>
+    <p class="src">— Customer testimonial, WhiteHelmet (Saudi-based construction intelligence), 2026 · <a class="ext" href="https://www.whitehelmet.sa/products/ai-compliance-analysis">whitehelmet.sa</a></p>
+    <div class="why"><b>Why it matters:</b> a Gulf customer quantifying both time (~90% faster) and avoided delay (permit delay of "months" prevented) on the exact Saudi Building Code this product targets.</div>
+  </div>
+
+  <div class="quote">
+    <blockquote>What used to take us weeks is now done in days… Every coordination issue that Buildcheck caught saved us from expensive field modifications and potential delays.</blockquote>
+    <p class="src">— Customer testimonial, Buildcheck (AI design review) · <a class="ext" href="https://buildcheck.ai/">buildcheck.ai</a></p>
+    <div class="why"><b>Why it matters:</b> confirms the "catch it in design, not in the field" value from a paying user's mouth.</div>
+  </div>
+
+  <div class="box">
+    <h5>Quantified value (all sourced)</h5>
+    <p><strong>Rework ≈ 5% of project cost</strong> on average (CII IR-153; 90th-pct 12.4%), design rework +1–3 pts. <strong>~70–80% of cost deviations trace to design</strong>, not execution. <strong>An error caught in design costs ~10× less than in construction, ~100× less than after handover</strong> (CII 1-10-100); pre-construction review catches 60%+ of rework-causing errors. Independent ROI: <strong>4:1 to 30:1</strong> cost-avoidance; an RFI is $200–$500 at drawing stage vs $2,000–$8,000 in the field. Documented outcomes: design errors reaching the field <strong>cut 50–75%</strong>, schedule compressed 8–18%. <strong>On a $5bn giga-project</strong>, ~5% rework = ~$250M, of which ~28% (~$70M) is design-caused; catching half early avoids <strong>~$35M on a single project</strong> — before schedule/first-oil value. On a $20bn project the design-caused figure is ~$280M. <span style="font-size:12px;color:var(--ink-soft)">(Sources: reworkcost.com/CII IR-153, mycomply.net, helonic.com, miragemetrics.com, tommasomariaricci.com)</span></p>
+  </div>
+
+  <div class="box hazard">
+    <h5>Honest gap</h5>
+    <p>Strong <em>practitioner and vendor</em> validation (WhiteHelmet, Buildcheck) and a decisive <em>regulator</em> signal (Dubai Municipality), but <strong>no on-record quote from an Aramco/ADNOC owner executive naming this specific tool</strong> — treat owner-persona demand as inferred from the regulator move and the mandatory SBC 2024 reset, and confirm in primary interviews.</p>
+  </div>
+</section>
+
+<section id="s8">
+  <h2 class="sec"><span class="num">08</span>Buying</h2>
+  <h3 class="sectitle">Buying reality: how Gulf owners buy</h3>
+  <h4>Saudi Aramco</h4>
+  <ul>
+    <li><strong>SAP Ariba</strong> <span class="gloss">(Aramco's mandatory online supplier portal)</span> registration — needs an in-Kingdom entity via <strong>MISA</strong> <span class="gloss">(the ministry that licenses foreign companies)</span>. ~3–6 months.</li>
+    <li><strong>IKTVA</strong> <span class="gloss">(In-Kingdom Total Value Add — Aramco's local-content score; a weak score hurts every bid)</span>.</li>
+    <li><strong>SACS-002 → CCC</strong> <span class="gloss">(a mandatory cybersecurity standard; you must earn a Compliance Certificate before touching Aramco data)</span>.</li>
+    <li><strong>PDPL</strong> <span class="gloss">(Saudi data-protection law)</span> / data residency — sensitive data hosted in-Kingdom by default.</li>
+    <li><strong>Front doors:</strong> Wa'ed Ventures ($500M VC arm), SAIL (innovation lab), Aramco Digital.</li>
+  </ul>
+  <h4>ADNOC (UAE)</h4>
+  <ul>
+    <li><strong>ICV</strong> <span class="gloss">(In-Country Value — the UAE equivalent of IKTVA)</span>.</li>
+    <li><strong>Sovereign cloud</strong> — G42's Khazna plus Microsoft/AWS/Google/Oracle UAE regions.</li>
+    <li><strong>AIQ</strong> <span class="gloss">(the ADNOC–G42 AI joint venture)</span> won the $340M deal. ADNOC prefers to build agentic AI through AIQ — so partner with them, don't compete.</li>
+  </ul>
+  <h4>Deal shape</h4>
+  <ul>
+    <li><strong>Pricing:</strong> % of project value (Procore charges on <strong>ACV</strong> <span class="gloss">(Annual Construction Volume)</span>, ~0.1–0.3% of hard costs). On a $10bn project, 0.05% = $5M — trivial vs one $23M claim.</li>
+    <li><strong>Path:</strong> paid <strong>PoC</strong> <span class="gloss">(Proof of Concept — a small paid pilot on 1–2 live projects)</span> → multi-year contract.</li>
+    <li><strong>Cycle:</strong> 9–18+ months first contact to contract.</li>
+  </ul>
+</section>
+
+<section id="s9">
+  <h2 class="sec"><span class="num">09</span>Plan</h2>
+  <h3 class="sectitle">Recommendations</h3>
+  <ol>
+    <li><strong>Pick the wedge now:</strong> lead with the two lowest-effort, highest-confidence owner wedges — claims-defence &amp; entitlement-recovery (A) and the design-feasibility gate (G), both running mostly on data the owner already holds. Bring in the FID red-team (B) as the high-value second move once inside and trusted. Add cost (C) and schedule-truth (D) later.</li>
+    <li><strong>Make compliance a feature:</strong> in-Kingdom/in-UAE hosting + SACS-002/CCC + IKTVA/ICV from day one.</li>
+    <li><strong>Enter through the innovation arms:</strong> Wa'ed / SAIL / Aramco Digital; partner with AIQ / Hub71. Run a paid PoC with a pre-agreed success metric.</li>
+    <li><strong>Price to value:</strong> a fraction of project value; one avoided claim pays for it many times over.</li>
+  </ol>
+</section>
+
+<section id="s10">
+  <h2 class="sec"><span class="num">10</span>Caveats</h2>
+  <h3 class="sectitle">Caveats &amp; evidence gaps</h3>
+  <div class="box hazard">
+  <ul>
+    <li>Kashagan's larger lifetime figures are secondary financial press — treat as estimates.</li>
+    <li>Interface-management quantification rests largely on one INCOSE dataset.</li>
+    <li>No single clean "cost of poor handover" percentage exists; the six-month bottleneck and NIST $15.8bn/yr are the anchors.</li>
+    <li>Gulf sign-off authority and cycle length are thin in public sources — validate with interviews.</li>
+    <li>No verified deployment of nPlan/ALICE <em>specifically</em> at Aramco or ADNOC was found.</li>
+    <li>Several vendor metrics (nPlan's $1.2bn saved; ALICE's savings) are self-reported.</li>
+  </ul>
+  </div>
+</section>
+
+<footer>
+  <p>Plain-English edition · Agentic AI for Capital Project Management · Compiled 26 August 2026. Sources: McKinsey, EY, HKA CRUX, Arcadis, KPMG, Flyvbjerg/Oxford, NIST, INCOSE, IPA, CFIHOS/ISO 19650, AIQ/Presight, nPlan, Document Crunch/Trimble, Balfour Beatty, Kairos, Aramco/PMI, and company filings. URLs given inline at each statistic and quote. Vendor-reported and single-study figures flagged in-text. Validate with primary interviews before external use.</p>
+</footer>
+
+</div>
+</body>
+</html>
