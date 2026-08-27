@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Asset Nova — end-to-end journeys (wireframes)</title>
+<style>
+  :root{
+    --bg:#0a0e14; --panel:#11161f; --panel2:#161d29; --line:#1f2937;
+    --txt:#e5eaf2; --dim:#8b95a7; --faint:#5b6474;
+    --accent:#4f8ef7; --green:#34d399; --amber:#fbbf24; --red:#f87171;
+    --purple:#a78bfa; --cyan:#22d3ee;
+    --mono:'SF Mono',ui-monospace,Menlo,monospace;
+    --sans:-apple-system,'Inter',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{background:var(--bg);color:var(--txt);font-family:var(--sans);overflow:hidden}
+  .slide{display:none;position:absolute;inset:0;padding:40px 60px 56px;flex-direction:column;overflow:hidden}
+  .slide.active{display:flex;animation:fade .4s}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .kicker{font-family:var(--mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+  .kicker.p1{color:var(--accent)} .kicker.p2{color:var(--cyan)} .kicker.p3{color:var(--purple)} .kicker.eng{color:var(--green)}
+  h1{font-size:46px;line-height:1.1;font-weight:700;letter-spacing:-.5px}
+  h2{font-size:27px;line-height:1.2;font-weight:700;letter-spacing:-.3px;margin-bottom:6px}
+  h2 em{font-style:normal;color:var(--accent)}
+  .sub{font-size:15.5px;color:var(--dim);margin-top:8px;line-height:1.5;max-width:1080px}
+  .body{flex:1;display:flex;flex-direction:column;justify-content:center;min-height:0}
+  .foot{position:absolute;bottom:18px;left:60px;right:230px;display:flex;justify-content:space-between;font-family:var(--mono);font-size:10.5px;color:var(--faint)}
+  .nav-hint{position:fixed;bottom:18px;right:20px;font-family:var(--mono);font-size:10.5px;color:var(--faint)}
+  .progress{position:fixed;top:0;left:0;height:2px;background:var(--accent);transition:width .3s}
+  .stage-tag{position:absolute;top:18px;right:60px;font-family:var(--mono);font-size:10.5px;color:var(--faint);letter-spacing:2px}
+
+  /* wireframe primitives */
+  .wf{background:#0d121b;border:1px dashed #354054;border-radius:8px;padding:0;overflow:hidden;display:flex;flex-direction:column}
+  .wf-bar{display:flex;align-items:center;gap:8px;padding:7px 12px;border-bottom:1px dashed #354054;background:#101725;font-family:var(--mono);font-size:10.5px;color:var(--faint);letter-spacing:1px;text-transform:uppercase}
+  .wf-bar b{color:var(--dim);font-weight:600;letter-spacing:1px}
+  .wf-body{padding:12px 14px;display:flex;flex-direction:column;gap:9px}
+  .row{display:flex;gap:10px;align-items:center}
+  .ph{height:9px;border-radius:3px;background:#1d2636}
+  .ph.w20{width:20%}.ph.w30{width:30%}.ph.w40{width:40%}.ph.w50{width:50%}.ph.w60{width:60%}.ph.w70{width:70%}.ph.w100{width:100%}
+  .lbl{font-family:var(--mono);font-size:11px;color:var(--dim)}
+  .lbl.s{font-size:10px;color:var(--faint)}
+  .money{font-family:var(--mono);color:var(--amber);font-size:13px}
+  .money.lg{font-size:22px}
+  .conf{font-family:var(--mono);font-size:10.5px;color:var(--green)}
+  .conf.mid{color:var(--amber)} .conf.low{color:var(--red)}
+  .btn{display:inline-block;font-family:var(--mono);font-size:10.5px;padding:5px 11px;border-radius:6px;border:1px solid #2b3a55;color:var(--dim);background:#121a28}
+  .btn.pri{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .btn.dan{border-color:#4a2530;color:var(--red)}
+  .queue{display:flex;flex-direction:column;gap:0}
+  .qrow{display:grid;grid-template-columns:24px 1fr 96px 78px 96px 108px;gap:10px;align-items:center;padding:9px 12px;border-bottom:1px dashed #232e42;font-size:13px;color:var(--dim)}
+  .qrow.head{font-family:var(--mono);font-size:9.5px;letter-spacing:1px;text-transform:uppercase;color:var(--faint);border-bottom:1px solid var(--line)}
+  .qrow b{color:var(--txt);font-weight:600}
+  .qrow.sel{background:#101a2c}
+  .cols{display:flex;gap:18px;min-height:0}
+  .col{flex:1;min-width:0}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+  .card h3{font-size:11.5px;text-transform:uppercase;letter-spacing:1px;color:var(--accent);margin-bottom:8px}
+  .card p,.card li{font-size:13.5px;color:var(--dim);line-height:1.5}
+  .card ul{padding-left:16px}
+  .note{font-family:var(--mono);font-size:11px;color:var(--amber);line-height:1.5;border-left:2px solid var(--amber);padding-left:10px;margin-top:10px}
+  .note.g{color:var(--green);border-color:var(--green)}
+  .note.d{color:var(--faint);border-color:#2b3a55}
+  pre.diagram{font-family:var(--mono);font-size:12.5px;line-height:1.5;color:var(--dim);background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px 18px;overflow:auto}
+  pre.diagram b{color:var(--txt)} pre.diagram i{font-style:normal;color:var(--accent)}
+  table{border-collapse:collapse;width:100%;font-size:13.5px}
+  th{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--faint);text-align:left;padding:7px 11px;border-bottom:1px solid var(--line)}
+  td{padding:9px 11px;border-bottom:1px solid var(--line);color:var(--dim);line-height:1.45;vertical-align:top}
+  td b,td strong{color:var(--txt)}
+  tr.win td{background:#0f1d1a}
+  tr.win td:first-child{color:var(--green)}
+  .steps{display:flex;gap:10px;margin-top:12px}
+  .steps .s{flex:1;background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:11px 12px}
+  .steps .s b{display:block;font-family:var(--mono);color:var(--accent);font-size:10.5px;margin-bottom:6px}
+  .steps .s p{font-size:12.5px;color:var(--dim);line-height:1.45}
+  .arrow{align-self:center;font-family:var(--mono);color:var(--faint);font-size:18px;padding:0 2px}
+  .chip{display:inline-block;font-family:var(--mono);font-size:10px;padding:2px 8px;border-radius:10px;background:#1a2333;color:var(--accent);border:1px solid #24344f;margin-right:6px}
+  .chip.g{color:var(--green);border-color:#1f4a3a;background:#0f1d1a}
+  .chip.a{color:var(--amber);border-color:#4a3c1f;background:#1d1a0f}
+  .chip.r{color:var(--red);border-color:#4a2530;background:#1d1013}
+  .flow{display:flex;gap:8px;align-items:stretch}
+  .flow .fs{flex:1;background:#0d121b;border:1px dashed #354054;border-radius:8px;padding:10px 11px}
+  .flow .fs b{display:block;font-family:var(--mono);font-size:10px;color:var(--green);margin-bottom:5px;letter-spacing:1px}
+  .flow .fs p{font-size:12px;color:var(--dim);line-height:1.4}
+  .io{display:grid;grid-template-columns:1fr 30px 1fr;gap:10px;align-items:center;margin-top:10px}
+  .io .box{background:#0d121b;border:1px dashed #354054;border-radius:8px;padding:10px 12px;font-family:var(--mono);font-size:11.5px;color:var(--dim);line-height:1.55}
+  .io .box b{color:var(--txt)}
+  .io .mid{text-align:center;font-family:var(--mono);color:var(--accent);font-size:16px}
+  @media print{
+    @page{size:338.7mm 190.5mm;margin:0}
+    html,body{overflow:visible;height:auto}
+    .slide{display:flex !important;position:relative;inset:auto;width:338.7mm;height:190.5mm;page-break-after:always;animation:none}
+    .nav-hint,.progress{display:none}
+    .foot{position:absolute}
+  }
+</style>
+</head>
+<body>
+<div class="progress" id="prog"></div>
+
+<!-- 1 TITLE -->
+<section class="slide">
+  <div class="body">
+    <div class="kicker">Wireframe prototype · end-to-end journeys</div>
+    <h1>Asset <span style="color:var(--accent)">Nova</span></h1>
+    <p class="sub" style="font-size:20px;color:var(--txt);margin-top:14px">What using each product actually looks like, screen by screen.</p>
+    <p class="sub">Three products, one journey each, wireframed end to end. Then the alternates we considered, and the engineering flow behind the screens.</p>
+    <div style="margin-top:22px">
+      <span class="chip">1 · Claims defence &amp; recovery</span>
+      <span class="chip" style="color:var(--cyan);border-color:#1e4450;background:#0f1c22">2 · Design feasibility</span>
+      <span class="chip" style="color:var(--purple);border-color:#3a2d55;background:#161029">3 · Approval red team (later)</span>
+    </div>
+    <p class="sub" style="margin-top:26px;font-size:13px;color:var(--faint)">Wireframes on purpose: boxes and dashed lines, no styling opinions. Arrows or space to move. Alexandre Cela · August 2026</p>
+  </div>
+</section>
+
+<!-- 2 HOW TO READ -->
+<section class="slide">
+  <div class="kicker">How to read this</div>
+  <h2>Grey boxes are screens. Amber notes are the product decision.</h2>
+  <div class="body">
+    <div class="cols">
+      <div class="col">
+        <div class="wf">
+          <div class="wf-bar"><b>screen name</b> · where it lives</div>
+          <div class="wf-body">
+            <div class="row"><span class="lbl">a field or a line of content</span></div>
+            <div class="ph w70"></div>
+            <div class="ph w40"></div>
+            <div class="row"><span class="money">$ money at stake</span><span class="conf">confidence</span></div>
+            <div class="row"><span class="btn pri">primary action</span><span class="btn">secondary</span><span class="btn dan">reject</span></div>
+          </div>
+        </div>
+        <p class="note">Amber note: the design choice and why it's the lowest-effort option for the person using it.</p>
+        <p class="note g">Green note: the moment the product earns trust.</p>
+      </div>
+      <div class="col">
+        <div class="card">
+          <h3>The one rule behind every screen</h3>
+          <p>Nothing here asks anyone to change how they already work. The agent reads files the owner already has, it shows up where the person already looks, and it never sends anything itself.</p>
+          <ul style="margin-top:8px">
+            <li>Read-only inputs, no migration, no new system of record</li>
+            <li>Arrives in email or Teams, reviewed on one screen</li>
+            <li>Every line clicks through to a page in a real document</li>
+            <li>Ranked by money, so 20 minutes covers the day</li>
+            <li>Proven on closed projects before it touches a live one</li>
+          </ul>
+        </div>
+        <div class="card" style="margin-top:14px">
+          <h3>What you'll see, in order</h3>
+          <p>Product 1 journey (9 screens) · alternates considered · Product 2 journey (6 screens) · alternates · Product 3 journey (3 screens) · the engineering flow, step by step, with what goes in and what comes out.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>Asset Nova · journeys</span><span>legend</span></div>
+</section>
+
+<!-- 3 MAP -->
+<section class="slide">
+  <div class="kicker">The map</div>
+  <h2>Three journeys, three moments in the owner's lifecycle</h2>
+  <div class="body">
+<pre class="diagram">
+ IDEA      OPTIONS     <i>DESIGN</i>                <i>APPROVE</i>            <i>BUILD</i>                   START-UP    OPERATE
+ screen    pick one    <i>FEED, every revision</i>   <i>the board vote</i>     <i>3 to 6 years</i>           handover    20-40 yrs
+                       |                     |                  |
+                       <b>PRODUCT 2</b>            <b>PRODUCT 3</b>          <b>PRODUCT 1</b>
+                       Design feasibility    Approval red team  Claims defence &amp; recovery
+                       "is it legal,         "is this number    "where is money leaking,
+                        affordable,           honest?"           and what do I do today?"
+                        buildable?"
+                       <b>trigger:</b> a drawing   <b>trigger:</b> a gate      <b>trigger:</b> always on
+                       revision is issued    date in the diary   (the record changes every day)
+                       <b>cadence:</b> minutes     <b>cadence:</b> once per     <b>cadence:</b> a daily queue,
+                       per revision          gate                20 minutes to clear
+
+ ~ later, same reading layer ~
+ concept   option      drawing chase         gate challenge     cost forecast truth      handover    history feeds
+ red-team  compare     (what's late that     book reuse         schedule truth           complete-   the next vote
+                        threatens the                           interface gaps           ness
+                        finish date)
+</pre>
+    <p class="note">Product 1 is the only one that's always on, because it's the only one whose trigger is "the record changed". Products 2 and 3 are event-driven, so they don't need a queue.</p>
+  </div>
+  <div class="foot"><span>Asset Nova · journeys</span><span>lifecycle fit</span></div>
+</section>
+
+<!-- 4 P1 OVERVIEW -->
+<section class="slide">
+  <div class="kicker p1">Product 1 · claims defence &amp; recovery · Faisal Al-Harbi</div>
+  <h2>The chosen journey: an always-on agent, and a 20-minute morning review</h2>
+  <p class="sub">Persona: Faisal Al-Harbi, the owner's contracts and commercial manager on Jebel Nasr Train 4. His job is to rebut inflated claims, catch where the contractor missed its own deadlines, and collect the owner's own late-delivery damages and back-charges.</p>
+  <div class="body">
+    <div class="steps">
+      <div class="s"><b>0 · CONNECT</b><p>Read-only copy of the contract and the letters. One afternoon, IT only.</p></div>
+      <div class="s"><b>1 · WATCH</b><p>Agent reads new documents overnight, every night. No screen involved.</p></div>
+      <div class="s"><b>2 · DIGEST</b><p>Morning email: three things worth money today.</p></div>
+      <div class="s"><b>3 · QUEUE</b><p>One screen, ranked by money, with deadlines counting down.</p></div>
+      <div class="s"><b>4 · OPEN</b><p>The evidence chain, and how the money was estimated.</p></div>
+      <div class="s"><b>5 · DECIDE</b><p>Approve, edit or reject. The human is the gate.</p></div>
+      <div class="s"><b>6 · DRAFT</b><p>The letter or rebuttal pack, cited, ready to send.</p></div>
+      <div class="s"><b>7 · TRACK</b><p>What was sent, what came back, what it settled at.</p></div>
+      <div class="s"><b>8 · REPORT</b><p>Month-end brief written on demand, then thrown away.</p></div>
+    </div>
+    <p class="note" style="margin-top:18px">Why always on: the events that create or destroy entitlement happen daily, and the deadlines that kill them are counted in days. A monthly product cannot save a 28-day notice window. This is the one place where "always on" is the value, not a feature.</p>
+    <p class="note g">Why human in the loop on the money: the agent's job is to find and size the move. Deciding to spend a commercial position is the manager's job, and it stays that way. That's also what makes the first sale possible.</p>
+  </div>
+  <div class="foot"><span>Product 1</span><span>journey overview · 9 screens follow</span></div>
+</section>
+
+<!-- 5 P1 S0 CONNECT -->
+<section class="slide">
+  <div class="kicker p1">Product 1 · screen 0 · Faisal Al-Harbi</div>
+  <h2>Day one: five read-only connections and nothing else</h2>
+  <div class="body">
+    <div class="cols">
+      <div class="col" style="flex:1.15">
+        <div class="wf">
+          <div class="wf-bar"><b>Set up project</b> · admin, one time</div>
+          <div class="wf-body">
+            <div class="row"><span class="lbl" style="width:150px">Project</span><div class="ph w60"></div></div>
+            <div class="row"><span class="lbl" style="width:150px">Contract set</span><span class="lbl s">GC + special conditions + 14 amendments &nbsp; <span class="chip g">read</span></span></div>
+            <div class="row"><span class="lbl" style="width:150px">Correspondence</span><span class="lbl s">document platform export, read-only key &nbsp; <span class="chip g">read</span></span></div>
+            <div class="row"><span class="lbl" style="width:150px">Schedule updates</span><span class="lbl s">monthly schedule files, folder watch &nbsp; <span class="chip g">read</span></span></div>
+            <div class="row"><span class="lbl" style="width:150px">Site reports</span><span class="lbl s">daily reports folder &nbsp; <span class="chip g">read</span></span></div>
+            <div class="row" style="margin-top:4px"><span class="lbl" style="width:150px">Who can see this</span><span class="lbl s">mirrors the commercial team's existing permissions</span></div>
+            <div class="row"><span class="lbl" style="width:150px">Where it runs</span><span class="lbl s">in-Kingdom private cloud · no training on your data</span></div>
+            <div class="row" style="margin-top:6px"><span class="btn pri">Start on closed project first</span><span class="btn">Go live</span></div>
+          </div>
+        </div>
+        <p class="note">The default is deliberately the closed project. We'd rather prove it on last year's files, where being wrong costs nothing, than argue about trust on a live claim.</p>
+      </div>
+      <div class="col">
+        <div class="card">
+          <h3>What the owner gives up here</h3>
+          <p>Read access to commercially sensitive, sometimes privileged material. That's the real sacrifice in this product, and it's the whole sales conversation.</p>
+          <p style="margin-top:8px">Our answers, on this screen and not in an appendix: hosting in region, permissions copied from the team that already reads these files, no training on their data, and a log of every document the agent opened and why.</p>
+        </div>
+        <div class="card" style="margin-top:14px">
+          <h3>Effort</h3>
+          <p>One afternoon of IT work. No data cleaning, no coding structure to agree, no migration, and nothing for the commercial team to do at all.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>Product 1 · screen 0</span><span>connect</span></div>
+</section>
+
+<!-- 6 P1 S1 WATCH -->
+<section class="slide">
+  <div class="kicker p1">Product 1 · screen 1 · Faisal Al-Harbi</div>
+  <h2>Faisal's screen that doesn't exist</h2>
+  <div class="body">
+    <div class="cols">
+      <div class="col">
+<pre class="diagram">
+ <b>JEBEL NASR TRAIN 4 · SOURCE FILES · READ ONLY</b>
+
+ \JN4\02-Contract\ on SharePoint       61 PDFs
+   EPC contract, 14 amendments, particular conditions
+ JN4-correspondence-2024-2026.zip      11,482 documents
+   Aconex export: letters, transmittals, notices, minutes
+ \JN4\07-Site\DSR\                    3,140 PDFs
+   daily site reports, about 30 a week
+ JN4-P6-2026-07.xer                     1 file · 8,900 activities
+   monthly schedule update from P6
+ KEC-IPA-039.pdf                        1 file
+   current interim payment application
+
+ <b>overnight, every night</b>
+ new documents since yesterday          412
+   letters and minutes                   78
+   drawing transmittals                 201
+   daily site reports                    30
+   schedule update                        1
+   contractor payment claim               1
+
+ read and filed                        412
+ linked to the timeline                 398
+ needs a human to classify               14   <i>(queued, not guessed)</i>
+
+ candidate money moves found              5
+   above the reporting threshold          3   <i>(go to the digest)</i>
+   watch list                             2   <i>(not worth your time yet)</i>
+</pre>
+      </div>
+      <div class="col">
+        <div class="card">
+          <h3>Deliberately no dashboard</h3>
+          <p>There's no live wall of charts here, and that's a decision. A dashboard makes a person go and look. An always-on agent comes to Faisal, and only when there's money on the table.</p>
+        </div>
+        <div class="card" style="margin-top:14px">
+          <h3>What "always on" means concretely</h3>
+          <p>Documents are read as they land, not at month-end. Deadlines are recalculated daily. So the product's promise is a countdown, not a report: you will never learn about a notice window after it closed.</p>
+        </div>
+        <p class="note">If nothing worth money happened, the agent says nothing. Silence is a feature. The fastest way to lose a commercial manager is to send them a daily email they learn to ignore.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>Product 1 · screen 1</span><span>always on</span></div>
+</section>
+
+<!-- 7 P1 S2 DIGEST -->
+<section class="slide">
+  <div class="kicker p1">Product 1 · screen 2 · Faisal Al-Harbi</div>
+  <h2>07:30, in the inbox they already open</h2>
+  <div class="body">
+    <div class="cols">
+      <div class="col" style="flex:1.2">
+        <div class="wf">
+          <div class="wf-bar"><b>Email / Teams card</b> · no login needed to read</div>
+          <div class="wf-body">
+            <div class="row"><span class="lbl" style="color:var(--txt)">3 things worth money today · $23.4M in play</span></div>
+            <div class="ph w100" style="height:1px;background:#232e42"></div>
+            <div class="row"><span class="money" style="width:80px">$18.0M</span><span class="lbl">Contractor's claim 07: on 3 of 6 events their notice was late</span></div>
+            <div class="row"><span class="lbl s" style="margin-left:80px">rebuttal drafted · 41 documents cited</span><span class="conf">high confidence</span></div>
+            <div class="ph w100" style="height:1px;background:#232e42"></div>
+            <div class="row"><span class="money" style="width:80px">$2.1M</span><span class="lbl">Late-delivery damages chargeable this month</span></div>
+            <div class="row"><span class="lbl s" style="margin-left:80px">calculation ready · certificate + schedule cited</span><span class="conf">high confidence</span></div>
+            <div class="ph w100" style="height:1px;background:#232e42"></div>
+            <div class="row"><span class="money" style="width:80px">$3.3M</span><span class="lbl">Letter of 14 May signals a claim that isn't in your risk register</span></div>
+            <div class="row"><span class="lbl s" style="margin-left:80px">6 days to respond</span><span class="conf mid">medium confidence</span></div>
+            <div class="row" style="margin-top:6px"><span class="btn pri">Review the three</span><span class="btn">Nothing today, thanks</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <h3>Why email is the product surface</h3>
+          <p>The adoption cost of a new tool is mostly the cost of remembering it exists. This person already lives in mail. So the digest is the product, and the web screen is where they go once they've decided something is worth ten minutes.</p>
+        </div>
+        <p class="note">Three items, never ten. The agent has to choose. A queue that needs triage has moved the work, not removed it.</p>
+        <p class="note d">Counter-metric we watch: how often the digest gets ignored two days running. That, not usage, tells us if the ranking is honest.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>Product 1 · screen 2</span><span>the morning digest</span></div>
+</section>
+
+<!-- 8 P1 S3 QUEUE -->
+<section class="slide">
+  <div class="kicker p1">Product 1 · screen 3 · Faisal Al-Harbi</div>
+  <h2>One screen, ranked by money, with the clock visible</h2>
+  <div class="body">
+    <div class="wf">
+          <div class="wf-bar"><b>Money queue</b> · Jebel Nasr Train 4 · updated 06:10 today</div>
+      <div class="queue">
+        <div class="qrow head"><span></span><span>What the agent found</span><span>Value at stake</span><span>Confidence</span><span>Deadline</span><span>Action ready</span></div>
+        <div class="qrow sel"><span class="lbl s">01</span><span><b>Claim 07 rebuttal:</b> 3 of 6 events notified late by the contractor</span><span class="money">$18.0M</span><span class="conf">high</span><span class="lbl s">reply due 12 d</span><span class="lbl s">rebuttal pack</span></div>
+        <div class="qrow"><span class="lbl s">02</span><span><b>Late-delivery damages:</b> milestone 4 certified 47 days late</span><span class="money">$2.1M</span><span class="conf">high</span><span class="lbl s">this month</span><span class="lbl s">charge letter</span></div>
+        <div class="qrow"><span class="lbl s">03</span><span><b>Unregistered exposure:</b> letter 14 May signals a claim to come</span><span class="money">$3.3M</span><span class="conf mid">medium</span><span class="lbl s">6 d to respond</span><span class="lbl s">holding reply</span></div>
+        <div class="qrow"><span class="lbl s">04</span><span><b>Back-charge:</b> owner-supplied crane used on other scope, 22 shifts</span><span class="money">$0.4M</span><span class="conf mid">medium</span><span class="lbl s">no deadline</span><span class="lbl s">back-charge note</span></div>
+        <div class="qrow"><span class="lbl s">05</span><span><b>Watch:</b> access to area 7 disputed in 3 daily reports this week</span><span class="lbl s">not sized yet</span><span class="conf low">low</span><span class="lbl s">watching</span><span class="lbl s">none yet</span></div>
+      </div>
+    </div>
+    <div class="cols" style="margin-top:14px">
+      <div class="col"><p class="note">Ranked by money, not by date received. The queue is the product's opinion about what matters, and it has to be right or the manager goes back to their own spreadsheet.</p></div>
+      <div class="col"><p class="note g">Low-confidence items are shown as "watching", never as findings. Being visibly unsure is how the agent keeps the right to be trusted on the high-confidence ones.</p></div>
+      <div class="col"><p class="note d">Everything on this screen is reversible. Nothing has left the building yet.</p></div>
+    </div>
+  </div>
+  <div class="foot"><span>Product 1 · screen 3</span><span>the queue</span></div>
+</section>
+
+<!-- 9 P1 S4 OPEN -->
+<section class="slide">
+  <div class="kicker p1">Product 1 · screen 4 · Faisal Al-Harbi</div>
+  <h2>Open one item: the evidence, then the arithmetic</h2>
+  <div class="body">
+    <div class="cols">
+      <div class="col" style="flex:1.25">
+        <div class="wf">
+          <div class="wf-bar"><b>Item 01</b> · Claim 07 rebuttal · $18.0M · high confidence</div>
+          <div class="wf-body">
+            <div class="row"><span class="lbl" style="color:var(--txt)">What the contractor says</span></div>
+            <div class="lbl s">$40.2M and 96 days, six events, submitted 3 August</div>
+            <div class="row" style="margin-top:6px"><span class="lbl" style="color:var(--txt)">What the record says</span></div>
+            <div class="lbl s">Event 2 · notice sent 41 days after the event · contract requires 28 &nbsp;<span class="chip r">late</span></div>
+            <div class="lbl s">Event 4 · no notice found in the record at all &nbsp;<span class="chip r">missing</span></div>
+            <div class="lbl s">Event 5 · notice sent to the wrong recipient under clause 4.12 &nbsp;<span class="chip a">defective</span></div>
+            <div class="lbl s">Events 1, 3, 6 · properly notified &nbsp;<span class="chip g">valid</span></div>
+            <div class="row" style="margin-top:6px"><span class="lbl" style="color:var(--txt)">Evidence chain</span><span class="lbl s">41 documents · every line clicks to a page</span></div>
+            <div class="ph w70"></div><div class="ph w50"></div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="wf">
+          <div class="wf-bar"><b>How the money was estimated</b></div>
+          <div class="wf-body">
+            <div class="row"><span class="lbl">Claimed</span><span class="money" style="margin-left:auto">$40.2M</span></div>
+            <div class="row"><span class="lbl">Events barred by their own late notice</span><span class="money" style="margin-left:auto">-$12.4M</span></div>
+            <div class="row"><span class="lbl">Quantum unsupported by the record</span><span class="money" style="margin-left:auto">-$5.6M</span></div>
+            <div class="ph w100" style="height:1px;background:#232e42"></div>
+            <div class="row"><span class="lbl" style="color:var(--txt)">Defensible position</span><span class="money lg" style="margin-left:auto">$18.0M</span></div>
+            <div class="row"><span class="lbl s">kept, if the rebuttal holds</span></div>
+            <div class="row" style="margin-top:6px"><span class="lbl s">If you do nothing: comparable settlements land near $22M, on their evidence, not yours</span></div>
+          </div>
+        </div>
+        <p class="note">The estimate is shown as arithmetic, not a score. A commercial manager will sign their name under a subtraction they can follow. They won't sign under a confidence percentage.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>Product 1 · screen 4</span><span>evidence and ROI</span></div>
+</section>
+
+<!-- 10 P1 S5-6 DECIDE + DRAFT -->
+<section class="slide">
+  <div class="kicker p1">Product 1 · screens 5 and 6 · Faisal Al-Harbi</div>
+  <h2>The human decides, the agent drafts, the human sends</h2>
+  <div class="body">
+    <div class="cols">
+      <div class="col">
+        <div class="wf">
+          <div class="wf-bar"><b>Decision</b> · item 01</div>
+          <div class="wf-body">
+            <div class="row"><span class="btn pri">Approve the position</span><span class="btn">Edit the position</span><span class="btn dan">Reject</span></div>
+            <div class="row" style="margin-top:4px"><span class="lbl s">Reject reason (one click, it trains the next version)</span></div>
+            <div class="lbl s">· the event is commercially settled elsewhere</div>
+            <div class="lbl s">· wrong contract clause</div>
+            <div class="lbl s">· evidence is thinner than it looks</div>
+            <div class="lbl s">· right finding, wrong time to use it</div>
+            <div class="row" style="margin-top:6px"><span class="lbl">Route to</span><span class="lbl s">legal review &nbsp;·&nbsp; project director sign-off &nbsp;·&nbsp; send myself</span></div>
+          </div>
+        </div>
+        <p class="note">"Right finding, wrong time to use it" is the most important reject reason in the product. It's the difference between a tool that learns commercial judgement and one that gets switched off.</p>
+      </div>
+      <div class="col" style="flex:1.15">
+        <div class="wf">
+          <div class="wf-bar"><b>Drafted rebuttal</b> · ready for a person to send</div>
+          <div class="wf-body">
+            <div class="lbl s">To: contractor commercial manager · Ref: Claim 07 · Clause 4.12 and 8.4</div>
+            <div class="ph w100"></div><div class="ph w100"></div><div class="ph w70"></div>
+            <div class="row"><span class="lbl s">para 3 cites</span><span class="lbl s" style="color:var(--accent)">letter CX-2214, 12 Feb, p.2</span></div>
+            <div class="ph w100"></div><div class="ph w60"></div>
+            <div class="row"><span class="lbl s">annex A</span><span class="lbl s" style="color:var(--accent)">notice timeline, 6 events, 41 sources</span></div>
+            <div class="row" style="margin-top:6px"><span class="btn pri">Send from my mailbox</span><span class="btn">Export as letter</span><span class="btn">Add to claim file</span></div>
+            <div class="row"><span class="lbl s">The agent has no send permission. It never has.</span></div>
+          </div>
+        </div>
+        <p class="note g">This is the trust hinge of the whole business. The agent's output is a draft in the owner's own voice, cited, in their own mailbox. Nothing reaches the contractor without a person's hand on it.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>Product 1 · screens 5 and 6</span><span>decide and draft</span></div>
+</section>
+
+<!-- 11 P1 S7-8 TRACK + REPORT -->
+<section class="slide">
+  <div class="kicker p1">Product 1 · screens 7 and 8 · Faisal Al-Harbi</div>
+  <h2>Then it closes the loop, and writes the month-end brief on demand</h2>
+  <div class="body">
+    <div class="cols">
+      <div class="col">
+        <div class="wf">
+          <div class="wf-bar"><b>Outcome log</b> · what actually happened</div>
+          <div class="queue">
+            <div class="qrow head" style="grid-template-columns:1fr 90px 90px 110px"><span>Position taken</span><span>We said</span><span>Settled at</span><span>Agent was</span></div>
+            <div class="qrow" style="grid-template-columns:1fr 90px 90px 110px"><span>Claim 05, access delay</span><span class="money">$6.0M</span><span class="money">$6.4M</span><span class="conf">close</span></div>
+            <div class="qrow" style="grid-template-columns:1fr 90px 90px 110px"><span>Claim 07, six events</span><span class="money">$18.0M</span><span class="lbl s">open</span><span class="lbl s">pending</span></div>
+            <div class="qrow" style="grid-template-columns:1fr 90px 90px 110px"><span>Damages, milestone 4</span><span class="money">$2.1M</span><span class="money">$2.1M</span><span class="conf">exact</span></div>
+            <div class="qrow" style="grid-template-columns:1fr 90px 90px 110px"><span>Back-charge, crane</span><span class="money">$0.4M</span><span class="money">$0.1M</span><span class="conf mid">over-read</span></div>
+          </div>
+        </div>
+        <p class="note">This log is the pilot's scorecard and the product's memory at the same time. Money kept, versus what the agent predicted, is the only number the customer should judge us on.</p>
+      </div>
+      <div class="col">
+        <div class="wf">
+          <div class="wf-bar"><b>Month-end brief</b> · rendered on demand · not saved</div>
+          <div class="wf-body">
+            <div class="lbl s" style="color:var(--amber)">RENDERED NOW · THROWN AWAY AFTER YOU READ IT</div>
+            <div class="row"><span class="lbl">Commercial position this month</span></div>
+            <div class="ph w100"></div><div class="ph w60"></div>
+            <div class="row"><span class="lbl">Money kept to date</span><span class="money" style="margin-left:auto">$8.6M</span></div>
+            <div class="row"><span class="lbl">Recovered to date</span><span class="money" style="margin-left:auto">$2.2M</span></div>
+            <div class="row"><span class="lbl">Open positions</span><span class="money" style="margin-left:auto">$21.3M</span></div>
+            <div class="row"><span class="lbl">Deadlines in the next 30 days</span><span class="lbl s" style="margin-left:auto">4</span></div>
+            <div class="row" style="margin-top:6px"><span class="btn">Render for the project director instead</span></div>
+          </div>
+        </div>
+        <p class="note">No stored report, no dashboard to maintain, no version anyone can quote back at you. The brief is generated from the record when someone asks, in the shape that person needs, and then it's gone.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>Product 1 · screens 7 and 8</span><span>outcome and reporting</span></div>
+</section>
+
+<!-- 12 P1 ALTERNATES -->
+<section class="slide">
+  <div class="kicker p1">Product 1 · the alternates · Faisal Al-Harbi</div>
+  <h2>Three journeys were on the table. We picked the one with the clock in it.</h2>
+  <div class="body">
+    <table>
+      <tr><th>Candidate journey</th><th>What it feels like</th><th>Value</th><th>Effort to adopt</th><th>Why not / why yes</th></tr>
+      <tr class="win"><td><b>A · Always-on money queue</b><br><span class="lbl s">chosen</span></td><td>Agent watches the record daily. Morning digest, 20-minute review, drafts on approval.</td><td><b>Highest.</b> Catches deadlines and recovery, not just defence.</td><td>Low. Read-only files, email surface, no new habit.</td><td><b>Chosen.</b> Only version that can save a 28-day notice window, and the only one that finds the owner's own recovery.</td></tr>
+      <tr><td><b>B · Claim-triggered war room</b></td><td>Sleeps until a claim arrives, then assembles a rebuttal pack in 48 hours.</td><td>Medium. Defence only. Misses deadlines and back-charges entirely.</td><td>Lowest. Nothing to look at until you need it.</td><td>Kept as the <b>way in</b>, not the product: it's the perfect first demo on a closed claim, and it's how a sceptical team tries us without committing.</td></tr>
+      <tr><td><b>C · Monthly commercial report co-pilot</b></td><td>Folds into the existing month-end reporting cycle and writes the commercial section.</td><td>Low. Inherits the exact monthly lateness that causes the problem.</td><td>Lowest, culturally. It's a habit they already have.</td><td>Rejected as the journey, kept as an <b>output</b> (screen 8). Automating the monthly cycle makes the report cheaper, not the project better.</td></tr>
+    </table>
+    <p class="note" style="margin-top:14px">The test we used: does the journey change the outcome, or only the reporting of it? B and C are both easier to sell and neither moves money. A is the one where the product's cadence matches the problem's cadence.</p>
+  </div>
+  <div class="foot"><span>Product 1</span><span>candidate journeys, one prioritised</span></div>
+</section>
+
+<!-- 13 P2 OVERVIEW -->
+<section class="slide">
+  <div class="kicker p2">Product 2 · design feasibility · Priya Raghavan</div>
+  <h2>The chosen journey: a check that runs on the revision you were issuing anyway</h2>
+  <p class="sub">Persona: Priya Raghavan, the owner's design and engineering manager on Jebel Nasr Train 4. Her job is to issue drawings that are legal, affordable and buildable, before mistakes harden into rework in the field.</p>
+  <div class="body">
+    <div class="steps">
+      <div class="s"><b>0 · SET RULES</b><p>Which code edition, which budget ceilings. Once, at project start.</p></div>
+      <div class="s"><b>1 · DROP</b><p>A revision lands in the folder they already use. No new step.</p></div>
+      <div class="s"><b>2 · CHECK</b><p>Legal, affordable, buildable. Minutes, not weeks.</p></div>
+      <div class="s"><b>3 · READ</b><p>A cited pass and fail list, worst first, with the money attached.</p></div>
+      <div class="s"><b>4 · ARGUE</b><p>Open a finding, see the clause and the drawing region, accept or dispute.</p></div>
+      <div class="s"><b>5 · ISSUE</b><p>Issue the revision with a clean sheet, or issue with known exceptions on the record.</p></div>
+    </div>
+    <p class="note" style="margin-top:18px">This is the lowest-effort product of the three, and that's why it ships alongside Product 1. It attaches to an action the designer already performs, so adoption doesn't need a behaviour change, a login habit or a champion.</p>
+    <p class="note g">The demand signal isn't a survey, it's a regulator: Dubai Municipality is building automatic permit issue by reading submitted drawings against the building code. When the check becomes automatic on the outside, arriving pre-checked stops being optional.</p>
+  </div>
+  <div class="foot"><span>Product 2</span><span>journey overview · 6 screens follow</span></div>
+</section>
+
+<!-- 14 P2 CHECK -->
+<section class="slide">
+  <div class="kicker p2">Product 2 · screens 1 to 3 · Priya Raghavan</div>
+  <h2>Drop a revision, get a cited verdict in minutes</h2>
+  <div class="body">
+    <div class="cols">
+      <div class="col">
+        <div class="wf">
+          <div class="wf-bar"><b>Revision received</b> · watched folder · Priya Raghavan</div>
+          <div class="wf-body">
+            <div class="row"><span class="lbl" style="width:120px">Package</span><span class="lbl s">Jebel Nasr Train 4 · process area · A-207 rev C</span></div>
+            <div class="row"><span class="lbl" style="width:120px">Issued</span><span class="lbl s">12 June 2026 · existing transmittal folder</span></div>
+            <div class="row"><span class="lbl" style="width:120px">Checking against</span><span class="lbl s">Saudi Building Code · approved budget ceiling · P6 long-lead order</span></div>
+            <div class="row"><span class="lbl" style="width:120px">Status</span><span class="conf">complete · 4 minutes</span></div>
+            <div class="row"><span class="lbl s">No new step for Priya: the revision landed where it always lands.</span></div>
+          </div>
+        </div>
+        <p class="note">Priya accepts the legal finding, disputes the affordable finding as "already waived by the authority", and issues A-207 rev C with the exception recorded. The dispute becomes a labelled error to report.</p>
+      </div>
+      <div class="col" style="flex:1.3">
+        <div class="wf">
+          <div class="wf-bar"><b>Verdict</b> · 3 checks · worst first</div>
+          <div class="queue">
+            <div class="qrow head" style="grid-template-columns:74px 1fr 92px 84px"><span>Check</span><span>Finding</span><span>If it reaches the field</span><span>Confidence</span></div>
+            <div class="qrow" style="grid-template-columns:74px 1fr 92px 84px"><span class="chip r">legal</span><span><b>Fire separation</b> is 1.2 m short. Saudi Building Code clause 7.4.2, quoted verbatim with page and drawing region.</span><span class="lbl s">cited</span><span class="conf">high</span></div>
+            <div class="qrow" style="grid-template-columns:74px 1fr 92px 84px"><span class="chip a">affordable</span><span><b>Change cost</b> is $6.8M against $4.1M of remaining design allowance.</span><span class="money">$6.8M</span><span class="conf">high</span></div>
+            <div class="qrow" style="grid-template-columns:74px 1fr 92px 84px"><span class="chip a">buildable</span><span><b>132 kV transformer</b> move adds 14 weeks to a long-lead order already on the critical path.</span><span class="lbl s">14 weeks</span><span class="conf">high</span></div>
+          </div>
+        </div>
+        <p class="note">"If it reaches the field" is the only column a director reads. It's the same finding an engineer would report, priced. An error costs about ten times more once it's being built, and a hundred times more after handover.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>Product 2 · screens 1 to 3</span><span>check and verdict</span></div>
+</section>
+
+<!-- 15 P2 ARGUE -->
+<section class="slide">
+  <div class="kicker p2">Product 2 · screens 4 and 5 · Priya Raghavan</div>
+  <h2>Open the finding: the clause, the drawing, and a way to disagree</h2>
+  <div class="body">
+    <div class="cols">
+      <div class="col" style="flex:1.2">
+        <div class="wf">
+          <div class="wf-bar"><b>Finding 01</b> · fire separation · code clause 7.4.2</div>
+          <div class="wf-body">
+            <div class="row">
+              <div class="wf" style="flex:1;border-style:solid;border-color:#232e42">
+                <div class="wf-bar">drawing region · sheet A-207 Rev C</div>
+                <div class="wf-body" style="height:104px;position:relative">
+                  <div class="ph w60"></div><div class="ph w40"></div>
+                  <div style="position:absolute;right:16px;top:14px;width:96px;height:56px;border:2px solid var(--red);border-radius:4px"></div>
+                  <div class="lbl s" style="position:absolute;right:16px;top:74px;color:var(--red)">1.2 m short here</div>
+                </div>
+              </div>
+              <div class="wf" style="flex:1;border-style:solid;border-color:#232e42">
+                <div class="wf-bar">code text · quoted, not paraphrased</div>
+                <div class="wf-body" style="height:104px">
+                  <div class="lbl s">"...separation between the protected stair and the adjacent process area shall be not less than..."</div>
+                  <div class="lbl s" style="color:var(--accent)">clause 7.4.2 · current edition · p.318</div>
+                </div>
+              </div>
+            </div>
+            <div class="row" style="margin-top:4px"><span class="btn pri">Accept, send to the design team</span><span class="btn">Dispute this finding</span><span class="btn">Accept with a waiver on record</span></div>
+            <div class="row"><span class="lbl s">Dispute reasons: wrong code edition · not applicable to this occupancy · already waived by the authority · misread the drawing</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <h3>Advisory, never blocking</h3>
+          <p>The check can't stop a revision being issued. An engineer who's been overruled by a machine once will find a way around it forever, so the product argues its case and then gets out of the way.</p>
+        </div>
+        <div class="card" style="margin-top:12px">
+          <h3>Disputes are the training data</h3>
+          <p>Every dispute reason is a labelled error. Wrong code edition and misread drawing are engineering bugs. Not applicable and already waived are missing context we should have had. Both get fixed, and we report the rate.</p>
+        </div>
+        <p class="note">The sacrifice here is professional, not commercial: a machine is marking an engineer's work inside the engineer's own workflow. Quoting the clause verbatim and making disagreement one click is how you make that bearable.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>Product 2 · screens 4 and 5</span><span>argue and issue</span></div>
+</section>
+
+<!-- 16 P2 ALTERNATES -->
+<section class="slide">
+  <div class="kicker p2">Product 2 · the alternates · Priya Raghavan</div>
+  <h2>Two other journeys, both easier to sell, both weaker</h2>
+  <div class="body">
+    <table>
+      <tr><th>Candidate journey</th><th>What it feels like</th><th>Value</th><th>Effort to adopt</th><th>Why not / why yes</th></tr>
+      <tr class="win"><td><b>A · Revision gate</b><br><span class="lbl s">chosen</span></td><td>Every revision is checked as it's issued. Cited verdict in minutes.</td><td><b>Highest.</b> Catches the error at the cheapest possible moment, every single round.</td><td>Lowest. Attaches to the file drop that already happens.</td><td><b>Chosen.</b> Cadence matches the problem: errors are created revision by revision, so the check has to live there.</td></tr>
+      <tr><td><b>B · Pre-permit sweep</b></td><td>One big check before submitting to the authority.</td><td>Medium. Prevents permit delay, but the errors have already been designed in and paid for.</td><td>Low. One event, one owner, easy to schedule.</td><td>Kept as a <b>packaged milestone</b> inside A. It's the easiest thing to price and the easiest first sale, so it's the pilot's headline, not the product.</td></tr>
+      <tr><td><b>C · Design-to-budget watch</b></td><td>Tracks cost drift across revisions and reports to the cost engineer.</td><td>Medium, but it's a reporting product. Tells you the money moved, after it moved.</td><td>Medium. Needs budget ceilings broken down further than most projects hold them.</td><td>Folded into A as the "affordable" check. On its own it's a dashboard, and dashboards decay.</td></tr>
+    </table>
+    <p class="note" style="margin-top:14px">Same test as Product 1: does the journey change the outcome or only the reporting? Only A gets in front of the mistake.</p>
+  </div>
+  <div class="foot"><span>Product 2</span><span>candidate journeys, one prioritised</span></div>
+</section>
+
+<!-- 17 P3 -->
+<section class="slide">
+  <div class="kicker p3">Product 3 · approval red team (later) · Tom Beckett and Layla Haddad</div>
+  <h2>Tom and Layla run the journey backwards first, on purpose</h2>
+  <div class="body">
+    <div class="cols">
+      <div class="col">
+        <div class="wf">
+          <div class="wf-bar"><b>Step 1 · the retrospective</b> · trust-builder, no sale attached</div>
+          <div class="wf-body">
+            <div class="row"><span class="lbl" style="color:var(--txt)">"Here are the questions we'd have raised before Train 5 went to the investment committee."</span></div>
+            <div class="lbl s">· the $6.1bn estimate and 8% contingency compared with the owner's history</div>
+            <div class="lbl s">· definition gaps found by running backwards on 14 finished owner projects</div>
+            <div class="lbl s">· nine evidence-backed questions, not a recommendation</div>
+            <div class="row" style="margin-top:4px"><span class="lbl s">Every question checked against what then happened on the finished projects.</span></div>
+          </div>
+        </div>
+        <p class="note">Run it on a finished project first, where nobody's decision is under attack. This is the only way to introduce a product whose message is "your number is wrong".</p>
+      </div>
+      <div class="col">
+        <div class="wf">
+          <div class="wf-bar"><b>Step 2 · the private pre-read</b> · sponsor only</div>
+          <div class="wf-body">
+            <div class="row"><span class="lbl">Reference history</span><span class="lbl s" style="margin-left:auto">14 finished owner projects</span></div>
+            <div class="row"><span class="lbl">This gate</span><span class="lbl s" style="margin-left:auto">Train 5 · $6.1bn estimate</span></div>
+            <div class="row"><span class="lbl">Contingency</span><span class="lbl s" style="margin-left:auto">8%</span></div>
+            <div class="row"><span class="lbl">Challenge book</span><span class="lbl s" style="margin-left:auto">9 questions with evidence</span></div>
+            <div class="row"><span class="btn pri" style="margin-top:6px">Turn into the gate challenge book</span><span class="btn">Keep private</span></div>
+          </div>
+        </div>
+        <div class="wf" style="margin-top:12px">
+          <div class="wf-bar"><b>Step 3 · the gate meeting</b></div>
+          <div class="wf-body"><div class="lbl s">The challenge book goes into the room as the sponsor's own questions, with sources. The agent is never in the room, and never has a vote.</div></div>
+        </div>
+        <p class="note">Why it's third: it needs the owner's own portfolio history, and it lands an unwelcome message at the highest-stakes moment on the project. Products 1 and 2 buy the data access and the trust that make this sale possible.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>Product 3</span><span>enabled after 1 and 2 succeed</span></div>
+</section>
+
+<!-- 18 ENG OVERVIEW -->
+<section class="slide">
+  <div class="kicker eng">The engineering flow</div>
+  <h2>One reading layer, nine steps, three products on top</h2>
+  <div class="body">
+<pre class="diagram">
+ <b>FILES THE OWNER ALREADY HAS</b>
+ contract · letters &amp; minutes · schedule updates · site reports · drawings · code editions · cost ceilings
+        |
+   <i>1 READ AND FILE</i>        every page split, dated, attributed to a party, tagged to a drawing or an activity
+        |
+   <i>2 BUILD THE RECORD</i>     one linked timeline: events, obligations, revisions, deadlines, quantities
+        |
+   <i>3 APPLY THE RULES</i>      deadline maths · damages · code clauses · cost bounds        <b>[ code, not the model ]</b>
+        |
+   <i>4 REASON OVER IT</i>       "does this event trigger this clause?"                       <b>[ the model, with citations ]</b>
+                             "does this revision close last round's comments?"
+        |
+   <i>5 SIZE THE MONEY</i>       value at stake · confidence · what happens if you do nothing
+        |
+   <i>6 SHOW YOUR WORKING</i>    no citation, no finding. Uncited claims are dropped, not softened
+        |
+   <i>7 A HUMAN DECIDES</i>      approve · edit · reject, on a queue ranked by money
+        |
+   <i>8 DRAFT THE ACTION</i>     the letter · the rebuttal pack · the verdict list · the challenge book
+        |
+   <i>9 LEARN FROM OUTCOMES</i>  what was approved, what was rejected, what it settled at        -> back into 4 and 5
+</pre>
+    <div class="cols" style="margin-top:12px">
+      <div class="col"><p class="note">The split at steps 3 and 4 is the whole engineering thesis. Anything that ends up as a number in a letter is computed in code, so it's reproducible and arguable. The model reads, links and proposes.</p></div>
+      <div class="col"><p class="note g">Products 2 and 3 reuse steps 1, 2, 6, 7, 8 and 9 unchanged. That's why the second product costs a fraction of the first, and why the roadmap items later are weeks of work, not years.</p></div>
+    </div>
+  </div>
+  <div class="foot"><span>Engineering flow</span><span>overview · steps detailed next</span></div>
+</section>
+
+<!-- 19 P1 AGENTIC FLOW -->
+<section class="slide">
+  <div class="kicker eng">Engineering flow · Product 1</div>
+  <h2>How Product 1 works, end to end</h2>
+  <div class="body">
+<pre class="diagram">
+INPUT                        PROCESSING                          ACTION                     DETERMINISTIC OR AGENTIC
+contract + 14 amendments  →  parse, split by clause      [code]
+                             extract obligations,
+                             notice windows, recipients  [model]
+                                    ↓
+letters, notices,         →  classify document type      [model]   →  link to the timeline    deterministic write
+minutes (11,482)             extract dates, parties,               [code]                     (a link, not an opinion)
+                             the event referred to       [model]
+                                    ↓
+daily site reports        →  extract event facts:        [model]
+(3,140)                      what stopped, where, when
+                                    ↓
+P6 update (.xer)          →  read dates and float        [code]
+                                    ↓
+                             ONE PROJECT RECORD: events, obligations, deadlines, documents
+                                    ↓
+                             notice window test          [code]   →  event valid / barred      deterministic, always
+                             damages calculation         [code]   →  47 days x $45k = $2.1M    deterministic, always
+                             quantum bounds              [code]   →  supported / unsupported   deterministic, always
+                                    ↓
+                             build the position          [model]  →  a ranked finding with     agentic proposal,
+                             (event to clause mapping,               a money number and an     never an action
+                             evidence selection)                     evidence chain
+                                    ↓
+                             citation check              [code]   →  no citation, no finding   deterministic veto
+                                    ↓
+                             HUMAN REVIEW               [human]   →  approve / edit / reject   the only gate that
+                                                                                               releases anything
+                                    ↓
+                             draft the notice or         [model]  →  a document in the         agentic drafting,
+                             rebuttal                                owner's own template      zero send authority
+                                    ↓
+                             send                       [human]   →  a person presses send     never the agent
+                                    ↓
+                             record the outcome          [code]   →  settled at what number,   deterministic learning
+                                                                     which findings held        signal
+</pre>
+    <p class="note">The agent is autonomous about reading, linking, calculating and proposing. It has no autonomy over anything that leaves the building.</p>
+  </div>
+  <div class="foot"><span>Engineering flow · Product 1</span><span>agentic workflow</span></div>
+</section>
+
+<!-- 20 P2 AGENTIC FLOW -->
+<section class="slide">
+  <div class="kicker eng">Engineering flow · Product 2</div>
+  <h2>How Product 2 works, end to end</h2>
+  <div class="body">
+<pre class="diagram">
+INPUT                        PROCESSING                          ACTION                     DETERMINISTIC OR AGENTIC
+code edition, pinned      →  index clauses, keep the     [code]
+by Priya on day one          page and the exact text
+budget ceiling, pinned    →  store as a number           [code]
+                                    ↓
+drawing / document        →  detect the revision,        [code]   →  start a check run        deterministic trigger
+revision (A-207 rev C)       diff against rev B                                              (no human asked for it)
+                             read geometry, labels,      [model]
+                             specified materials
+                                    ↓
+                             LEGAL     clause retrieval  [code]
+                                       clause-to-drawing [model]  →  finding, clause quoted   agentic proposal
+                                       comparison                    verbatim + drawing region
+                             AFFORDABLE cost delta       [code]   →  $6.8M vs $4.1M left      deterministic
+                             BUILDABLE  clash geometry   [code]
+                                        long-lead dates  [code]   →  14 weeks on a critical   deterministic
+                                                                     path order
+                                    ↓
+                             citation check              [code]   →  no clause text, no       deterministic veto
+                                                                     finding
+                                    ↓
+                             HUMAN VERDICT              [human]   →  accept / dispute /       advisory, never blocking:
+                                                                     accept with a waiver     the revision can always
+                                                                                              be issued
+                                    ↓
+                             record the dispute reason   [code]   →  a labelled error         deterministic learning
+                                                                                              signal
+</pre>
+    <p class="note">The check is advisory, never blocking. Priya can issue the revision, including a recorded exception.</p>
+  </div>
+  <div class="foot"><span>Engineering flow · Product 2</span><span>agentic workflow</span></div>
+</section>
+
+<!-- 21 P3 AGENTIC FLOW -->
+<section class="slide">
+  <div class="kicker eng">Engineering flow · Product 3</div>
+  <h2>How Product 3 works, end to end</h2>
+  <div class="body">
+<pre class="diagram">
+INPUT                        PROCESSING                          ACTION                     DETERMINISTIC OR AGENTIC
+14 finished owner         →  extract sanctioned vs       [model]
+projects                     final cost and date         [code]
+                                    ↓
+                             REFERENCE CLASS: median growth, spread   [code]
+                                    ↓
+this gate's estimate,     →  definition completeness     [model]  →  what is missing from     agentic proposal
+basis of estimate,           audit against the owner's                the definition at this
+schedule, contingency        own gate standard                        gate
+                             contingency vs the          [code]   →  8% asked, 23% median     deterministic
+                             reference class                          historical growth
+                                    ↓
+                             citation check              [code]   →  every number traced to   deterministic veto
+                                                                     a source document
+                                    ↓
+                             PRIVATE PRE-READ to the     [human]  →  the estimator sees it    no surprise in the room
+                             estimator and sponsor                    first and can respond
+                             challenge book: nine        [model]  →  questions, not a         the agent never votes
+                             questions with evidence                 recommendation
+</pre>
+    <p class="note">This runs later, once per gate. The agent asks nine questions and casts no vote.</p>
+  </div>
+  <div class="foot"><span>Engineering flow · Product 3</span><span>agentic workflow</span></div>
+</section>
+
+<!-- 19 ENG STEPS 1-3 -->
+<section class="slide">
+  <div class="kicker eng">Engineering flow · steps 1 to 3</div>
+  <h2>From a folder of PDFs to arithmetic you can argue with</h2>
+  <div class="body">
+    <div class="io">
+      <div class="box"><b>IN</b><br>letter CX-2214.pdf, 3 pages, scanned<br>daily reports, 30 files, mixed formats<br>schedule update, monthly file<br>contract, 1,400 pages, 14 amendments</div>
+      <div class="mid">1 &rarr;</div>
+      <div class="box"><b>OUT</b><br>page-level text with a source anchor each<br>date · author · recipient · party<br>tagged to activity, drawing or tag<br>clause library with the amendments applied</div>
+    </div>
+    <div class="io">
+      <div class="box"><b>IN</b><br>those tagged pages</div>
+      <div class="mid">2 &rarr;</div>
+      <div class="box"><b>OUT</b><br>an <b>event</b>: access to area 7 denied, 12 Feb, evidenced by 3 documents<br>an <b>obligation</b>: notice within 28 days, clause 4.12<br>a <b>link</b>: event -&gt; obligation -&gt; activity -&gt; money</div>
+    </div>
+    <div class="io">
+      <div class="box"><b>IN</b><br>event date 12 Feb · notice sent 25 Mar · clause window 28 days<br>milestone certified 47 days late · damages rate per day · cap</div>
+      <div class="mid">3 &rarr;</div>
+      <div class="box"><b>OUT</b><br>"notice was 13 days late, the bar applies" <span class="lbl s">(computed)</span><br>"$2.1M chargeable, under the 10% cap" <span class="lbl s">(computed)</span></div>
+    </div>
+    <p class="note">Step 3 never asks the model for a number. Dates, day counts, rates and caps are arithmetic, and arithmetic in a letter has to be reproducible by the person signing it.</p>
+  </div>
+  <div class="foot"><span>Engineering flow</span><span>read · record · rules</span></div>
+</section>
+
+<!-- 20 ENG STEPS 4-6 -->
+<section class="slide">
+  <div class="kicker eng">Engineering flow · steps 4 to 6</div>
+  <h2>Where the model reasons, and where it's kept on a leash</h2>
+  <div class="body">
+    <div class="io">
+      <div class="box"><b>IN</b><br>the event, the clause text, the linked documents, the schedule position</div>
+      <div class="mid">4 &rarr;</div>
+      <div class="box"><b>OUT</b><br>a proposed finding, in the shape of a claim a lawyer would recognise:<br><b>what happened · which obligation · who owes whom · the evidence list</b></div>
+    </div>
+    <div class="io">
+      <div class="box"><b>IN</b><br>the finding · comparable settlements · the quantum in the record</div>
+      <div class="mid">5 &rarr;</div>
+      <div class="box"><b>OUT</b><br>value at stake, as a subtraction the manager can follow<br>confidence, from evidence coverage and rule certainty, not vibes<br>the cost of doing nothing</div>
+    </div>
+    <div class="io">
+      <div class="box"><b>IN</b><br>the finding and every sentence in it</div>
+      <div class="mid">6 &rarr;</div>
+      <div class="box"><b>OUT</b><br>every sentence carries a source anchor, or it's deleted<br>a finding with no evidence chain never reaches a human<br>low-confidence items are labelled "watching", not "found"</div>
+    </div>
+    <div class="cols" style="margin-top:10px">
+      <div class="col"><p class="note">Three failures we design against by name: inventing a document, citing a real document that says something else, and being confidently wrong about a date. The first two are caught at step 6, the third can't happen because step 3 owns the dates.</p></div>
+      <div class="col"><p class="note d">Cost control: cheap models read and tag at volume, the expensive reasoning runs only on candidate events. Cost per document read is a tracked metric, because a product that reads everything daily has to be cheap to run.</p></div>
+    </div>
+  </div>
+  <div class="foot"><span>Engineering flow</span><span>reason · size · cite</span></div>
+</section>
+
+<!-- 21 ENG EVALS -->
+<section class="slide">
+  <div class="kicker eng">Engineering flow · how we know it works</div>
+  <h2>Nothing ships without a score on closed projects</h2>
+  <div class="body">
+    <div class="cols">
+      <div class="col">
+        <div class="wf">
+          <div class="wf-bar"><b>Eval set</b> · built from finished projects, where the answer is known</div>
+          <div class="wf-body">
+            <div class="row"><span class="lbl" style="width:210px">Events a specialist found</span><span class="lbl s">did we find them? <span class="conf">recall</span></span></div>
+            <div class="row"><span class="lbl" style="width:210px">Events we found that they didn't</span><span class="lbl s">checked by hand, one by one</span></div>
+            <div class="row"><span class="lbl" style="width:210px">Invented facts in cited claims</span><span class="lbl s" style="color:var(--red)">zero tolerance, release blocker</span></div>
+            <div class="row"><span class="lbl" style="width:210px">Deadline and damages maths</span><span class="lbl s">exact match required</span></div>
+            <div class="row"><span class="lbl" style="width:210px">Clause mapped correctly</span><span class="lbl s">scored against the specialist's mapping</span></div>
+            <div class="row"><span class="lbl" style="width:210px">Cost per document read</span><span class="lbl s">tracked per release</span></div>
+          </div>
+        </div>
+        <p class="note">"It found what our commercial team found, plus one thing they missed, all cited" is the pilot's success test. It's also the eval, which is the point: the demo and the test are the same artefact.</p>
+      </div>
+      <div class="col">
+        <div class="card">
+          <h3>Learning, but governed</h3>
+          <p>Rejections and disputes are labelled data. They tune ranking, thresholds and clause mapping. They never silently change what the rules layer computes, and no customer's material trains anything shared.</p>
+        </div>
+        <div class="card" style="margin-top:12px">
+          <h3>Deployment constraints, treated as features</h3>
+          <p>In-region private cloud from day one. No training on customer data. A read audit trail showing every document the agent opened and why. Cyber certification and local-content requirements sit on the roadmap, not in a compliance annex at the end.</p>
+        </div>
+        <div class="card" style="margin-top:12px">
+          <h3>The counter-metric</h3>
+          <p>How often a manager overrides the agent, and whether that falls over time. Usage can be flattered. Override rate can't.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>Engineering flow</span><span>evals and governance</span></div>
+</section>
+
+<!-- 22 ADOPTION -->
+<section class="slide">
+  <div class="kicker">The adoption promise</div>
+  <h2>Six rules that make this the cheapest thing a project team ever adopted</h2>
+  <div class="body">
+    <div class="cols">
+      <div class="col">
+        <div class="card"><h3>1 · Their own files, read-only</h3><p>No migration, no new system of record, no agreement about coding structures. If it needs a data project first, we've already lost.</p></div>
+        <div class="card" style="margin-top:12px"><h3>2 · No new habit</h3><p>Product 1 arrives in the inbox. Product 2 hooks the file drop. Product 3 shows up as the sponsor's own pre-read.</p></div>
+        <div class="card" style="margin-top:12px"><h3>3 · The agent never sends</h3><p>It drafts. A person presses send. Every time, in every product.</p></div>
+      </div>
+      <div class="col">
+        <div class="card"><h3>4 · Every line is clickable</h3><p>No assertion without a page in a real document behind it. Uncited findings are dropped, not softened.</p></div>
+        <div class="card" style="margin-top:12px"><h3>5 · Proof on history first</h3><p>Run on closed projects, show what it would have caught, then go near a live one.</p></div>
+        <div class="card" style="margin-top:12px"><h3>6 · Priced against one avoided loss</h3><p>Pilot small enough to sit inside one project team's own authority. The market's deal shape is a paid pilot, then a large multi-year contract.</p></div>
+      </div>
+    </div>
+    <p class="note" style="margin-top:14px">Each rule is a design constraint on every screen in this prototype, not a promise in a sales deck. If a screen breaks one of these rules, the screen is wrong.</p>
+  </div>
+  <div class="foot"><span>Asset Nova · journeys</span><span>the adoption promise</span></div>
+</section>
+
+<!-- 26 SUCCESS GATES -->
+<section class="slide">
+  <div class="kicker eng">Engineering flow · eval gates</div>
+  <h2>What success looks like for the agent</h2>
+  <div class="body">
+    <div class="cols">
+      <div class="col">
+        <div class="card">
+          <h3>Gate 0 · Reading is trustworthy</h3>
+          <table>
+            <tr><th>Measure</th><th>Pass mark</th></tr>
+            <tr><td>Documents read and correctly typed</td><td>98% or better</td></tr>
+            <tr><td>Dates extracted correctly</td><td>99.5% or better</td></tr>
+            <tr><td>Documents refused and queued for human</td><td>Reported, not hidden; under 5% of volume</td></tr>
+            <tr><td>Invented facts</td><td>Zero. Any occurrence blocks the gate</td></tr>
+          </table>
+        </div>
+        <div class="card" style="margin-top:12px">
+          <h3>Gate 1 · Findings are worth attention</h3>
+          <table>
+            <tr><th>Measure</th><th>Pass mark</th></tr>
+            <tr><td>Precision on findings shown as findings</td><td>85% or better</td></tr>
+            <tr><td>Recall against commercial team's closed-project findings</td><td>80% or better, and at least one material item they missed</td></tr>
+            <tr><td>Evidence chain accuracy</td><td>99.5% or better</td></tr>
+            <tr><td>Deadline arithmetic</td><td>100%</td></tr>
+            <tr><td>Low-confidence items shown as “watching”</td><td>100%</td></tr>
+          </table>
+          <p class="note">Stop rule: precision below 60% after eight weeks means return to Gate 0.</p>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <h3>Gate 2 · A human agrees, in practice</h3>
+          <table>
+            <tr><th>Measure</th><th>Pass mark</th></tr>
+            <tr><td>Findings actioned rather than only seen</td><td>80% or better</td></tr>
+            <tr><td>Drafts approved with minor edits or none</td><td>70% or better</td></tr>
+            <tr><td>Override rate</td><td>Falling week on week</td></tr>
+            <tr><td>Digest ignored two days running</td><td>Under 10% of weeks</td></tr>
+            <tr><td>Cost per document read</td><td>Under $0.05 blended</td></tr>
+          </table>
+          <p class="note">Stop rule: four straight weeks without review pauses the pilot.</p>
+        </div>
+        <div class="card" style="margin-top:12px">
+          <h3>Gate 3 · It changed the money</h3>
+          <table>
+            <tr><th>Measure</th><th>Pass mark</th></tr>
+            <tr><td>Exposures surfaced and countersigned</td><td>$20M or more per pilot project</td></tr>
+            <tr><td>Notice deadlines missed on covered scope</td><td>Zero</td></tr>
+            <tr><td>Money kept or recovered agreed before pilot</td><td>Beats pilot fee by 5x or better</td></tr>
+            <tr><td>Findings surviving to settlement</td><td>Reported honestly, including failures</td></tr>
+          </table>
+        </div>
+        <div class="card" style="margin-top:12px">
+          <h3>One number per product</h3>
+          <p><b>Product 1:</b> money kept or recovered per project, countersigned by customer.</p>
+          <p><b>Product 2:</b> share of flagged findings that would have become field changes, with dispute rate as honest counter-metric.</p>
+          <p><b>Product 3:</b> gate decisions changed, with estimator agreement that the question was fair.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>Engineering flow · eval gates</span><span>pass marks before scale</span></div>
+</section>
+
+<!-- 23 END -->
+<section class="slide">
+  <div class="kicker">What to look at next</div>
+  <h2>The journeys, and then the paperwork behind them</h2>
+  <div class="body">
+    <div class="cols">
+      <div class="col">
+        <div class="card">
+          <h3>In this repo</h3>
+          <p><b>outputs/asset-nova-round2-deck.md</b> and its slide deck: the ROI story, value decomposition and lifecycle fit.</p>
+          <p style="margin-top:8px"><b>outputs/prds/</b>: product PRDs for all three, and engineering PRDs for products 1 and 2.</p>
+          <p style="margin-top:8px"><b>outputs/journey-maps/</b>: the same journeys written out, with the alternates and the scoring.</p>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <h3>The three sentences to remember</h3>
+          <p>Reading got cheap, so problems that were only ever reading problems became solvable.</p>
+          <p style="margin-top:8px">The money is decided in design and at the vote, and it's lost during the build. We put one product at each of those three points.</p>
+          <p style="margin-top:8px">Every screen here is built so a project team can start on Monday without changing anything they do.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>Asset Nova · journeys</span><span>Alexandre Cela · August 2026</span></div>
+</section>
+
+<div class="nav-hint">&larr; &rarr; or space · F fullscreen</div>
+<script>
+const slides=[...document.querySelectorAll('.slide')];let cur=0;
+function show(n){if(n<0||n>=slides.length)return;slides[cur].classList.remove('active');cur=n;slides[cur].classList.add('active');
+document.getElementById('prog').style.width=((cur+1)/slides.length*100)+'%';}
+const m=location.hash.match(/slide=(\d+)/);const st=m?Math.min(Math.max(+m[1],0),slides.length-1):0;
+slides[st].classList.add('active');cur=st;document.getElementById('prog').style.width=((st+1)/slides.length*100)+'%';
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();show(cur+1)}
+  if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();show(cur-1)}
+  if(e.key==='Home')show(0); if(e.key==='End')show(slides.length-1);
+  if(e.key==='f'||e.key==='F'){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen()}
+});
+</script>
+</body>
+</html>

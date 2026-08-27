@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Asset Nova — Round 2 Deck</title>
+<style>
+  :root{
+    --bg:#0a0e14; --panel:#11161f; --panel2:#161d29; --line:#1f2937;
+    --txt:#e5eaf2; --dim:#8b95a7; --faint:#5b6474;
+    --accent:#4f8ef7; --green:#34d399; --amber:#fbbf24; --red:#f87171;
+    --purple:#a78bfa; --cyan:#22d3ee;
+    --mono:'SF Mono',ui-monospace,Menlo,monospace;
+    --sans:-apple-system,'Inter',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{background:var(--bg);color:var(--txt);font-family:var(--sans);overflow:hidden}
+  .slide{display:none;position:absolute;inset:0;padding:56px 84px 72px;flex-direction:column;overflow:hidden}
+  .slide.active{display:flex;animation:fade .45s}
+  @keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  .kicker{font-family:var(--mono);font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+  h1{font-size:52px;line-height:1.1;font-weight:700;letter-spacing:-.5px}
+  h2{font-size:34px;line-height:1.2;font-weight:700;letter-spacing:-.3px;margin-bottom:24px}
+  h2 em{font-style:normal;color:var(--accent)}
+  .sub{font-size:19px;color:var(--dim);margin-top:16px;line-height:1.5;max-width:900px}
+  .body{flex:1;display:flex;flex-direction:column;justify-content:center}
+  table{border-collapse:collapse;width:100%;font-size:15px}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--faint);text-align:left;padding:8px 14px;border-bottom:1px solid var(--line)}
+  td{padding:11px 14px;border-bottom:1px solid var(--line);color:var(--dim);line-height:1.45;vertical-align:top}
+  td b,td strong{color:var(--txt)}
+  tr.hl td{background:#101a2c;color:var(--txt)}
+  .cols{display:flex;gap:28px}
+  .col{flex:1}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px 24px}
+  .card h3{font-size:13px;text-transform:uppercase;letter-spacing:1px;color:var(--accent);margin-bottom:10px}
+  .card p,.card li{font-size:14.5px;color:var(--dim);line-height:1.55}
+  .card ul{padding-left:18px}
+  .bignum{display:flex;gap:44px;margin:26px 0}
+  .bignum div b{display:block;font-size:46px;font-family:var(--mono);color:var(--amber)}
+  .bignum div i{font-style:normal;font-size:13.5px;color:var(--dim);display:block;max-width:220px;margin-top:6px;line-height:1.4}
+  .quote{border-left:3px solid var(--accent);padding:14px 22px;background:var(--panel);border-radius:0 10px 10px 0;font-size:16.5px;color:var(--dim);line-height:1.6;max-width:980px}
+  .quote b{color:var(--txt)}
+  .quote .attr{display:block;margin-top:10px;font-size:13px;color:var(--faint)}
+  pre.diagram{font-family:var(--mono);font-size:13.5px;line-height:1.45;color:var(--dim);background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:22px 26px;overflow:auto}
+  pre.diagram b{color:var(--txt)}
+  .pill{display:inline-block;font-size:11px;padding:3px 10px;border-radius:12px;background:#1a2333;color:var(--accent);border:1px solid #24344f;margin-right:8px}
+  .foot{position:absolute;bottom:22px;left:84px;right:250px;display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:var(--faint)}
+  .nav-hint{position:fixed;bottom:22px;right:26px;font-family:var(--mono);font-size:11px;color:var(--faint)}
+  .progress{position:fixed;top:0;left:0;height:2px;background:var(--accent);transition:width .3s}
+  .fromto td:first-child{color:var(--red)}
+  .fromto td:last-child{color:var(--green)}
+  .green{color:var(--green)} .amber{color:var(--amber)} .red{color:var(--red)} .purple{color:var(--purple)} .cyan{color:var(--cyan)}
+  .demo-link{display:inline-block;margin-top:26px;background:var(--accent);color:#fff;font-weight:600;padding:13px 26px;border-radius:10px;text-decoration:none;font-size:16px}
+  .steps{display:flex;gap:16px;margin-top:30px}
+  .steps .s{flex:1;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+  .steps .s b{display:block;font-family:var(--mono);color:var(--accent);font-size:12px;margin-bottom:8px}
+  .steps .s p{font-size:13.5px;color:var(--dim);line-height:1.5}
+  .appendix-tag{position:absolute;top:22px;right:84px;font-family:var(--mono);font-size:11px;color:var(--purple);letter-spacing:2px}
+  .markdown-list{padding-left:24px;color:var(--dim);font-size:17px;line-height:1.5}
+  .markdown-list li{margin-bottom:8px}
+  .slide-1 .body{justify-content:center}
+  .slide-1 h1{font-size:58px}
+  .slide-1 .markdown-p:first-of-type{font-size:24px;color:var(--txt);margin-top:20px}
+  .slide-2 .markdown-list{font-size:17px;line-height:1.42}
+  .slide-4 .markdown-list{font-size:18px;line-height:1.48}
+  .slide-5 pre.diagram,.slide-6 pre.diagram{font-size:12px;line-height:1.3;padding:18px 22px;white-space:pre;overflow:hidden}
+  .slide-7 .body{justify-content:flex-start;gap:8px}
+  .slide-7 .markdown-p{font-size:13px;line-height:1.3;margin-top:0}
+  .slide-7 table{font-size:11.5px}
+  .slide-7 th{padding:5px 8px;font-size:10px}
+  .slide-7 td{padding:5px 8px;line-height:1.25}
+  .slide-8 .markdown-p,.slide-11 .markdown-p,.slide-14 .markdown-p{font-size:14px;line-height:1.35}
+  .slide-8 .markdown-list,.slide-11 .markdown-list{font-size:14px;line-height:1.3}
+  .slide-8 .markdown-list li,.slide-11 .markdown-list li{margin-bottom:4px}
+  .slide-8 .markdown-p:not(:first-child),.slide-11 .markdown-p:not(:first-child){margin-top:8px}
+  .slide-9 pre.diagram,.slide-12 pre.diagram,.slide-15 pre.diagram{font-size:10px;line-height:1.15;padding:12px 14px;white-space:pre;overflow:hidden}
+  .slide-10 table,.slide-13 table,.slide-16 table{font-size:14px}
+  .slide-10 .roi-table{table-layout:fixed;font-size:12px}
+  .slide-10 .roi-table th,.slide-10 .roi-table td{padding:5px 8px}
+  .slide-10 .roi-table th:first-child,.slide-10 .roi-table td:first-child{width:48%}
+  .slide-10 .roi-table th:nth-child(2),.slide-10 .roi-table td:nth-child(2){width:24%}
+  .slide-10 .roi-table th:nth-child(3),.slide-10 .roi-table td:nth-child(3){width:28%}
+  .roi-table tr.money td:not(:first-child){font-family:var(--mono);color:var(--amber);white-space:nowrap}
+  .slide-10 .roi-table tr.money td:not(:first-child){white-space:normal}
+  .roi-table tr.money td b,.roi-table tr.money td strong{color:var(--amber)}
+  .roi-table tr.verdict td{background:#13261f;color:var(--green)}
+  .roi-table tr.verdict td:nth-child(4){background:#2b2410;color:var(--amber)}
+  .roi-table tr.verdict td b,.roi-table tr.verdict td strong{color:inherit}
+  .slide-10 .markdown-p,.slide-13 .markdown-p,.slide-16 .markdown-p{font-size:15px;line-height:1.4}
+  .slide-10 .markdown-p:not(:first-child),.slide-13 .markdown-p:not(:first-child){margin-top:10px}
+  .slide-18 .quote{margin-bottom:10px;max-width:1180px;font-size:14px;line-height:1.38;padding:10px 18px}
+  .slide-19 pre.diagram{font-size:12.5px;line-height:1.34;padding:18px 22px}
+  .slide-19 .markdown-p{font-size:15px;line-height:1.4}
+  .slide-20 .markdown-p,.slide-23 .markdown-p,.slide-24 .markdown-list,.slide-26 .markdown-list{font-size:16px;line-height:1.48}
+  .slide-21 .body,.slide-22 .body{justify-content:flex-start;gap:8px}
+  .slide-21 .markdown-p,.slide-22 .markdown-p{font-size:13px;line-height:1.3;margin-top:0}
+  .slide-21 table,.slide-22 table{font-size:12px}
+  .slide-21 th,.slide-22 th{padding:5px 8px;font-size:10px}
+  .slide-21 td,.slide-22 td{padding:5px 8px;line-height:1.25}
+  .slide-25 .body{justify-content:flex-start;gap:10px}
+  .slide-25 table{font-size:12px;table-layout:fixed}
+  .slide-25 th{padding:6px 8px;font-size:10px}
+  .slide-25 td{padding:7px 8px;line-height:1.3}
+  .slide-25 th:first-child,.slide-25 td:first-child{width:15%}
+  .slide-25 th:nth-child(2),.slide-25 td:nth-child(2){width:24%}
+  .slide-25 th:nth-child(3),.slide-25 td:nth-child(3){width:46%}
+  .slide-25 th:nth-child(4),.slide-25 td:nth-child(4){width:15%}
+  .slide-25 .markdown-p{font-size:13px;line-height:1.35;margin-top:0}
+  .markdown-p{font-size:17px;color:var(--dim);line-height:1.5;margin-top:12px;max-width:1180px}
+  .markdown-p strong{color:var(--txt)}
+  .markdown-p em{color:var(--dim)}
+  @media print{
+    @page{size:338.7mm 190.5mm;margin:0}
+    html,body{overflow:visible;height:auto}
+    .slide{display:flex !important;position:relative;inset:auto;width:338.7mm;height:190.5mm;page-break-after:always;animation:none}
+    .nav-hint,.progress{display:none}
+    .foot{position:absolute}
+  }
+</style>
+</head>
+<body>
+<div class="progress" id="prog"></div>
+<section class="slide slide-1 active"><div class="kicker">Asset Nova · Round 2 · Slide 1</div><h1>Asset Nova</h1><div class="body"><p class="markdown-p">Three products that protect the money on a giga-project.</p>
+<p class="markdown-p">Owner-side. Built on files the owner already has. Every output cites its source, and a person presses send.</p></div><div class="foot"><span>Asset Nova · Round 2</span><span>1 / 26</span></div></section>
+<section class="slide slide-2"><div class="kicker">Asset Nova · Round 2 · Slide 2</div><h2>The whole story in six lines</h2><div class="body"><ol class="markdown-list"><li>Big projects almost always cost more and take longer than the number the board approved. In oil and gas: 64% over budget, 73% late, 59% average cost growth, and the Middle East is the worst region measured (89% over cost). <em>(EY, 365 projects over $1bn)</em></li><li>It isn't a software shortage. It's that the facts that would have saved the project are spread across dozens of systems, dozens of companies and millions of documents nobody can read fast enough.</li><li>Reading is now cheap. That is the only thing that changed, and it changes which problems are solvable.</li><li>So we sell three reading machines, in the order the owner can actually buy them.</li><li>Each one pays for itself out of a single avoided loss on a single project.</li><li>None of them asks the owner to change how they work. That's the design constraint, not a nice-to-have.</li></ol></div><div class="foot"><span>Asset Nova · Round 2</span><span>2 / 26</span></div></section>
+<section class="slide slide-3"><div class="kicker">Asset Nova · Round 2 · Slide 3</div><h2>What goes wrong, in money</h2><div class="body"><table class="">
+<tr><th>What happens</th><th>How big</th><th>Source</th></tr>
+<tr><td>Contractors ask for roughly twice what they eventually settle for</td><td>~2× gap between submitted and settled</td><td>IPA via National Academies / Long International</td></tr>
+<tr><td>Money in dispute on affected projects</td><td>33.4% of the contract budget</td><td>HKA CRUX (2,200+ projects)</td></tr>
+<tr><td>One average dispute</td><td>$60.1M and about 12.5 months</td><td>Arcadis 2025</td></tr>
+<tr><td>Redoing work that was built wrong</td><td>~5% of project cost (top 10% of projects: 12.4%)</td><td>CII IR-153</td></tr>
+<tr><td>Where those errors come from</td><td>70–80% of cost deviations trace back to design, not building</td><td>industry analyses cited in the report</td></tr>
+<tr><td>Cost of catching an error late</td><td>10× more in construction, 100× more after handover</td><td>CII 1-10-100</td></tr>
+<tr><td>Overrun after the board has already approved the budget</td><td>23% on average, even post-sanction</td><td>EY</td></tr>
+</table>
+<p class="markdown-p">Plain reading: the money leaks in three places. During the build, through claims. In the design office, through errors that get built. And at the moment of approval, through a number that was too hopeful.</p>
+<p class="markdown-p">Our three products sit exactly on those three leaks.</p></div><div class="foot"><span>Asset Nova · Round 2</span><span>3 / 26</span></div></section>
+<section class="slide slide-4"><div class="kicker">Asset Nova · Round 2 · Slide 4</div><h2>Why decades of software didn't fix it</h2><div class="body"><ul class="markdown-list"><li>Every project is a one-off. Teams disband, lessons evaporate, and the next project starts from zero.</li><li>The contract makes truth adversarial. Fixed-price deals reward claiming and reward hiding bad news.</li><li>Low estimates win approval, so estimates come in low. That's not a mistake, it's an incentive.</li><li>Reporting is monthly. Any problem is four to eight weeks old before a leader sees it.</li><li>The decisive evidence is prose: letters, minutes, daily reports, drawing comments. Old software could only handle the tidy 20% of data in databases, and the messy 80% was invisible.</li></ul>
+<p class="markdown-p">The gap is not analysis, it's reading. That's the sentence the whole business rests on.</p></div><div class="foot"><span>Asset Nova · Round 2</span><span>4 / 26</span></div></section>
+<section class="slide slide-5"><div class="kicker">Asset Nova · Round 2 · Slide 5</div><h2>The owner's lifecycle, and where the money is really decided</h2><div class="body"><pre class="diagram"> IDEA        OPTIONS      DESIGN        APPROVE      BUILD           START-UP      OPERATE
+ (screen)    (pick one)   (FEED)        (the vote)   (3-6 years)     (handover)    (20-40 yrs)
+    |            |           |             |             |               |             |
+ cheap to    cheapest    where cost    the number    where the       where delay    where bad
+ kill        moment to   is actually   everything    overrun         costs most     handover
+             change      set           is measured   becomes         (money spent,  data costs
+             your mind                 against       visible        no revenue)     for decades</pre>
+<p class="markdown-p">Two facts that drive our whole product order:</p>
+<ol class="markdown-list"><li>Cost is <strong>decided</strong> in design and at the approval vote. It only <strong>shows up</strong> years later, during the build.</li><li>Almost every AI product in this market works during the build, for the contractor. The owner's seat, the design stage and the approval gate are open ground.</li></ol></div><div class="foot"><span>Asset Nova · Round 2</span><span>5 / 26</span></div></section>
+<section class="slide slide-6"><div class="kicker">Asset Nova · Round 2 · Slide 6</div><h2>The three products on that map</h2><div class="body"><pre class="diagram"> IDEA    OPTIONS    DESIGN ..................  APPROVE ........  BUILD .................  START-UP   OPERATE
+                    [ PRODUCT 2 ]              [ PRODUCT 3 ]     [ PRODUCT 1 ]
+                    Design feasibility         FID red team      Claims defence
+                    check every revision       pressure-test     &amp; recovery
+                                               the number        always on
+                    ~ ~ later opportunities ~ ~
+ concept   option   drawing chase              gate challenge    cost forecast truth      handover    asset data
+ red-team  compare  (deliverables)             book              schedule truth           complete-   feeds the
+                                                                 interface gaps           ness        next vote</pre>
+<ul class="markdown-list"><li><strong>Product 1 — Claims defence and recovery.</strong> Ships first. Runs during the build, on the record the owner already controls.</li><li><strong>Product 2 — Design feasibility.</strong> Ships alongside or just after. Runs during design, on the owner's own drawings.</li><li><strong>Product 3 — Approval red team (FID).</strong> Switched on after 1 and 2 have earned trust, because it needs the owner's history and it delivers an unwelcome message at the highest-stakes moment.</li></ul>
+<p class="markdown-p">The greyed items are the roadmap. Each one reuses the same reading layer, so the second product costs a fraction of the first.</p></div><div class="foot"><span>Asset Nova · Round 2</span><span>6 / 26</span></div></section>
+<section class="slide slide-7"><div class="kicker">Asset Nova · Round 2 · Slide 7</div><h2>One project, one team, one week: the scenario the rest of this deck uses</h2><div class="body"><p class="markdown-p"><strong>The project.</strong> Jebel Nasr Train 4, a $5.2bn gas processing train for a Gulf national oil company. Lump-sum EPC contract with Kaisan Engineering &amp; Construction (KEC), signed with 14 amendments to date. Month 26 of a 48-month build. Late-delivery damages run at $45k per day, capped at 10% of contract value. Claim notices are due within 28 days of the event, and must go to the named recipient.</p>
+<p class="markdown-p"><strong>The people.</strong></p>
+<table class="">
+<tr><th>Name</th><th>Role</th><th>Which product</th></tr>
+<tr><td>Faisal Al-Harbi</td><td>Owner's contracts and commercial manager, Jebel Nasr Train 4. Team of four.</td><td>Product 1, the buyer and the user</td></tr>
+<tr><td>Mariam Kassab</td><td>Senior quantity surveyor in Faisal's team</td><td>Product 1, second user</td></tr>
+<tr><td>Omar Zahra</td><td>Owner's in-house counsel</td><td>Product 1, review routing</td></tr>
+<tr><td>Priya Raghavan</td><td>Owner's design and engineering manager</td><td>Product 2, the user</td></tr>
+<tr><td>Tom Beckett</td><td>Project director, Jebel Nasr</td><td>Product 3, the sponsor</td></tr>
+<tr><td>Layla Haddad</td><td>Lead estimator, capital projects</td><td>Product 3, the user who gets challenged</td></tr>
+</table>
+<p class="markdown-p"><strong>Day one, the only setup Faisal does: five read-only connections.</strong> No migration, no new system of record.</p>
+<table class="">
+<tr><th>Source</th><th>What it is</th><th>Volume at connection</th></tr>
+<tr><td><code>\JN4\02-Contract\</code> on SharePoint</td><td>The EPC contract, 14 amendments, the particular conditions</td><td>61 PDFs</td></tr>
+<tr><td><code>JN4-correspondence-2024-2026.zip</code> exported from Aconex</td><td>Letters, transmittals, notices, minutes</td><td>11,482 documents</td></tr>
+<tr><td><code>\JN4\07-Site\DSR\</code></td><td>Daily site reports, about 30 a week</td><td>3,140 PDFs</td></tr>
+<tr><td><code>JN4-P6-2026-07.xer</code></td><td>The monthly schedule update from P6</td><td>1 file, 8,900 activities</td></tr>
+<tr><td><code>KEC-IPA-039.pdf</code></td><td>The current interim payment application</td><td>1 file</td></tr>
+</table>
+<p class="markdown-p">Names, clauses and companies are illustrative for a case study.</p></div><div class="foot"><span>Asset Nova · Round 2</span><span>7 / 26</span></div></section>
+<section class="slide slide-8"><div class="kicker">Asset Nova · Round 2 · Slide 8</div><h2>Product 1: what it actually does, in Faisal's week</h2><div class="body"><p class="markdown-p">For Faisal Al-Harbi, the owner's contracts and commercial manager on Jebel Nasr Train 4. His team of four connects the existing record once, then starts with the event that matters: on 3 August 2026, KEC submits claim 07, <code>KEC-CL-007.pdf</code>, for $40.2M and 96 days of extension, built on six delay events.</p>
+<p class="markdown-p">The agent reads the contract, letters, schedule update and site reports overnight, then gives Faisal a cited position:</p>
+<ul class="markdown-list"><li><strong>Event 2 notice was late.</strong> <code>KEC-L-1987</code>, dated 41 days after the event in <code>DSR-2026-02-14</code>. The 28-day requirement means 13 days late, so the event is barred.</li><li><strong>Event 4 has no notice at all.</strong> No notice appears in the 11,482 documents.</li><li><strong>Event 5 went to the wrong recipient.</strong> <code>KEC-L-2043</code> is addressed to the site manager, not the named recipient. Defective notice.</li><li><strong>Events 1, 3 and 6 were properly notified.</strong> Their notices are found and valid.</li><li><strong>Position.</strong> 41 documents cited. $40.2M claimed, less $12.4M barred, less $5.6M of quantum the record does not support, leaves <strong>$18.0M defensible</strong>.</li><li><strong>Milestone 4 was certified 47 days late.</strong> Certificate <code>JN4-MC-004</code> against the milestone date in the contract means 47 days at $45k, or <strong>$2.1M</strong> chargeable this month.</li><li><strong>An unregistered exposure.</strong> <code>KEC-L-2214</code> of 14 May 2026 signals a claim not in the risk register: <strong>$3.3M</strong>, with 6 days left to reply.</li></ul>
+<p class="markdown-p">Every item shows the money at stake, how confident the agent is, and the documents behind it. Faisal approves, edits or rejects. The agent writes the letter. A person sends it.</p>
+<p class="markdown-p">Two things make it credible: it never sends anything itself, and every line clicks through to a page in a real document.</p></div><div class="foot"><span>Asset Nova · Round 2</span><span>8 / 26</span></div></section>
+<section class="slide slide-9"><div class="kicker">Asset Nova · Round 2 · Slide 9</div><h2>How Product 1 works, end to end</h2><div class="body"><pre class="diagram">INPUT                        PROCESSING                          ACTION                     DETERMINISTIC OR AGENTIC
+contract + 14 amendments  →  parse, split by clause      [code]
+                             extract obligations,
+                             notice windows, recipients  [model]
+                                    ↓
+letters, notices,         →  classify document type      [model]   →  link to the timeline    deterministic write
+minutes (11,482)             extract dates, parties,               [code]                     (a link, not an opinion)
+                             the event referred to       [model]
+                                    ↓
+daily site reports        →  extract event facts:        [model]
+(3,140)                      what stopped, where, when
+                                    ↓
+P6 update (.xer)          →  read dates and float        [code]
+                                    ↓
+                             ONE PROJECT RECORD: events, obligations, deadlines, documents
+                                    ↓
+                             notice window test          [code]   →  event valid / barred      deterministic, always
+                             damages calculation         [code]   →  47 days x $45k = $2.1M    deterministic, always
+                             quantum bounds              [code]   →  supported / unsupported   deterministic, always
+                                    ↓
+                             build the position          [model]  →  a ranked finding with     agentic proposal,
+                             (event to clause mapping,               a money number and an     never an action
+                             evidence selection)                     evidence chain
+                                    ↓
+                             citation check              [code]   →  no citation, no finding   deterministic veto
+                                    ↓
+                             HUMAN REVIEW               [human]   →  approve / edit / reject   the only gate that
+                                                                                               releases anything
+                                    ↓
+                             draft the notice or         [model]  →  a document in the         agentic drafting,
+                             rebuttal                                owner&#x27;s own template      zero send authority
+                                    ↓
+                             send                       [human]   →  a person presses send     never the agent
+                                    ↓
+                             record the outcome          [code]   →  settled at what number,   deterministic learning
+                                                                     which findings held        signal</pre>
+<p class="markdown-p">Autonomy, stated plainly: the agent is autonomous about reading, linking, calculating and proposing. It has no autonomy over anything that leaves the building.</p></div><div class="foot"><span>Asset Nova · Round 2</span><span>9 / 26</span></div></section>
+<section class="slide slide-10"><div class="kicker">Asset Nova · Round 2 · Slide 10</div><h2>Product 1: what it's worth, and what it costs you</h2><div class="body"><p class="markdown-p"><strong>Value (money).</strong> On a $5bn project, our conservative model:</p>
+<table class="roi-table">
+<tr><th>Step</th><th>Number</th><th>Where it comes from</th></tr>
+<tr class="money"><td>Claims submitted over the build</td><td>~$400M (8% of project value)</td><td>our assumption, to validate with the owner's own history</td></tr>
+<tr class="money"><td>Typically settled at about half</td><td>~$200M paid</td><td>IPA: submitted vs settled gap "as much as half"</td></tr>
+<tr class="money"><td>Sharper, evidenced defence on 10% of that</td><td><strong>$20M kept</strong></td><td>our model</td></tr>
+<tr class="money"><td>Late-delivery damages and back-charges pursued properly (from ~40% to ~70% of what's owed)</td><td><strong>~$9M recovered</strong></td><td>our model, using a $30M entitlement pool</td></tr>
+<tr class="money"><td>One dispute kept out of formal proceedings</td><td><strong>$5–8M of legal and expert cost avoided</strong>, plus 12.5 months of management time</td><td>Arcadis: $60.1M and 12.5 months per average dispute</td></tr>
+<tr><td><strong>Total per project</strong></td><td><strong>~$30M</strong></td><td></td></tr>
+<tr class="money"><td>Price at 0.05% of project value</td><td>$2.5M</td><td>industry pricing runs 0.1–0.3% of project value</td></tr>
+<tr><td><strong>Return</strong></td><td><strong>~10:1</strong></td><td></td></tr>
+</table>
+<p class="markdown-p"><strong>Likelihood of delivering: high.</strong> The evidence lives in documents the owner already holds. Deadline maths is arithmetic, not judgement. Every output is checkable against a cited page. The category is already proven commercially: Document Crunch reached 400+ customers and Trimble bought it for $246.4M in April 2026.</p>
+<p class="markdown-p"><strong>Effort from the persona: low.</strong> Give us a read-only copy of the contract and the correspondence archive. Spend about 20 minutes a day on a ranked queue. Nothing to migrate, no new system of record, no change to the monthly cycle.</p>
+<p class="markdown-p"><strong>Sacrifice from the persona: real but answerable.</strong> They're letting software read the most commercially sensitive, sometimes legally privileged, material on the project. Our answer: in-Kingdom or in-UAE hosting, private cloud, no training on their data, access mirroring the existing commercial team's permissions, and a full audit trail of what the agent read and why.</p></div><div class="foot"><span>Asset Nova · Round 2</span><span>10 / 26</span></div></section>
+<section class="slide slide-11"><div class="kicker">Asset Nova · Round 2 · Slide 11</div><h2>Product 2: what it actually does, in Priya's week</h2><div class="body"><p class="markdown-p">For Priya Raghavan, the owner's design and engineering manager on Jebel Nasr Train 4. On 12 June 2026, the design contractor issues sheet <code>A-207 rev C</code> for the process area. Priya does nothing different: the revision lands in the same transmittal folder it always did.</p>
+<p class="markdown-p">Three checks run in four minutes and hand back a cited pass or fail list:</p>
+<ul class="markdown-list"><li><strong>Legal.</strong> Fire separation is 1.2 m short. The fire chapter of the Saudi Building Code, clause 7.4.2, is quoted verbatim with the page, next to the drawing region.</li><li><strong>Affordable.</strong> The change costs $6.8M against $4.1M of remaining design allowance. The cost model line and the approved budget ceiling are shown.</li><li><strong>Buildable.</strong> Moving the 132 kV transformer adds 14 weeks to a long-lead order already on the critical path. The purchase order date and the P6 activity are shown.</li></ul>
+<p class="markdown-p">Priya accepts the first finding, disputes the second as "already waived by the authority", and issues the revision with the exception recorded. The dispute becomes a labelled error we report on.</p>
+<p class="markdown-p">It's a spell-check for feasibility. It catches the error while it costs thousands, not the tens of millions it becomes once it's in the ground.</p>
+<p class="markdown-p">Strongest demand signal in the market: Dubai Municipality is building a system to issue permits automatically by reading submitted drawings against the Dubai Building Code. When the regulator automates the check, every owner has to arrive pre-compliant.</p></div><div class="foot"><span>Asset Nova · Round 2</span><span>11 / 26</span></div></section>
+<section class="slide slide-12"><div class="kicker">Asset Nova · Round 2 · Slide 12</div><h2>How Product 2 works, end to end</h2><div class="body"><pre class="diagram">INPUT                        PROCESSING                          ACTION                     DETERMINISTIC OR AGENTIC
+code edition, pinned      →  index clauses, keep the     [code]
+by Priya on day one          page and the exact text
+budget ceiling, pinned    →  store as a number           [code]
+                                    ↓
+drawing / document        →  detect the revision,        [code]   →  start a check run        deterministic trigger
+revision (A-207 rev C)       diff against rev B                                              (no human asked for it)
+                             read geometry, labels,      [model]
+                             specified materials
+                                    ↓
+                             LEGAL     clause retrieval  [code]
+                                       clause-to-drawing [model]  →  finding, clause quoted   agentic proposal
+                                       comparison                    verbatim + drawing region
+                             AFFORDABLE cost delta       [code]   →  $6.8M vs $4.1M left      deterministic
+                             BUILDABLE  clash geometry   [code]
+                                        long-lead dates  [code]   →  14 weeks on a critical   deterministic
+                                                                     path order
+                                    ↓
+                             citation check              [code]   →  no clause text, no       deterministic veto
+                                                                     finding
+                                    ↓
+                             HUMAN VERDICT              [human]   →  accept / dispute /       advisory, never blocking:
+                                                                     accept with a waiver     the revision can always
+                                                                                              be issued
+                                    ↓
+                             record the dispute reason   [code]   →  a labelled error         deterministic learning
+                                                                                              signal</pre></div><div class="foot"><span>Asset Nova · Round 2</span><span>12 / 26</span></div></section>
+<section class="slide slide-13"><div class="kicker">Asset Nova · Round 2 · Slide 13</div><h2>Product 2: what it's worth, and what it costs you</h2><div class="body"><p class="markdown-p"><strong>Value (money).</strong> On a $5bn project:</p>
+<table class="roi-table">
+<tr><th>Step</th><th>Number</th><th>Source</th></tr>
+<tr class="money"><td>Rework at ~5% of project cost</td><td>~$250M</td><td>CII IR-153</td></tr>
+<tr class="money"><td>Share caused by design (~28%)</td><td>~$70M</td><td>industry analyses in the report</td></tr>
+<tr class="money"><td>Catch half of it in design</td><td><strong>~$35M avoided per project</strong></td><td>our model on sourced inputs</td></tr>
+<tr><td>On a $20bn project, the design-caused pool</td><td>~$280M</td><td>same method</td></tr>
+<tr><td>Review time</td><td>6 weeks down to 3 days on Saudi Building Code review</td><td>WhiteHelmet customer testimonial, 2026 (self-reported)</td></tr>
+<tr><td>Independent return modelling</td><td>4:1 to 30:1 cost avoidance; a query costs $200–500 at drawing stage vs $2,000–8,000 in the field</td><td>Mirage Metrics, 2026</td></tr>
+</table>
+<p class="markdown-p"><strong>Likelihood of delivering: high on a narrow scope, medium if we promise everything.</strong> Reading drawings and code is now doable, and two Gulf vendors already sell a version of it. The honest risk is coverage: we start with one code set and the disciplines that cause the most rework, and we say so.</p>
+<p class="markdown-p"><strong>Effort from the persona: lowest of the three.</strong> It hooks into the design file drop that already happens. One-time job: confirm which code edition and which budget ceilings apply. After that the designer's habit doesn't change at all.</p>
+<p class="markdown-p"><strong>Sacrifice from the persona: professional pride, mostly.</strong> A machine is marking an engineer's work inside the engineer's own workflow. Our answer: advisory, never blocking; every finding cites the clause and the drawing region; one click to dispute a finding, and disputes train the next version.</p></div><div class="foot"><span>Asset Nova · Round 2</span><span>13 / 26</span></div></section>
+<section class="slide slide-14"><div class="kicker">Asset Nova · Round 2 · Slide 14</div><h2>Product 3: what it does, and why it waits</h2><div class="body"><p class="markdown-p">For Tom Beckett, project director of Jebel Nasr, and Layla Haddad, lead estimator for capital projects. Product 3 runs once per gate, later. Train 5 goes to the investment committee with a $6.1bn estimate and 8% contingency.</p>
+<p class="markdown-p">Before it is used forward, the agent runs backwards on 14 of the owner's own finished projects and shows what it would have said about each. Layla gets the challenge book first, privately. The agent asks nine questions and casts no vote.</p>
+<p class="markdown-p">The agent pressure-tests the number: it compares this project against how comparable past projects actually turned out, audits the design package for the gaps that predict overruns, and writes the challenge book for the gate meeting.</p>
+<p class="markdown-p">Why it waits: it needs the owner's own project history, and it tells the most senior people in the room that their number is wrong. That's a sale you make once you're already trusted and already inside the data. Products 1 and 2 buy that position.</p>
+<p class="markdown-p">The prize is the biggest, though: EY finds a 23% average overrun <strong>after</strong> approval. On a $5bn approval, that's $1.15bn of exposure. Taking a fifth of it off the table is $230M.</p></div><div class="foot"><span>Asset Nova · Round 2</span><span>14 / 26</span></div></section>
+<section class="slide slide-15"><div class="kicker">Asset Nova · Round 2 · Slide 15</div><h2>How Product 3 works, end to end</h2><div class="body"><pre class="diagram">INPUT                        PROCESSING                          ACTION                     DETERMINISTIC OR AGENTIC
+14 finished owner         →  extract sanctioned vs       [model]
+projects                     final cost and date         [code]
+                                    ↓
+                             REFERENCE CLASS: median growth, spread   [code]
+                                    ↓
+this gate&#x27;s estimate,     →  definition completeness     [model]  →  what is missing from     agentic proposal
+basis of estimate,           audit against the owner&#x27;s                the definition at this
+schedule, contingency        own gate standard                        gate
+                             contingency vs the          [code]   →  8% asked, 23% median     deterministic
+                             reference class                          historical growth
+                                    ↓
+                             citation check              [code]   →  every number traced to   deterministic veto
+                                                                     a source document
+                                    ↓
+                             PRIVATE PRE-READ to the     [human]  →  the estimator sees it    no surprise in the room
+                             estimator and sponsor                    first and can respond
+                             challenge book: nine        [model]  →  questions, not a         the agent never votes
+                             questions with evidence                 recommendation</pre>
+<p class="markdown-p">The agent never votes. It gives Layla and Tom a cited set of questions before the gate meeting.</p></div><div class="foot"><span>Asset Nova · Round 2</span><span>15 / 26</span></div></section>
+<section class="slide slide-16"><div class="kicker">Asset Nova · Round 2 · Slide 16</div><h2>The three side by side</h2><div class="body"><table class="roi-table">
+<tr><th></th><th><strong>1. Claims defence &amp; recovery</strong></th><th><strong>2. Design feasibility</strong></th><th><strong>3. Approval red team</strong></th></tr>
+<tr><td>Persona</td><td>Contracts / commercial manager</td><td>Design / engineering manager</td><td>Project director, estimator, investment committee</td></tr>
+<tr><td>Stage</td><td>Build</td><td>Design</td><td>The approval vote</td></tr>
+<tr class="money"><td>Value per $5bn project</td><td>~$30M</td><td>~$35M</td><td>~$230M of exposure addressed</td></tr>
+<tr><td>Likelihood of delivering</td><td>High</td><td>High on a narrow scope</td><td>Medium</td></tr>
+<tr><td>Effort from the persona</td><td>Low: read-only files, 20 min/day</td><td>Lowest: hooks existing file drop</td><td>High: hand over portfolio history</td></tr>
+<tr><td>Sacrifice</td><td>Trusting software with privileged commercial material</td><td>Being marked by a machine</td><td>Political: an unwelcome message at the biggest vote</td></tr>
+<tr><td>Data needed</td><td>Contract, letters, schedule, site reports</td><td>Drawings, code set, budget ceilings</td><td>Historical outcomes across the portfolio</td></tr>
+<tr class="hl verdict"><td>Verdict</td><td><strong>Ship first</strong></td><td><strong>Ship in parallel</strong></td><td><strong>Earn the right, then ship</strong></td></tr>
+</table>
+<p class="markdown-p">The rule behind the order: value divided by (effort + sacrifice), with delivery confidence as the multiplier. Product 3 wins on value alone and loses on everything else, which is exactly why it's third and not never.</p></div><div class="foot"><span>Asset Nova · Round 2</span><span>16 / 26</span></div></section>
+<section class="slide slide-17"><div class="kicker">Asset Nova · Round 2 · Slide 17</div><h2>The adoption promise (this is the real product decision)</h2><div class="body"><p class="markdown-p">The fastest way to lose this market is to ask a project team to change how it works mid-project. So we commit to six rules:</p>
+<ol class="markdown-list"><li><strong>Runs on files they already have.</strong> Read-only. No migration, no new system of record.</li><li><strong>No new habit.</strong> It arrives where they already look (email or Teams), and reviews happen on one screen.</li><li><strong>The agent never sends.</strong> It drafts. A person presses send. Always.</li><li><strong>Every claim is clickable.</strong> No assertion without a citation to a page in a real document.</li><li><strong>Proof on history first.</strong> We run on last year's closed files and show what it would have caught, before it touches a live project.</li><li><strong>Priced against one avoided loss,</strong> and sized so a pilot sits inside one project team's own authority.</li></ol>
+<p class="markdown-p">That last one matters commercially: ADNOC signed a $340M three-year agentic-AI contract, but only after a proof of concept. The deal shape in this market is small paid pilot, then large multi-year contract.</p></div><div class="foot"><span>Asset Nova · Round 2</span><span>17 / 26</span></div></section>
+<section class="slide slide-18"><div class="kicker">Asset Nova · Round 2 · Slide 18</div><h2>Proof from people who live it</h2><div class="body"><div class="quote">"The difference between the amount submitted for a claim versus the amount actually paid at settlement... is as much as half. The owner too must ensure profitability of his project by defending unsupportable claims by a 'low ball' contractor." IPA via National Academies and Long International. <em>Product 1, stated from the owner's seat.</em></div>
+<div class="quote">"What most projects lose to poor claims management is not a dispute they should have won, but entitlement they never assembled the evidence to claim." Kairos, claims advisory, 2026. <em>The failure mode named exactly.</em></div>
+<div class="quote">"A fully integrated digital system capable of issuing building permits automatically and without human intervention by reading submitted drawings and documents, verifying compliance with the Dubai Building Code." Dubai Municipality, 2026. <em>Product 2's demand signal, from the regulator.</em></div>
+<div class="quote">"We reduced our compliance review cycle from 6 weeks to 3 days. The AI caught two fire environmental gaps that would have delayed our building permit by months." WhiteHelmet customer, 2026 (self-reported). <em>Product 2, quantified in the Gulf.</em></div>
+<div class="quote">"More than half of its potential lost to underperformance... all shared a root cause: bias." McKinsey on an owner's capital portfolio, 2025. <em>Product 3's reason to exist.</em></div>
+<div class="quote">"ADNOC is on a mission to become the world's most AI-enabled energy company." $340M, three years, after a proof of concept. Musabbeh Al Kaabi, ADNOC Upstream CEO, 2025. <em>The willingness to pay, and the price ceiling.</em></div>
+<p class="markdown-p">Honest gap: no on-record Aramco or ADNOC executive naming a claims, estimating or design-check tool specifically. Owner demand for Product 2 is inferred from the regulator's move and the mandatory building-code reset. We validate that in primary interviews.</p></div><div class="foot"><span>Asset Nova · Round 2</span><span>18 / 26</span></div></section>
+<section class="slide slide-19"><div class="kicker">Asset Nova · Round 2 · Slide 19</div><h2>How it works, in one picture</h2><div class="body"><pre class="diagram">  FILES THE OWNER ALREADY HAS
+  contract · letters &amp; minutes · schedule updates · site reports · drawings · cost ceilings
+            |
+            v
+  1  READ AND FILE          every page split, dated, tagged to a party, a drawing or an activity
+            |
+  2  BUILD THE RECORD       one linked timeline of events, obligations, revisions and deadlines
+            |
+  3  APPLY THE RULES        deadline maths, code clauses, cost bounds. Arithmetic, not opinion
+            |
+  4  REASON OVER IT         &quot;does this event trigger a clause?&quot; &quot;does this revision close last round&#x27;s comments?&quot;
+            |
+  5  SIZE THE MONEY         value at stake, confidence, and what happens if you do nothing
+            |
+  6  SHOW YOUR WORKING      every finding carries citations. No citation, no finding
+            |
+  7  A HUMAN DECIDES        approve · edit · reject, on a queue ranked by money
+            |
+  8  DRAFT THE ACTION       the letter, the rebuttal pack, the challenge book
+            |
+  9  LEARN FROM THE OUTCOME what got approved, what got rejected, what the settlement actually was</pre>
+<p class="markdown-p">Two engineering commitments behind that picture:</p>
+<ul class="markdown-list"><li><strong>The hard maths is deterministic, the soft reading is the model's job.</strong> Deadlines, damages and cost bounds are computed in code so they're always reproducible. The model reads and proposes, it doesn't do the arithmetic that ends up in a letter.</li><li><strong>Nothing ships without an eval.</strong> Each skill has a scored test set built from closed projects: did it find the events a specialist found, did it invent anything, did it get the deadline right. Releases are gated on those scores.</li><li>The per-product diagrams are the detail behind that picture.</li></ul></div><div class="foot"><span>Asset Nova · Round 2</span><span>19 / 26</span></div></section>
+<section class="slide slide-20"><div class="kicker">Asset Nova · Round 2 · Slide 20</div><h2>How we'll know it's working</h2><div class="body"><p class="markdown-p"><strong>Business.</strong> Money kept or recovered per project (the number the pilot is judged on), pilot to contract conversion, share of project value captured in price.</p>
+<p class="markdown-p"><strong>Product.</strong> Items reviewed per week per manager, share of drafted actions actually sent, time from an event appearing in the record to a human deciding on it, and one honest counter-metric: how often a manager overrides the agent, and whether that falls.</p>
+<p class="markdown-p"><strong>AI engineering.</strong> Recall against a specialist's own findings on closed projects, invented-fact rate at zero tolerance for cited claims, deadline accuracy, and cost per document read.</p></div><div class="foot"><span>Asset Nova · Round 2</span><span>20 / 26</span></div></section>
+<section class="slide slide-21"><div class="kicker">Asset Nova · Round 2 · Slide 21</div><h2>What success looks like for the agent</h2><div class="body"><p class="markdown-p">Four gates, in order. Nothing moves to the next gate until the previous one passes. Each gate has a pass mark and a stop rule, and each is measured on the owner's own closed projects before it is measured on a live one.</p>
+<p class="markdown-p"><strong>Gate 0. Reading is trustworthy (offline, closed project archive)</strong></p>
+<table class="">
+<tr><th>What we measure</th><th>Pass mark</th><th>Why this number</th></tr>
+<tr><td>Documents read and correctly typed</td><td>98% or better</td><td>Below this, the record has holes and every later number is suspect</td></tr>
+<tr><td>Dates extracted correctly</td><td>99.5% or better</td><td>A wrong date is a wrong deadline, which is the one error the product cannot survive</td></tr>
+<tr><td>Documents refused and queued for human</td><td>Reported, not hidden; under 5% of volume</td><td>Abstaining is allowed. Guessing is not.</td></tr>
+<tr><td>Invented facts</td><td>Zero. Any occurrence blocks the gate</td><td>This is a legal record.</td></tr>
+</table>
+<p class="markdown-p"><strong>Gate 1. Findings are worth a person's attention (offline, against a specialist's own conclusions)</strong></p>
+<table class="">
+<tr><th>What we measure</th><th>Pass mark</th></tr>
+<tr><td>Precision on findings shown as findings</td><td>85% or better</td></tr>
+<tr><td>Recall against commercial team’s closed-project findings</td><td>80% or better, and at least one material item they missed</td></tr>
+<tr><td>Evidence chain accuracy</td><td>99.5% or better</td></tr>
+<tr><td>Deadline arithmetic</td><td>100%</td></tr>
+<tr><td>Low-confidence items shown as “watching”</td><td>100%</td></tr>
+</table>
+<p class="markdown-p">Stop rule: precision below 60% after eight weeks means return to Gate 0.</p></div><div class="foot"><span>Asset Nova · Round 2</span><span>21 / 26</span></div></section>
+<section class="slide slide-22"><div class="kicker">Asset Nova · Round 2 · Slide 22</div><h2>What success looks like for the agent (continued)</h2><div class="body"><p class="markdown-p"><strong>Gate 2. A human agrees, in practice (shadow mode on a live project, nothing sent)</strong></p>
+<table class="">
+<tr><th>What we measure</th><th>Pass mark</th></tr>
+<tr><td>Findings actioned rather than only seen</td><td>80% or better</td></tr>
+<tr><td>Drafts approved with minor edits or none</td><td>70% or better</td></tr>
+<tr><td>Override rate</td><td>Falling week on week</td></tr>
+<tr><td>Digest ignored two days running</td><td>Under 10% of weeks</td></tr>
+<tr><td>Cost per document read</td><td>Under $0.05 blended</td></tr>
+</table>
+<p class="markdown-p">Stop rule: four straight weeks without review pauses the pilot.</p>
+<p class="markdown-p"><strong>Gate 3. It changed the money (live pilot, the number the pilot is judged on)</strong></p>
+<table class="">
+<tr><th>What we measure</th><th>Pass mark</th></tr>
+<tr><td>Exposures surfaced and countersigned</td><td>$20M or more per pilot project</td></tr>
+<tr><td>Notice deadlines missed on covered scope</td><td>Zero</td></tr>
+<tr><td>Money kept or recovered agreed before pilot</td><td>Beats pilot fee by 5x or better</td></tr>
+<tr><td>Findings surviving to settlement</td><td>Reported honestly, including failures</td></tr>
+</table>
+<p class="markdown-p"><strong>The one number for each product</strong></p>
+<ul class="markdown-list"><li>Product 1: money kept or recovered per project, countersigned by the customer.</li><li>Product 2: share of flagged findings that would have become field changes, measured on closed revision history, with dispute rate as honest counter-metric.</li><li>Product 3: gate decisions changed, meaning contingency raised, scope re-cut, or approval deferred, with estimator agreement that the question was fair.</li></ul></div><div class="foot"><span>Asset Nova · Round 2</span><span>22 / 26</span></div></section>
+<section class="slide slide-23"><div class="kicker">Asset Nova · Round 2 · Slide 23</div><h2>Risks, and what we do about them</h2><div class="body"><table class="">
+<tr><th>Risk</th><th>What we do</th></tr>
+<tr><td>Owner won't give a machine the privileged commercial record</td><td>Start on closed projects. In-region private cloud. Permissions that mirror the existing team. Full read audit.</td></tr>
+<tr><td>Wrong finding damages a legal position</td><td>Draft only, never send. Everything cited. Deadline and damages maths in code, not model output.</td></tr>
+<tr><td>Code coverage in Product 2 is thinner than promised</td><td>Narrow first release: one code edition, the disciplines that cause the most rework. Publish what's in scope.</td></tr>
+<tr><td>Incumbents move (Trimble, Procore, and the AI vendors)</td><td>They're contractor-side and build-phase. We're owner-side across design, approval and build, on data they don't have.</td></tr>
+<tr><td>Product 3 needs history the owner may not have organised</td><td>Bundle the history clean-up as the first paid step, and lean on public outcome data until it exists.</td></tr>
+<tr><td>Buying gates in the Gulf (registration, local content, cyber certification, data residency)</td><td>Treat them as features on the roadmap from day one, not paperwork at the end.</td></tr>
+</table></div><div class="foot"><span>Asset Nova · Round 2</span><span>23 / 26</span></div></section>
+<section class="slide slide-24"><div class="kicker">Asset Nova · Round 2 · Slide 24</div><h2>First 90 days</h2><div class="body"><ul class="markdown-list"><li><strong>Days 1–15.</strong> Ten interviews: owner contracts managers, design managers, one estimator, one investment-committee member. Validate the $400M claims-submission assumption against a real portfolio.</li><li><strong>Days 16–45.</strong> Product 1 on one closed project's archive. Success test: it finds what the commercial team found, plus at least one thing they missed, all cited.</li><li><strong>Days 30–60.</strong> Product 2 on one FEED revision history. Success test: it flags the errors that actually became field changes.</li><li><strong>Days 60–90.</strong> One paid pilot signed on a live project, with the money-kept metric agreed in writing before we start. Compliance work (hosting, cyber certification, local content) running in parallel.</li></ul>
+<p class="markdown-p">Product 3 gets a retrospective demo only in this window: "here are the twelve flags we'd have raised at your last approval." No sale attached yet.</p></div><div class="foot"><span>Asset Nova · Round 2</span><span>24 / 26</span></div></section>
+<section class="slide slide-25"><div class="kicker">Asset Nova · Round 2 · Slide 25</div><h2>Product 1 delivery plan on a page</h2><div class="body"><table class="">
+<tr><th>Phase and weeks</th><th>Objective</th><th>Key results that matter most</th><th>Gate that ends it</th></tr>
+<tr><td>Phase 1, weeks 1 to 6</td><td>Show that the agent reads one owner's closed project better than a person could in the time available, with nothing invented.</td><td>Documents read and correctly typed: 98% or better; dates extracted correctly: 99.5% or better; invented facts: Zero. One occurrence fails the phase</td><td>Gate 0</td></tr>
+<tr><td>Phase 2, weeks 7 to 14</td><td>Show that what the agent proposes is worth a commercial manager's attention, and that it knows when to keep quiet.</td><td>Precision on items shown as findings: 85% or better; recall against what the commercial team actually found on that closed project: 80% or better; material items the team missed, found and cited: at least one</td><td>Gate 1</td></tr>
+<tr><td>Phase 3, weeks 15 to 26</td><td>Put the agent beside a live team, in shadow mode with nothing sent, and earn the right to charge.</td><td>Findings actioned rather than only seen: 80% or better; drafts approved with light edits or none: 70% or better; cost per document read: under $0.05 blended</td><td>Gate 2</td></tr>
+<tr><td>Phase 4, months 7 to 12</td><td>Show money kept that the customer will put their name to, and turn one project into a portfolio.</td><td>Exposures surfaced and countersigned: $20M or more on the pilot project; money kept or recovered against the pre-agreed metric: beats the pilot fee by 5x or better; notice deadlines missed: Zero</td><td>Gate 3</td></tr>
+</table>
+<p class="markdown-p"><strong>Annual objective:</strong> Turn one owner's closed archive into a paid, renewed, referenceable claims defence deployment, with the money kept counted by the customer and not by us. <strong>Headline annual key results:</strong> $20M or more of countersigned exposures; pilot conversion to a multi-project contract of $2M or more by month 12.</p></div><div class="foot"><span>Asset Nova · Round 2</span><span>25 / 26</span></div></section>
+<section class="slide slide-26"><div class="kicker">Asset Nova · Round 2 · Slide 26</div><h2>Where this goes</h2><div class="body"><p class="markdown-p">Same reading layer, more skills, in the order the owner will accept them:</p>
+<ul class="markdown-list"><li><strong>During the build:</strong> is the cost forecast honest, is the schedule telling the truth, are the gaps between contractors going to bite.</li><li><strong>In design:</strong> which of the 3,900 late documents actually threaten the finish date.</li><li><strong>At handover:</strong> what's missing before operations will accept the asset.</li><li><strong>Then the loop closes:</strong> every finished project becomes evidence for the next approval vote. That history is the owner's own, and it compounds, which is the part no competitor can copy.</li></ul></div><div class="foot"><span>Asset Nova · Round 2</span><span>26 / 26</span></div></section>
+<div class="nav-hint">← → navigate · F fullscreen</div>
+<script>
+const slides=[...document.querySelectorAll('.slide')];
+let cur=0;
+function show(n){
+  cur=Math.max(0,Math.min(slides.length-1,n));
+  slides.forEach((s,i)=>s.classList.toggle('active',i===cur));
+  document.getElementById('prog').style.width=((cur+1)/slides.length*100)+'%';
+}
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')show(cur+1);
+  else if(e.key==='ArrowLeft'||e.key==='PageUp')show(cur-1);
+  else if(e.key==='Home')show(0);
+  else if(e.key==='f'||e.key==='F')document.documentElement.requestFullscreen?.();
+});
+document.addEventListener('click',e=>{if(e.target.closest('a'))return;show(cur+1)});
+const m=location.hash.match(/slide=(\d+)/);show(m?+m[1]:0);
+if(location.hash.includes('export'))document.querySelector('.nav-hint').style.display='none';
+</script>
+</body>
+</html>
