@@ -513,7 +513,20 @@ Product 3 gets a retrospective demo only in this window: "here are the twelve fl
 
 ---
 
-## SLIDE 25 — Where this goes
+## SLIDE 25 — Product 1 delivery plan on a page
+
+| Phase and weeks | Objective | Key results that matter most | Gate that ends it |
+|---|---|---|---|
+| Phase 1, weeks 1 to 6 | Show that the agent reads one owner's closed project better than a person could in the time available, with nothing invented. | Documents read and correctly typed: 98% or better; dates extracted correctly: 99.5% or better; invented facts: Zero. One occurrence fails the phase | Gate 0 |
+| Phase 2, weeks 7 to 14 | Show that what the agent proposes is worth a commercial manager's attention, and that it knows when to keep quiet. | Precision on items shown as findings: 85% or better; recall against what the commercial team actually found on that closed project: 80% or better; material items the team missed, found and cited: at least one | Gate 1 |
+| Phase 3, weeks 15 to 26 | Put the agent beside a live team, in shadow mode with nothing sent, and earn the right to charge. | Findings actioned rather than only seen: 80% or better; drafts approved with light edits or none: 70% or better; cost per document read: under $0.05 blended | Gate 2 |
+| Phase 4, months 7 to 12 | Show money kept that the customer will put their name to, and turn one project into a portfolio. | Exposures surfaced and countersigned: $20M or more on the pilot project; money kept or recovered against the pre-agreed metric: beats the pilot fee by 5x or better; notice deadlines missed: Zero | Gate 3 |
+
+**Annual objective:** Turn one owner's closed archive into a paid, renewed, referenceable claims defence deployment, with the money kept counted by the customer and not by us. **Headline annual key results:** $20M or more of countersigned exposures; pilot conversion to a multi-project contract of $2M or more by month 12.
+
+---
+
+## SLIDE 26 — Where this goes
 
 Same reading layer, more skills, in the order the owner will accept them:
 

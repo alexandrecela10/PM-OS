@@ -102,12 +102,21 @@ CSS = r"""  :root{
   .slide-18 .quote{margin-bottom:10px;max-width:1180px;font-size:14px;line-height:1.38;padding:10px 18px}
   .slide-19 pre.diagram{font-size:12.5px;line-height:1.34;padding:18px 22px}
   .slide-19 .markdown-p{font-size:15px;line-height:1.4}
-  .slide-20 .markdown-p,.slide-23 .markdown-p,.slide-24 .markdown-list,.slide-25 .markdown-list{font-size:16px;line-height:1.48}
+  .slide-20 .markdown-p,.slide-23 .markdown-p,.slide-24 .markdown-list,.slide-26 .markdown-list{font-size:16px;line-height:1.48}
   .slide-21 .body,.slide-22 .body{justify-content:flex-start;gap:8px}
   .slide-21 .markdown-p,.slide-22 .markdown-p{font-size:13px;line-height:1.3;margin-top:0}
   .slide-21 table,.slide-22 table{font-size:12px}
   .slide-21 th,.slide-22 th{padding:5px 8px;font-size:10px}
   .slide-21 td,.slide-22 td{padding:5px 8px;line-height:1.25}
+  .slide-25 .body{justify-content:flex-start;gap:10px}
+  .slide-25 table{font-size:12px;table-layout:fixed}
+  .slide-25 th{padding:6px 8px;font-size:10px}
+  .slide-25 td{padding:7px 8px;line-height:1.3}
+  .slide-25 th:first-child,.slide-25 td:first-child{width:15%}
+  .slide-25 th:nth-child(2),.slide-25 td:nth-child(2){width:24%}
+  .slide-25 th:nth-child(3),.slide-25 td:nth-child(3){width:46%}
+  .slide-25 th:nth-child(4),.slide-25 td:nth-child(4){width:15%}
+  .slide-25 .markdown-p{font-size:13px;line-height:1.35;margin-top:0}
   .markdown-p{font-size:17px;color:var(--dim);line-height:1.5;margin-top:12px;max-width:1180px}
   .markdown-p strong{color:var(--txt)}
   .markdown-p em{color:var(--dim)}
