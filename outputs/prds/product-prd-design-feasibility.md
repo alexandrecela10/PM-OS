@@ -79,12 +79,12 @@ The machine marks an engineer's work inside the engineer's own workflow. The ans
 
 ### Primary journey: every FEED revision
 
-1. The design team drops a revised drawing set as it already does.
-2. The manager's configured code edition and budget ceilings are applied.
-3. The product checks compliance, affordability and buildability.
-4. The manager receives a cited pass or fail list in minutes.
-5. The manager opens a clause and drawing region, accepts or disputes each finding.
-6. The revised design continues through the existing process. Findings and disputes remain in the record.
+1. Priya Raghavan, the owner's design and engineering manager for Jebel Nasr Train 4, has the Saudi Building Code edition and approved budget ceiling pinned on day one.
+2. On 12 June 2026, the design contractor issues `A-207 rev C` for the process area. The revision lands in the existing transmittal folder, so Priya does nothing different.
+3. In four minutes, the product checks legal, affordable and buildable: fire separation is 1.2m short against Saudi Building Code clause 7.4.2, the change is $6.8M against $4.1M of remaining design allowance, and moving the 132 kV transformer adds 14 weeks to a long-lead order on the critical path.
+4. Priya receives a cited pass or fail list with the clause, page, drawing region, cost model line, approved budget ceiling, purchase order date and P6 activity.
+5. Priya accepts the first finding and disputes the second as "already waived by the authority".
+6. Priya issues `A-207 rev C` with the exception recorded. The dispute reason is stored as a labelled error, and the revision continues through the existing process.
 
 ### Alternate 1: historical FEED backtest
 

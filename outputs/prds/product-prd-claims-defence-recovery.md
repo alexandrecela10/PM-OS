@@ -82,13 +82,13 @@ The team lets software read the most commercially sensitive, sometimes legally p
 
 ### Primary journey: daily ranked queue
 
-1. The owner provides a read-only contract and project archive.
-2. New documents are read and linked to the project record.
-3. The manager opens a queue ranked by money and confidence.
-4. A finding shows the event, the clause, the deadline or calculation, and clickable source pages.
-5. The manager approves, edits or rejects the finding.
-6. The agent drafts the notice or rebuttal.
-7. A named person presses send and the disposition is recorded.
+1. Faisal Al-Harbi, the owner's contracts and commercial manager for Jebel Nasr Train 4, connects five read-only sources: `\JN4\02-Contract\` on SharePoint with 61 PDFs, `JN4-correspondence-2024-2026.zip` from Aconex with 11,482 documents, `\JN4\07-Site\DSR\` with 3,140 PDFs, `JN4-P6-2026-07.xer` with 8,900 activities, and `KEC-IPA-039.pdf`.
+2. On 3 August 2026, KEC submits claim 07, `KEC-CL-007.pdf`, for $40.2M and 96 days of extension across six delay events.
+3. New documents are read and linked to the project record. The agent finds `KEC-L-1987` 41 days after the event in `DSR-2026-02-14`, `KEC-L-2043` addressed to the wrong recipient, and no notice for event 4 in the 11,482 documents.
+4. Faisal opens a queue ranked by money and confidence. The position cites 41 documents: $40.2M claimed, less $12.4M barred, less $5.6M unsupported quantum, leaving $18.0M defensible.
+5. The queue also shows certificate `JN4-MC-004` as 47 days late, or $2.1M at $45k per day, and `KEC-L-2214` as a $3.3M unregistered exposure with 6 days left to reply.
+6. Faisal, with review routing to Omar Zahra and support from Mariam Kassab, approves, edits or rejects the finding.
+7. The agent drafts the notice or rebuttal. A named person presses send and the disposition is recorded.
 
 ### Alternate 1: closed-project proof
 

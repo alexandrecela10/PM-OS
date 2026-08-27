@@ -75,23 +75,39 @@ CSS = r"""  :root{
   .slide-2 .markdown-list{font-size:17px;line-height:1.42}
   .slide-4 .markdown-list{font-size:18px;line-height:1.48}
   .slide-5 pre.diagram,.slide-6 pre.diagram{font-size:12px;line-height:1.3;padding:18px 22px;white-space:pre;overflow:hidden}
-  .slide-8 table,.slide-10 table,.slide-12 table{font-size:14px}
-  .slide-8 .roi-table{table-layout:fixed;font-size:12px}
-  .slide-8 .roi-table th,.slide-8 .roi-table td{padding:5px 8px}
-  .slide-8 .roi-table th:first-child,.slide-8 .roi-table td:first-child{width:48%}
-  .slide-8 .roi-table th:nth-child(2),.slide-8 .roi-table td:nth-child(2){width:24%}
-  .slide-8 .roi-table th:nth-child(3),.slide-8 .roi-table td:nth-child(3){width:28%}
+  .slide-7 .body{justify-content:flex-start;gap:8px}
+  .slide-7 .markdown-p{font-size:13px;line-height:1.3;margin-top:0}
+  .slide-7 table{font-size:11.5px}
+  .slide-7 th{padding:5px 8px;font-size:10px}
+  .slide-7 td{padding:5px 8px;line-height:1.25}
+  .slide-8 .markdown-p,.slide-11 .markdown-p,.slide-14 .markdown-p{font-size:14px;line-height:1.35}
+  .slide-8 .markdown-list,.slide-11 .markdown-list{font-size:14px;line-height:1.3}
+  .slide-8 .markdown-list li,.slide-11 .markdown-list li{margin-bottom:4px}
+  .slide-8 .markdown-p:not(:first-child),.slide-11 .markdown-p:not(:first-child){margin-top:8px}
+  .slide-9 pre.diagram,.slide-12 pre.diagram,.slide-15 pre.diagram{font-size:10px;line-height:1.15;padding:12px 14px;white-space:pre;overflow:hidden}
+  .slide-10 table,.slide-13 table,.slide-16 table{font-size:14px}
+  .slide-10 .roi-table{table-layout:fixed;font-size:12px}
+  .slide-10 .roi-table th,.slide-10 .roi-table td{padding:5px 8px}
+  .slide-10 .roi-table th:first-child,.slide-10 .roi-table td:first-child{width:48%}
+  .slide-10 .roi-table th:nth-child(2),.slide-10 .roi-table td:nth-child(2){width:24%}
+  .slide-10 .roi-table th:nth-child(3),.slide-10 .roi-table td:nth-child(3){width:28%}
   .roi-table tr.money td:not(:first-child){font-family:var(--mono);color:var(--amber);white-space:nowrap}
-  .slide-8 .roi-table tr.money td:not(:first-child){white-space:normal}
+  .slide-10 .roi-table tr.money td:not(:first-child){white-space:normal}
   .roi-table tr.money td b,.roi-table tr.money td strong{color:var(--amber)}
   .roi-table tr.verdict td{background:#13261f;color:var(--green)}
   .roi-table tr.verdict td:nth-child(4){background:#2b2410;color:var(--amber)}
   .roi-table tr.verdict td b,.roi-table tr.verdict td strong{color:inherit}
-  .slide-8 .markdown-p,.slide-10 .markdown-p,.slide-12 .markdown-p{font-size:15px;line-height:1.4}
-  .slide-8 .markdown-p:not(:first-child),.slide-10 .markdown-p:not(:first-child){margin-top:10px}
-  .slide-14 .quote{margin-bottom:10px;max-width:1180px;font-size:14px;line-height:1.38;padding:10px 18px}
-  .slide-15 pre.diagram{font-size:12.5px;line-height:1.34;padding:18px 22px}
-  .slide-16 .markdown-p,.slide-17 .markdown-p,.slide-18 .markdown-list,.slide-19 .markdown-list{font-size:16px;line-height:1.48}
+  .slide-10 .markdown-p,.slide-13 .markdown-p,.slide-16 .markdown-p{font-size:15px;line-height:1.4}
+  .slide-10 .markdown-p:not(:first-child),.slide-13 .markdown-p:not(:first-child){margin-top:10px}
+  .slide-18 .quote{margin-bottom:10px;max-width:1180px;font-size:14px;line-height:1.38;padding:10px 18px}
+  .slide-19 pre.diagram{font-size:12.5px;line-height:1.34;padding:18px 22px}
+  .slide-19 .markdown-p{font-size:15px;line-height:1.4}
+  .slide-20 .markdown-p,.slide-23 .markdown-p,.slide-24 .markdown-list,.slide-25 .markdown-list{font-size:16px;line-height:1.48}
+  .slide-21 .body,.slide-22 .body{justify-content:flex-start;gap:8px}
+  .slide-21 .markdown-p,.slide-22 .markdown-p{font-size:13px;line-height:1.3;margin-top:0}
+  .slide-21 table,.slide-22 table{font-size:12px}
+  .slide-21 th,.slide-22 th{padding:5px 8px;font-size:10px}
+  .slide-21 td,.slide-22 td{padding:5px 8px;line-height:1.25}
   .markdown-p{font-size:17px;color:var(--dim);line-height:1.5;margin-top:12px;max-width:1180px}
   .markdown-p strong{color:var(--txt)}
   .markdown-p em{color:var(--dim)}
@@ -138,7 +154,7 @@ def table_html(lines: list[str], slide_num: int) -> str:
             rows.append(cells)
     if not rows:
         return ""
-    classes = ["roi-table"] if slide_num in {8, 10, 12} else []
+    classes = ["roi-table"] if slide_num in {10, 13, 16} else []
     out = [f'<table class="{" ".join(classes)}">']
     headers, data = rows[0], rows[1:]
     out.append("<tr>" + "".join(f"<th>{inline(cell)}</th>" for cell in headers) + "</tr>")
@@ -147,7 +163,7 @@ def table_html(lines: list[str], slide_num: int) -> str:
         row_classes = []
         if first.lower() in {"total per project", "return", "verdict"}:
             row_classes.append("hl")
-        if slide_num in {8, 10, 12} and any(
+        if slide_num in {10, 13, 16} and any(
             word in first.lower() for word in ("claims submitted", "settled", "defence", "damages", "dispute", "price", "rework", "share caused", "catch half", "value per")
         ):
             row_classes.append("money")
@@ -226,6 +242,7 @@ def render_blocks(body: str, slide_num: int) -> str:
 def build_html() -> str:
     source = SOURCE.read_text()
     sections = re.split(r"(?m)^## SLIDE (\d+) — (.+)$", source)
+    total_slides = (len(sections) - 1) // 3
     slides = []
     for position in range(1, len(sections), 3):
         slide_num = int(sections[position])
@@ -240,7 +257,7 @@ def build_html() -> str:
             f'<section class="slide slide-{slide_num}{" active" if slide_num == 1 else ""}">'
             f'<div class="kicker">Asset Nova · Round 2 · Slide {slide_num}</div>'
             f'{title_markup}<div class="body">{content}</div>'
-            f'<div class="foot"><span>Asset Nova · Round 2</span><span>{slide_num} / 19</span></div></section>'
+            f'<div class="foot"><span>Asset Nova · Round 2</span><span>{slide_num} / {total_slides}</span></div></section>'
         )
     return (
         '<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="UTF-8">\n'
@@ -265,11 +282,12 @@ def export_pptx() -> None:
     screenshots = ROOT / "outputs/prototypes/asset-nova-round2-screenshots"
     screenshots.mkdir(exist_ok=True)
     url = HTML.resolve().as_uri()
+    slide_count = HTML.read_text().count('<section class="slide')
     with sync_playwright() as playwright:
         chrome = shutil.which("google-chrome") or shutil.which("chromium") or shutil.which("chromium-browser")
         browser = playwright.chromium.launch(headless=True, executable_path=chrome)
         page = browser.new_page(viewport={"width": 1440, "height": 900}, device_scale_factor=1)
-        for slide_num in range(1, 20):
+        for slide_num in range(1, slide_count + 1):
             page.goto(f"{url}#slide={slide_num - 1}&export", wait_until="load")
             page.screenshot(path=str(screenshots / f"slide-{slide_num:02d}.png"), full_page=False)
         browser.close()
@@ -278,7 +296,7 @@ def export_pptx() -> None:
     prs.slide_width = Inches(13.333333)
     prs.slide_height = Inches(7.5)
     blank = prs.slide_layouts[6]
-    for slide_num in range(1, 20):
+    for slide_num in range(1, slide_count + 1):
         slide = prs.slides.add_slide(blank)
         slide.shapes.add_picture(
             str(screenshots / f"slide-{slide_num:02d}.png"),

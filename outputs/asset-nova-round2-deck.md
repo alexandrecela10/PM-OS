@@ -99,23 +99,101 @@ The greyed items are the roadmap. Each one reuses the same reading layer, so the
 
 ---
 
-## SLIDE 7 — Product 1: what it actually does
+## SLIDE 7 — One project, one team, one week: the scenario the rest of this deck uses
 
-For the owner's contracts and commercial manager on a live build.
+**The project.** Jebel Nasr Train 4, a $5.2bn gas processing train for a Gulf national oil company. Lump-sum EPC contract with Kaisan Engineering & Construction (KEC), signed with 14 amendments to date. Month 26 of a 48-month build. Late-delivery damages run at $45k per day, capped at 10% of contract value. Claim notices are due within 28 days of the event, and must go to the named recipient.
 
-It reads the contract, the letters, the schedule updates and the site reports, every day, and keeps a running list of money moves worth making:
+**The people.**
 
-- "This $40M claim rests on six events. On three of them the contractor missed its own notice deadline. Here's the rebuttal, with the letters cited."
-- "You can charge $2.1M of late-delivery damages this month. Here's the calculation and the evidence."
-- "This letter, dated 14 May, signals a claim that isn't in your risk register yet."
+| Name | Role | Which product |
+|---|---|---|
+| Faisal Al-Harbi | Owner's contracts and commercial manager, Jebel Nasr Train 4. Team of four. | Product 1, the buyer and the user |
+| Mariam Kassab | Senior quantity surveyor in Faisal's team | Product 1, second user |
+| Omar Zahra | Owner's in-house counsel | Product 1, review routing |
+| Priya Raghavan | Owner's design and engineering manager | Product 2, the user |
+| Tom Beckett | Project director, Jebel Nasr | Product 3, the sponsor |
+| Layla Haddad | Lead estimator, capital projects | Product 3, the user who gets challenged |
 
-Every item shows the money at stake, how confident the agent is, and the documents behind it. The manager approves, edits or rejects. The agent writes the letter. A person sends it.
+**Day one, the only setup Faisal does: three read-only connections.** No migration, no new system of record.
+
+| Source | What it is | Volume at connection |
+|---|---|---|
+| `\JN4\02-Contract\` on SharePoint | The EPC contract, 14 amendments, the particular conditions | 61 PDFs |
+| `JN4-correspondence-2024-2026.zip` exported from Aconex | Letters, transmittals, notices, minutes | 11,482 documents |
+| `\JN4\07-Site\DSR\` | Daily site reports, about 30 a week | 3,140 PDFs |
+| `JN4-P6-2026-07.xer` | The monthly schedule update from P6 | 1 file, 8,900 activities |
+| `KEC-IPA-039.pdf` | The current interim payment application | 1 file |
+
+Names, clauses and companies are illustrative for a case study.
+
+---
+
+## SLIDE 8 — Product 1: what it actually does, in Faisal's week
+
+For Faisal Al-Harbi, the owner's contracts and commercial manager on Jebel Nasr Train 4. His team of four connects the existing record once, then starts with the event that matters: on 3 August 2026, KEC submits claim 07, `KEC-CL-007.pdf`, for $40.2M and 96 days of extension, built on six delay events.
+
+The agent reads the contract, letters, schedule update and site reports overnight, then gives Faisal a cited position:
+
+- **Event 2 notice was late.** `KEC-L-1987`, dated 41 days after the event in `DSR-2026-02-14`. The 28-day requirement means 13 days late, so the event is barred.
+- **Event 4 has no notice at all.** No notice appears in the 11,482 documents.
+- **Event 5 went to the wrong recipient.** `KEC-L-2043` is addressed to the site manager, not the named recipient. Defective notice.
+- **Events 1, 3 and 6 were properly notified.** Their notices are found and valid.
+- **Position.** 41 documents cited. $40.2M claimed, less $12.4M barred, less $5.6M of quantum the record does not support, leaves **$18.0M defensible**.
+- **Milestone 4 was certified 47 days late.** Certificate `JN4-MC-004` against the milestone date in the contract means 47 days at $45k, or **$2.1M** chargeable this month.
+- **An unregistered exposure.** `KEC-L-2214` of 14 May 2026 signals a claim not in the risk register: **$3.3M**, with 6 days left to reply.
+
+Every item shows the money at stake, how confident the agent is, and the documents behind it. Faisal approves, edits or rejects. The agent writes the letter. A person sends it.
 
 Two things make it credible: it never sends anything itself, and every line clicks through to a page in a real document.
 
 ---
 
-## SLIDE 8 — Product 1: what it's worth, and what it costs you
+## SLIDE 9 — How Product 1 works, end to end
+
+```
+INPUT                        PROCESSING                          ACTION                     DETERMINISTIC OR AGENTIC
+contract + 14 amendments  →  parse, split by clause      [code]
+                             extract obligations,
+                             notice windows, recipients  [model]
+                                    ↓
+letters, notices,         →  classify document type      [model]   →  link to the timeline    deterministic write
+minutes (11,482)             extract dates, parties,               [code]                     (a link, not an opinion)
+                             the event referred to       [model]
+                                    ↓
+daily site reports        →  extract event facts:        [model]
+(3,140)                      what stopped, where, when
+                                    ↓
+P6 update (.xer)          →  read dates and float        [code]
+                                    ↓
+                             ONE PROJECT RECORD: events, obligations, deadlines, documents
+                                    ↓
+                             notice window test          [code]   →  event valid / barred      deterministic, always
+                             damages calculation         [code]   →  47 days x $45k = $2.1M    deterministic, always
+                             quantum bounds              [code]   →  supported / unsupported   deterministic, always
+                                    ↓
+                             build the position          [model]  →  a ranked finding with     agentic proposal,
+                             (event to clause mapping,               a money number and an     never an action
+                             evidence selection)                     evidence chain
+                                    ↓
+                             citation check              [code]   →  no citation, no finding   deterministic veto
+                                    ↓
+                             HUMAN REVIEW               [human]   →  approve / edit / reject   the only gate that
+                                                                                               releases anything
+                                    ↓
+                             draft the notice or         [model]  →  a document in the         agentic drafting,
+                             rebuttal                                owner's own template      zero send authority
+                                    ↓
+                             send                       [human]   →  a person presses send     never the agent
+                                    ↓
+                             record the outcome          [code]   →  settled at what number,   deterministic learning
+                                                                     which findings held        signal
+```
+
+Autonomy, stated plainly: the agent is autonomous about reading, linking, calculating and proposing. It has no autonomy over anything that leaves the building.
+
+---
+
+## SLIDE 10 — Product 1: what it's worth, and what it costs you
 
 **Value (money).** On a $5bn project, our conservative model:
 
@@ -138,15 +216,17 @@ Two things make it credible: it never sends anything itself, and every line clic
 
 ---
 
-## SLIDE 9 — Product 2: what it actually does
+## SLIDE 11 — Product 2: what it actually does, in Priya's week
 
-For the owner's design and engineering manager during design.
+For Priya Raghavan, the owner's design and engineering manager on Jebel Nasr Train 4. On 12 June 2026, the design contractor issues sheet `A-207 rev C` for the process area. Priya does nothing different: the revision lands in the same transmittal folder it always did.
 
-Every time a drawing set is revised, the agent checks three things in minutes and hands back a cited pass or fail list:
+Three checks run in four minutes and hand back a cited pass or fail list:
 
-- **Is it legal?** Checked against the building code that applies (Saudi Building Code, Dubai Building Code).
-- **Is it affordable?** Checked against the budget ceiling for that part of the works.
-- **Can it be built?** Clashes, access, and equipment with long delivery times that the sequence assumes will be there.
+- **Legal.** Fire separation is 1.2 m short. The fire chapter of the Saudi Building Code, clause 7.4.2, is quoted verbatim with the page, next to the drawing region.
+- **Affordable.** The change costs $6.8M against $4.1M of remaining design allowance. The cost model line and the approved budget ceiling are shown.
+- **Buildable.** Moving the 132 kV transformer adds 14 weeks to a long-lead order already on the critical path. The purchase order date and the P6 activity are shown.
+
+Priya accepts the first finding, disputes the second as "already waived by the authority", and issues the revision with the exception recorded. The dispute becomes a labelled error we report on.
 
 It's a spell-check for feasibility. It catches the error while it costs thousands, not the tens of millions it becomes once it's in the ground.
 
@@ -154,7 +234,41 @@ Strongest demand signal in the market: Dubai Municipality is building a system t
 
 ---
 
-## SLIDE 10 — Product 2: what it's worth, and what it costs you
+## SLIDE 12 — How Product 2 works, end to end
+
+```
+INPUT                        PROCESSING                          ACTION                     DETERMINISTIC OR AGENTIC
+code edition, pinned      →  index clauses, keep the     [code]
+by Priya on day one          page and the exact text
+budget ceiling, pinned    →  store as a number           [code]
+                                    ↓
+drawing / document        →  detect the revision,        [code]   →  start a check run        deterministic trigger
+revision (A-207 rev C)       diff against rev B                                              (no human asked for it)
+                             read geometry, labels,      [model]
+                             specified materials
+                                    ↓
+                             LEGAL     clause retrieval  [code]
+                                       clause-to-drawing [model]  →  finding, clause quoted   agentic proposal
+                                       comparison                    verbatim + drawing region
+                             AFFORDABLE cost delta       [code]   →  $6.8M vs $4.1M left      deterministic
+                             BUILDABLE  clash geometry   [code]
+                                        long-lead dates  [code]   →  14 weeks on a critical   deterministic
+                                                                     path order
+                                    ↓
+                             citation check              [code]   →  no clause text, no       deterministic veto
+                                                                     finding
+                                    ↓
+                             HUMAN VERDICT              [human]   →  accept / dispute /       advisory, never blocking:
+                                                                     accept with a waiver     the revision can always
+                                                                                              be issued
+                                    ↓
+                             record the dispute reason   [code]   →  a labelled error         deterministic learning
+                                                                                              signal
+```
+
+---
+
+## SLIDE 13 — Product 2: what it's worth, and what it costs you
 
 **Value (money).** On a $5bn project:
 
@@ -175,14 +289,13 @@ Strongest demand signal in the market: Dubai Municipality is building a system t
 
 ---
 
-## SLIDE 11 — Product 3: what it does, and why it waits
+## SLIDE 14 — Product 3: what it does, and why it waits
 
-For the project director, the lead estimator and the investment committee, at the approval vote.
+For Tom Beckett, project director of Jebel Nasr, and Layla Haddad, lead estimator for capital projects. Product 3 runs once per gate, later. Train 5 goes to the investment committee with a $6.1bn estimate and 8% contingency.
 
-Before the board commits, the agent pressure-tests the number: it compares this project against how comparable past projects actually turned out, audits the design package for the gaps that predict overruns, and writes the challenge book for the gate meeting.
+Before it is used forward, the agent runs backwards on 14 of the owner's own finished projects and shows what it would have said about each. Layla gets the challenge book first, privately. The agent asks nine questions and casts no vote.
 
-- "This project looks like a group that overran 60%. Here are its nine weakest scope items."
-- "Your productivity assumption is above what comparable Gulf projects actually achieved."
+The agent pressure-tests the number: it compares this project against how comparable past projects actually turned out, audits the design package for the gaps that predict overruns, and writes the challenge book for the gate meeting.
 
 Why it waits: it needs the owner's own project history, and it tells the most senior people in the room that their number is wrong. That's a sale you make once you're already trusted and already inside the data. Products 1 and 2 buy that position.
 
@@ -190,7 +303,35 @@ The prize is the biggest, though: EY finds a 23% average overrun **after** appro
 
 ---
 
-## SLIDE 12 — The three side by side
+## SLIDE 15 — How Product 3 works, end to end
+
+```
+INPUT                        PROCESSING                          ACTION                     DETERMINISTIC OR AGENTIC
+14 finished owner         →  extract sanctioned vs       [model]
+projects                     final cost and date         [code]
+                                    ↓
+                             REFERENCE CLASS: median growth, spread   [code]
+                                    ↓
+this gate's estimate,     →  definition completeness     [model]  →  what is missing from     agentic proposal
+basis of estimate,           audit against the owner's                the definition at this
+schedule, contingency        own gate standard                        gate
+                             contingency vs the          [code]   →  8% asked, 23% median     deterministic
+                             reference class                          historical growth
+                                    ↓
+                             citation check              [code]   →  every number traced to   deterministic veto
+                                                                     a source document
+                                    ↓
+                             PRIVATE PRE-READ to the     [human]  →  the estimator sees it    no surprise in the room
+                             estimator and sponsor                    first and can respond
+                             challenge book: nine        [model]  →  questions, not a         the agent never votes
+                             questions with evidence                 recommendation
+```
+
+The agent never votes. It gives Layla and Tom a cited set of questions before the gate meeting.
+
+---
+
+## SLIDE 16 — The three side by side
 
 | | **1. Claims defence & recovery** | **2. Design feasibility** | **3. Approval red team** |
 |---|---|---|---|
@@ -207,7 +348,7 @@ The rule behind the order: value divided by (effort + sacrifice), with delivery 
 
 ---
 
-## SLIDE 13 — The adoption promise (this is the real product decision)
+## SLIDE 17 — The adoption promise (this is the real product decision)
 
 The fastest way to lose this market is to ask a project team to change how it works mid-project. So we commit to six rules:
 
@@ -222,7 +363,7 @@ That last one matters commercially: ADNOC signed a $340M three-year agentic-AI c
 
 ---
 
-## SLIDE 14 — Proof from people who live it
+## SLIDE 18 — Proof from people who live it
 
 > "The difference between the amount submitted for a claim versus the amount actually paid at settlement... is as much as half. The owner too must ensure profitability of his project by defending unsupportable claims by a 'low ball' contractor."
 > IPA via National Academies and Long International. *Product 1, stated from the owner's seat.*
@@ -246,7 +387,7 @@ Honest gap: no on-record Aramco or ADNOC executive naming a claims, estimating o
 
 ---
 
-## SLIDE 15 — How it works, in one picture
+## SLIDE 19 — How it works, in one picture
 
 ```
   FILES THE OWNER ALREADY HAS
@@ -276,10 +417,11 @@ Two engineering commitments behind that picture:
 
 - **The hard maths is deterministic, the soft reading is the model's job.** Deadlines, damages and cost bounds are computed in code so they're always reproducible. The model reads and proposes, it doesn't do the arithmetic that ends up in a letter.
 - **Nothing ships without an eval.** Each skill has a scored test set built from closed projects: did it find the events a specialist found, did it invent anything, did it get the deadline right. Releases are gated on those scores.
+- The per-product diagrams are the detail behind that picture.
 
 ---
 
-## SLIDE 16 — How we'll know it's working
+## SLIDE 20 — How we'll know it's working
 
 **Business.** Money kept or recovered per project (the number the pilot is judged on), pilot to contract conversion, share of project value captured in price.
 
@@ -289,7 +431,65 @@ Two engineering commitments behind that picture:
 
 ---
 
-## SLIDE 17 — Risks, and what we do about them
+## SLIDE 21 — What success looks like for the agent
+
+Four gates, in order. Nothing moves to the next gate until the previous one passes. Each gate has a pass mark and a stop rule, and each is measured on the owner's own closed projects before it is measured on a live one.
+
+**Gate 0. Reading is trustworthy (offline, closed project archive)**
+
+| What we measure | Pass mark |
+|---|---|---|
+| Documents read and correctly typed | 98% or better | Below this, the record has holes and every later number is suspect |
+| Dates extracted correctly | 99.5% or better | A wrong date is a wrong deadline, which is the one error the product cannot survive |
+| Documents refused and queued for human | Reported, not hidden; under 5% of volume |
+| Invented facts | Zero. Any occurrence blocks the gate |
+
+**Gate 1. Findings are worth a person's attention (offline, against a specialist's own conclusions)**
+
+| What we measure | Pass mark |
+|---|---|
+| Precision on findings shown as findings | 85% or better |
+| Recall against commercial team’s closed-project findings | 80% or better, and at least one material item they missed |
+| Evidence chain accuracy | 99.5% or better |
+| Deadline arithmetic | 100% |
+| Low-confidence items shown as “watching” | 100% |
+
+Stop rule: precision below 60% after eight weeks means return to Gate 0.
+
+---
+
+## SLIDE 22 — What success looks like for the agent (continued)
+
+**Gate 2. A human agrees, in practice (shadow mode on a live project, nothing sent)**
+
+| What we measure | Pass mark |
+|---|---|
+| Findings actioned rather than only seen | 80% or better |
+| Drafts approved with minor edits or none | 70% or better |
+| Override rate | Falling week on week |
+| Digest ignored two days running | Under 10% of weeks |
+| Cost per document read | Under $0.05 blended |
+
+Stop rule: four straight weeks without review pauses the pilot.
+
+**Gate 3. It changed the money (live pilot, the number the pilot is judged on)**
+
+| What we measure | Pass mark |
+|---|---|
+| Exposures surfaced and countersigned | $20M or more per pilot project |
+| Notice deadlines missed on covered scope | Zero |
+| Money kept or recovered agreed before pilot | Beats pilot fee by 5x or better |
+| Findings surviving to settlement | Reported honestly, including failures |
+
+**The one number for each product**
+
+- Product 1: money kept or recovered per project, countersigned by the customer.
+- Product 2: share of flagged findings that would have become field changes, measured on closed revision history, with dispute rate as honest counter-metric.
+- Product 3: gate decisions changed, meaning contingency raised, scope re-cut, or approval deferred, with estimator agreement that the question was fair.
+
+---
+
+## SLIDE 23 — Risks, and what we do about them
 
 | Risk | What we do |
 |---|---|
@@ -302,7 +502,7 @@ Two engineering commitments behind that picture:
 
 ---
 
-## SLIDE 18 — First 90 days
+## SLIDE 24 — First 90 days
 
 - **Days 1–15.** Ten interviews: owner contracts managers, design managers, one estimator, one investment-committee member. Validate the $400M claims-submission assumption against a real portfolio.
 - **Days 16–45.** Product 1 on one closed project's archive. Success test: it finds what the commercial team found, plus at least one thing they missed, all cited.
@@ -313,7 +513,7 @@ Product 3 gets a retrospective demo only in this window: "here are the twelve fl
 
 ---
 
-## SLIDE 19 — Where this goes
+## SLIDE 25 — Where this goes
 
 Same reading layer, more skills, in the order the owner will accept them:
 

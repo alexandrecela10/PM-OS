@@ -12,15 +12,37 @@ For every FEED design revision, return a fast, cited check of compliance, afford
 
 ## Nine-step pipeline
 
-1. **Read and file:** every drawing page is split, dated, versioned, and tagged to a discipline, region and revision.
-2. **Build the record:** link revisions, prior comments, open findings, code clauses, budget ceilings and affected activities.
-3. **Apply the rules:** apply code clauses, cost bounds and deterministic geometry or schedule checks. Arithmetic is code, not opinion.
-4. **Reason over it:** assess whether the revision closes prior comments, is likely compliant, and can be built in the stated sequence.
-5. **Size the money:** estimate the value at stake, confidence and consequence of leaving the issue open.
-6. **Show the working:** cite the code clause, drawing page and region. No citation, no finding.
-7. **A human decides:** the design manager accepts, disputes or defers each finding.
-8. **Draft the action:** create the cited review list for the existing design workflow.
-9. **Learn from the outcome:** record disputes, accepted findings and field changes that later confirm or disprove the finding.
+```text
+INPUT                        PROCESSING                          ACTION                     DETERMINISTIC OR AGENTIC
+code edition, pinned      →  index clauses, keep the     [code]
+by Priya on day one          page and the exact text
+budget ceiling, pinned    →  store as a number           [code]
+                                    ↓
+drawing / document        →  detect the revision,        [code]   →  start a check run        deterministic trigger
+revision (A-207 rev C)       diff against rev B                                              (no human asked for it)
+                             read geometry, labels,      [model]
+                             specified materials
+                                    ↓
+                             LEGAL     clause retrieval  [code]
+                                       clause-to-drawing [model]  →  finding, clause quoted   agentic proposal
+                                       comparison                    verbatim + drawing region
+                             AFFORDABLE cost delta       [code]   →  $6.8M vs $4.1M left      deterministic
+                             BUILDABLE  clash geometry   [code]
+                                        long-lead dates  [code]   →  14 weeks on a critical   deterministic
+                                                                     path order
+                                    ↓
+                             citation check              [code]   →  no clause text, no       deterministic veto
+                                                                     finding
+                                    ↓
+                             HUMAN VERDICT              [human]   →  accept / dispute /       advisory, never blocking:
+                                                                     accept with a waiver     the revision can always
+                                                                                              be issued
+                                    ↓
+                             record the dispute reason   [code]   →  a labelled error         deterministic learning
+                                                                                              signal
+```
+
+The check is advisory, never blocking. The revision can always be issued.
 
 ## Deterministic code vs model reasoning
 
@@ -58,6 +80,52 @@ The ROI estimator records the affected work package, the modelled rework or dela
 The design manager sees the cited pass or fail list on one screen. Findings are advisory, never blocking. The manager accepts, disputes or defers. A disputed finding carries the reason and can be reviewed in later revisions. No drawing is altered and no permit is submitted by the system.
 
 ## Evaluation design
+
+### Gate 0: Reading is trustworthy
+
+| What we measure | Pass mark |
+|---|---|
+| Documents read and correctly typed | 98% or better |
+| Dates extracted correctly | 99.5% or better |
+| Documents refused and queued for human | Reported, not hidden; under 5% of volume |
+| Invented facts | Zero. Any occurrence blocks the gate |
+
+### Gate 1: Findings are worth a person's attention
+
+| What we measure | Pass mark |
+|---|---|
+| Precision on findings shown as findings | 85% or better |
+| Recall against commercial team's closed-project findings | 80% or better, and at least one material item they missed |
+| Evidence chain accuracy | 99.5% or better |
+| Deadline arithmetic | 100% |
+| Low-confidence items shown as "watching" | 100% |
+
+Stop rule: precision below 60% after eight weeks means return to Gate 0.
+
+### Gate 2: A human agrees, in practice
+
+| What we measure | Pass mark |
+|---|---|
+| Findings actioned rather than only seen | 80% or better |
+| Drafts approved with minor edits or none | 70% or better |
+| Override rate | Falling week on week |
+| Digest ignored two days running | Under 10% of weeks |
+| Cost per document read | Under $0.05 blended |
+
+Stop rule: four straight weeks without review pauses the pilot.
+
+### Gate 3: It changed the money
+
+| What we measure | Pass mark |
+|---|---|
+| Exposures surfaced and countersigned | $20M or more per pilot project |
+| Notice deadlines missed on covered scope | Zero |
+| Money kept or recovered agreed before pilot | Beats pilot fee by 5x or better |
+| Findings surviving to settlement | Reported honestly, including failures |
+
+### Product 2 success number
+
+Share of flagged findings that would have become field changes, measured on closed revision history, with dispute rate as honest counter-metric.
 
 Build golden sets from closed FEED revision histories and compare recall with a specialist's own findings and the field changes that actually occurred. Include:
 

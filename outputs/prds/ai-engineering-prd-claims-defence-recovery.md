@@ -12,15 +12,46 @@ Read the owner's contract and live project record, surface claimable or at-risk 
 
 ## Nine-step pipeline
 
-1. **Read and file:** every page is split, dated, and tagged to a party, drawing or activity.
-2. **Build the record:** create one linked timeline of events, obligations, revisions and deadlines.
-3. **Apply the rules:** calculate deadline maths, code clauses and cost bounds. This is arithmetic, not opinion.
-4. **Reason over it:** decide whether an event triggers a clause and whether evidence closes a previous issue.
-5. **Size the money:** estimate value at stake, confidence and what happens if the owner does nothing.
-6. **Show the working:** attach citations to every finding. No citation, no finding.
-7. **A human decides:** approve, edit or reject on a queue ranked by money.
-8. **Draft the action:** produce the letter, rebuttal pack or challenge book.
-9. **Learn from the outcome:** capture what was approved, rejected and what the settlement actually was.
+```text
+INPUT                        PROCESSING                          ACTION                     DETERMINISTIC OR AGENTIC
+contract + 14 amendments  →  parse, split by clause      [code]
+                             extract obligations,
+                             notice windows, recipients  [model]
+                                    ↓
+letters, notices,         →  classify document type      [model]   →  link to the timeline    deterministic write
+minutes (11,482)             extract dates, parties,               [code]                     (a link, not an opinion)
+                             the event referred to       [model]
+                                    ↓
+daily site reports        →  extract event facts:        [model]
+(3,140)                      what stopped, where, when
+                                    ↓
+P6 update (.xer)          →  read dates and float        [code]
+                                    ↓
+                             ONE PROJECT RECORD: events, obligations, deadlines, documents
+                                    ↓
+                             notice window test          [code]   →  event valid / barred      deterministic, always
+                             damages calculation         [code]   →  47 days x $45k = $2.1M    deterministic, always
+                             quantum bounds              [code]   →  supported / unsupported   deterministic, always
+                                    ↓
+                             build the position          [model]  →  a ranked finding with     agentic proposal,
+                             (event to clause mapping,               a money number and an     never an action
+                             evidence selection)                     evidence chain
+                                    ↓
+                             citation check              [code]   →  no citation, no finding   deterministic veto
+                                    ↓
+                             HUMAN REVIEW               [human]   →  approve / edit / reject   the only gate that
+                                                                                               releases anything
+                                    ↓
+                             draft the notice or         [model]  →  a document in the         agentic drafting,
+                             rebuttal                                owner's own template      zero send authority
+                                    ↓
+                             send                       [human]   →  a person presses send     never the agent
+                                    ↓
+                             record the outcome          [code]   →  settled at what number,   deterministic learning
+                                                                     which findings held        signal
+```
+
+The agent is autonomous about reading, linking, calculating and proposing. It has no autonomy over anything that leaves the building.
 
 ## Deterministic code vs model reasoning
 
@@ -60,6 +91,52 @@ ROI is also code. It stores the source amount, the calculation path, the avoided
 Every surfaced item enters a queue ranked by money at stake and confidence. A named customer approver must approve, edit or reject it. The system has no `send` action. Only an approved draft can be handed to the customer's existing outbound process. Self-approval and unknown approvers are rejected. The audit trail records the finding, evidence, calculation, draft, edits and final disposition.
 
 ## Evaluation design
+
+### Gate 0: Reading is trustworthy
+
+| What we measure | Pass mark |
+|---|---|
+| Documents read and correctly typed | 98% or better |
+| Dates extracted correctly | 99.5% or better |
+| Documents refused and queued for human | Reported, not hidden; under 5% of volume |
+| Invented facts | Zero. Any occurrence blocks the gate |
+
+### Gate 1: Findings are worth a person's attention
+
+| What we measure | Pass mark |
+|---|---|
+| Precision on findings shown as findings | 85% or better |
+| Recall against commercial team's closed-project findings | 80% or better, and at least one material item they missed |
+| Evidence chain accuracy | 99.5% or better |
+| Deadline arithmetic | 100% |
+| Low-confidence items shown as "watching" | 100% |
+
+Stop rule: precision below 60% after eight weeks means return to Gate 0.
+
+### Gate 2: A human agrees, in practice
+
+| What we measure | Pass mark |
+|---|---|
+| Findings actioned rather than only seen | 80% or better |
+| Drafts approved with minor edits or none | 70% or better |
+| Override rate | Falling week on week |
+| Digest ignored two days running | Under 10% of weeks |
+| Cost per document read | Under $0.05 blended |
+
+Stop rule: four straight weeks without review pauses the pilot.
+
+### Gate 3: It changed the money
+
+| What we measure | Pass mark |
+|---|---|
+| Exposures surfaced and countersigned | $20M or more per pilot project |
+| Notice deadlines missed on covered scope | Zero |
+| Money kept or recovered agreed before pilot | Beats pilot fee by 5x or better |
+| Findings surviving to settlement | Reported honestly, including failures |
+
+### Product 1 success number
+
+Money kept or recovered per project, countersigned by customer.
 
 Build golden sets from closed projects and compare recall with a specialist's retrospective findings. Include:
 

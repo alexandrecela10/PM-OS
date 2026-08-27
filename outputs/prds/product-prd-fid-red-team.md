@@ -68,16 +68,16 @@ When those conditions are true, v1 can:
 
 ### Primary journey: approval challenge book
 
-1. The owner assembles the proposal, design package and comparable project history.
-2. The product compares assumptions and audits under-defined scope.
-3. It produces a cited list of flags, including the evidence behind each comparison.
-4. The project director and estimator review the ranked challenge book.
-5. The investment committee accepts, edits or rejects each challenge before the vote.
-6. The decision and later outcome are stored for the next approval.
+1. Tom Beckett, project director for Jebel Nasr, brings Train 5 to the investment committee with a $6.1bn estimate and 8% contingency. Layla Haddad, lead estimator for capital projects, owns the estimate.
+2. Before forward use, the owner gives the product the history of 14 finished owner projects. The product compares the Train 5 assumptions and audits under-defined scope against that reference class.
+3. It produces a cited challenge book of nine questions, including what is missing from the definition at this gate and how the 8% contingency compares with the 23% median historical growth.
+4. Layla receives the private pre-read first and can respond before Tom takes the questions to the gate meeting.
+5. The investment committee accepts, edits or rejects each question before the vote. The agent asks questions and casts no vote.
+6. The gate decision and later outcome are stored for the next approval.
 
 ### Alternate 1: retrospective demo
 
-Before any sale, run the product on the last approval and show the twelve flags it would have raised. Use this only as a trust-building demonstration, not as a promise that the next vote is safe.
+Before any sale, run the product on the last approval and show the questions it would have raised. Use this only as a trust-building demonstration, not as a promise that the next vote is safe.
 
 ### Alternate 2: history clean-up
 
