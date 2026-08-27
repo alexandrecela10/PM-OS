@@ -97,6 +97,18 @@
   .step.done{color:var(--green);border-color:#1d3b30}
   .toast{position:fixed;bottom:24px;right:24px;background:var(--green);color:#04110b;font-weight:600;padding:12px 18px;border-radius:10px;transform:translateY(80px);opacity:0;transition:all .5s}
   .toast.show{transform:none;opacity:1}
+  /* throwaway on-demand view */
+  .overlay{position:fixed;inset:0;background:rgba(4,7,12,.72);display:none;align-items:center;justify-content:center;z-index:50}
+  .overlay.show{display:flex;animation:fade .3s}
+  .brief{width:720px;max-height:82vh;overflow-y:auto;background:var(--panel);border:1px solid var(--accent);border-radius:14px;padding:24px 28px;box-shadow:0 0 60px rgba(79,142,247,.2)}
+  .brief .ephemeral{display:inline-block;font-family:var(--mono);font-size:10px;color:var(--purple);background:#1e1a2e;border:1px solid #2e2846;padding:2px 8px;border-radius:6px;margin-bottom:12px}
+  .brief h4{font-size:15px;margin-bottom:4px}
+  .brief .sub{font-size:11.5px;color:var(--faint);margin-bottom:14px}
+  .brief table{border-collapse:collapse;width:100%;font-size:12px;margin-bottom:14px}
+  .brief td{padding:7px 9px;border-bottom:1px solid var(--line);color:var(--dim)}
+  .brief td b{color:var(--txt)}
+  .brief .typing{font-size:12.5px;color:var(--dim);line-height:1.65;border-top:1px solid var(--line);padding-top:12px;min-height:120px;white-space:pre-wrap}
+  .brief .cursor{display:inline-block;width:7px;height:13px;background:var(--accent);animation:pulse 1s infinite;vertical-align:-2px}
 </style>
 </head>
 <body>
@@ -252,6 +264,9 @@
           <div class="status">waiting on agents</div>
         </div>
       </div>
+      <div class="btnrow">
+        <button class="primary" onclick="renderBrief()">⚡ Render stewardship brief — on demand</button>
+      </div>
       <div class="gov">
         <div class="g"><b>Who owns decisions</b>R. Khalid (Contracts Lead) approved the notice. Agent owner: PMO Director. Every action attributable, logged, reversible.</div>
         <div class="g"><b>Out of scope → escalate</b>Anything beyond registered project scope is refused and escalated. No silent drops: low-confidence items queue for triage.</div>
@@ -262,6 +277,26 @@
 </div>
 
 <div class="toast" id="toast">✓ Notice approved — orchestrating downstream agents</div>
+
+<!-- THROWAWAY VIEW: rendered on demand, never persisted -->
+<div class="overlay" id="overlay" onclick="if(event.target===this)closeBrief()">
+  <div class="brief">
+    <span class="ephemeral">⚡ RENDERED ON DEMAND · NOT SAVED · REGENERATED FROM THE RECORD EACH TIME</span>
+    <h4>Stewardship brief — EV-047 · Area 7 differing site conditions</h4>
+    <div class="sub">Compiled for PMO Director · Monday stewardship meeting · sources: 6 documents, 3 agents · audit #8842</div>
+    <table>
+      <tr><td><b>Exposure</b></td><td>$42.3M (cost + prolongation), 11 wks critical-path impact</td></tr>
+      <tr><td><b>Notice status</b></td><td>JGX-NTC-0047 approved by R. Khalid · sent within GC 4.12 window (6 days to spare)</td></tr>
+      <tr><td><b>Evidence pack</b></td><td>EP-047 · 6 documents · controls-mapped by ComplyNova</td></tr>
+      <tr><td><b>Downstream</b></td><td>Re-book pile rig +2wks · hold steel call-off saves $1.8M (FlowNova)</td></tr>
+      <tr><td><b>Schedule</b></td><td>9 challenge questions drafted for contractor review (Schedule Interrogator)</td></tr>
+    </table>
+    <div class="typing" id="briefText"></div>
+    <div class="btnrow" style="margin-top:6px">
+      <button onclick="closeBrief()">Discard view</button>
+    </div>
+  </div>
+</div>
 
 <script>
 // ---- left feed animation ----
@@ -320,6 +355,24 @@ function runOrchestration(){
   seq.forEach((f,i)=>setTimeout(f,600+i*1100));
 }
 function wire(id){document.getElementById(id).classList.add('live')}
+// ---- throwaway brief: typed out live, discarded on close (no dashboard persists) ----
+const briefCopy = "Recommendation: proceed with formal particulars under GC 4.12(b). The contractor's informal reservation (C-1187) does not satisfy notice requirements \u2014 our position is protected either way. Hold the Area 7 steel call-off pending revised piling methodology; FlowNova estimates $1.8M avoidable commitment. Raise the 9 schedule challenge questions at Thursday's review before agreeing any re-baseline. No other events within 30 days of a notice bar.";
+let typeTimer=null;
+function renderBrief(){
+  const o=document.getElementById('overlay'); o.classList.add('show');
+  const el=document.getElementById('briefText'); el.innerHTML='';
+  let i=0; clearInterval(typeTimer);
+  typeTimer=setInterval(()=>{
+    i+=3;
+    el.innerHTML=briefCopy.slice(0,i)+'<span class="cursor"></span>';
+    if(i>=briefCopy.length){el.textContent=briefCopy;clearInterval(typeTimer)}
+  },18);
+}
+function closeBrief(){
+  clearInterval(typeTimer);
+  document.getElementById('overlay').classList.remove('show');
+  document.getElementById('briefText').textContent='';
+}
 function on(id,msg){const n=document.getElementById(id);n.classList.add('on');n.querySelector('.status').textContent=msg}
 function done(id,msg){const n=document.getElementById(id);n.classList.remove('on');n.classList.add('done');n.querySelector('.status').textContent=msg}
 </script>

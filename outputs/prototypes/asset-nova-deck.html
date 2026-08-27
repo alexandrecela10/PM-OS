@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Asset Nova — Case Study Deck</title>
+<style>
+  :root{
+    --bg:#0a0e14; --panel:#11161f; --panel2:#161d29; --line:#1f2937;
+    --txt:#e5eaf2; --dim:#8b95a7; --faint:#5b6474;
+    --accent:#4f8ef7; --green:#34d399; --amber:#fbbf24; --red:#f87171;
+    --purple:#a78bfa; --cyan:#22d3ee;
+    --mono:'SF Mono',ui-monospace,Menlo,monospace;
+    --sans:-apple-system,'Inter',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{background:var(--bg);color:var(--txt);font-family:var(--sans);overflow:hidden}
+  .slide{display:none;position:absolute;inset:0;padding:56px 84px 72px;flex-direction:column;overflow:hidden}
+  .slide.active{display:flex;animation:fade .45s}
+  @keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  .kicker{font-family:var(--mono);font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+  h1{font-size:52px;line-height:1.1;font-weight:700;letter-spacing:-.5px}
+  h2{font-size:34px;line-height:1.2;font-weight:700;letter-spacing:-.3px;margin-bottom:24px}
+  h2 em{font-style:normal;color:var(--accent)}
+  .sub{font-size:19px;color:var(--dim);margin-top:16px;line-height:1.5;max-width:900px}
+  .body{flex:1;display:flex;flex-direction:column;justify-content:center}
+  table{border-collapse:collapse;width:100%;font-size:15px}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--faint);text-align:left;padding:8px 14px;border-bottom:1px solid var(--line)}
+  td{padding:11px 14px;border-bottom:1px solid var(--line);color:var(--dim);line-height:1.45;vertical-align:top}
+  td b,td strong{color:var(--txt)}
+  tr.hl td{background:#101a2c;color:var(--txt)}
+  .cols{display:flex;gap:28px}
+  .col{flex:1}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px 24px}
+  .card h3{font-size:13px;text-transform:uppercase;letter-spacing:1px;color:var(--accent);margin-bottom:10px}
+  .card p,.card li{font-size:14.5px;color:var(--dim);line-height:1.55}
+  .card ul{padding-left:18px}
+  .bignum{display:flex;gap:44px;margin:26px 0}
+  .bignum div b{display:block;font-size:46px;font-family:var(--mono);color:var(--amber)}
+  .bignum div i{font-style:normal;font-size:13.5px;color:var(--dim);display:block;max-width:220px;margin-top:6px;line-height:1.4}
+  .quote{border-left:3px solid var(--accent);padding:14px 22px;background:var(--panel);border-radius:0 10px 10px 0;font-size:16.5px;color:var(--dim);line-height:1.6;max-width:980px}
+  .quote b{color:var(--txt)}
+  .quote .attr{display:block;margin-top:10px;font-size:13px;color:var(--faint)}
+  pre.diagram{font-family:var(--mono);font-size:13.5px;line-height:1.45;color:var(--dim);background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:22px 26px;overflow:auto}
+  pre.diagram b{color:var(--txt)}
+  .pill{display:inline-block;font-size:11px;padding:3px 10px;border-radius:12px;background:#1a2333;color:var(--accent);border:1px solid #24344f;margin-right:8px}
+  .foot{position:absolute;bottom:22px;left:84px;right:84px;display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:var(--faint)}
+  .nav-hint{position:fixed;bottom:22px;right:26px;font-family:var(--mono);font-size:11px;color:var(--faint)}
+  .progress{position:fixed;top:0;left:0;height:2px;background:var(--accent);transition:width .3s}
+  .fromto td:first-child{color:var(--red)}
+  .fromto td:last-child{color:var(--green)}
+  .green{color:var(--green)} .amber{color:var(--amber)} .red{color:var(--red)} .purple{color:var(--purple)} .cyan{color:var(--cyan)}
+  .demo-link{display:inline-block;margin-top:26px;background:var(--accent);color:#fff;font-weight:600;padding:13px 26px;border-radius:10px;text-decoration:none;font-size:16px}
+  .steps{display:flex;gap:16px;margin-top:30px}
+  .steps .s{flex:1;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+  .steps .s b{display:block;font-family:var(--mono);color:var(--accent);font-size:12px;margin-bottom:8px}
+  .steps .s p{font-size:13.5px;color:var(--dim);line-height:1.5}
+  .appendix-tag{position:absolute;top:22px;right:84px;font-family:var(--mono);font-size:11px;color:var(--purple);letter-spacing:2px}
+</style>
+</head>
+<body>
+<div class="progress" id="prog"></div>
+
+<!-- 1 TITLE -->
+<section class="slide active">
+  <div class="body">
+    <div class="kicker">Product case study · PM role · Orbitron AI</div>
+    <h1>Asset <span style="color:var(--accent)">Nova</span></h1>
+    <p class="sub" style="font-size:24px;color:var(--txt);margin-top:20px">Commercial intelligence for capital megaprojects</p>
+    <p class="sub">The fourth NovaOS product. Built for the owner PMOs running the Gulf's largest capital programs.</p>
+    <p class="sub" style="margin-top:34px;font-size:15px;color:var(--faint)">Alexandre Cela · August 2026</p>
+  </div>
+</section>
+
+<!-- 2 DEMO FIRST -->
+<section class="slide">
+  <div class="kicker">The what, before the how</div>
+  <h2>Let me show you what it does</h2>
+  <div class="body">
+    <p class="sub" style="font-size:20px">A $4.8B gas processing expansion at Jubail. 400,000+ documents across Aconex, P6 and daily reports. One agent, reading continuously.</p>
+    <div class="steps">
+      <div class="s"><b>1 · DETECTION</b><p>The agent finds a <span class="amber">$42.3M exposure</span> nobody logged — 6 days before the notice bar</p></div>
+      <div class="s"><b>2 · EVIDENCE CHAIN</b><p>Six documents, linked from the contract clause to the daily report to the schedule diff</p></div>
+      <div class="s"><b>3 · DRAFT NOTICE</b><p>Every sentence sourced. A named human approves — the agent never sends</p></div>
+      <div class="s"><b>4 · ORCHESTRATION</b><p>Approval triggers ComplyNova + FlowNova + Schedule Interrogator in NovaStudio</p></div>
+    </div>
+    <a class="demo-link" href="commercial-guardian-demo.html" target="_blank">▶ Open live prototype</a>
+  </div>
+</section>
+
+<!-- 3 PUNCHLINE -->
+<section class="slide">
+  <div class="kicker">The punchline</div>
+  <h2>From reconstructing the past → to <em>reading the record as it happens</em></h2>
+  <div class="body">
+    <table class="fromto">
+      <tr><th>Today</th><th>With Asset Nova</th></tr>
+      <tr><td>Contracts team manually reconstructs 18 months of correspondence to assess one claim</td><td>Agent reads 400K documents continuously, surfaces events as they happen</td></tr>
+      <tr><td>Notice deadlines missed because nobody connected the letter to the clause to the schedule</td><td>Deadlines computed from the contract; countdown visible; draft notice ready</td></tr>
+      <tr><td>$60M+ disputes that take a year to resolve</td><td>Disputes prevented by proper contract administration — the #1 cause for a decade (Arcadis)</td></tr>
+      <tr><td>Monthly reports assembled by copy-paste across 6 systems, 6 weeks stale</td><td>Live, evidence-linked project intelligence, rendered on demand</td></tr>
+      <tr><td>One expert planner reads two XER files for a week to find hidden changes</td><td>Agent forensically diffs 412 logic changes and cross-examines them in minutes</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- 4 NUMBERS -->
+<section class="slide">
+  <div class="kicker">Why this matters</div>
+  <h2>Capital megaprojects fail at industrial scale</h2>
+  <div class="body">
+    <div class="bignum">
+      <div><b>89%</b><i>of Middle East O&G projects finish over budget (EY, 365 projects)</i></div>
+      <div><b>+59%</b><i>average O&G megaproject cost vs approved FID budget</i></div>
+      <div><b>33%</b><i>of project capex ends up disputed — $95B across 2,200+ projects (HKA CRUX)</i></div>
+      <div><b>$91M</b><i>average Middle East dispute; 12.5 months to resolve (Arcadis)</i></div>
+    </div>
+    <div class="quote">
+      Over 75% of respondents said the PM or Engineer's conduct was at the heart of how disputes crystallized — most often <b>"a lack of understanding of the procedural aspects of the contract."</b> Over 60% said <b>proper contract administration</b> would have the single largest impact in avoiding their disputes.
+      <span class="attr">— Arcadis, Global Construction Disputes Report</span>
+    </div>
+    <p class="sub">The data already exists — in letters, minutes, schedules. No human team can read 400,000 documents and connect every clause to every event to every deadline. <b style="color:var(--txt)">This is a reading problem, not a judgment problem.</b></p>
+  </div>
+</section>
+
+<!-- 5 STRUCTURAL -->
+<section class="slide">
+  <div class="kicker">The structural insight</div>
+  <h2>Software digitized the silos. It never connected them.</h2>
+  <div class="body">
+    <pre class="diagram">
+ SCHEDULE (P6)          COST (SAP)          DOCUMENTS (Aconex)
+     │                      │                       │
+     └────── each contractor runs its own instance ──┘
+                            │
+               ┌────────────┴─────────────┐
+               │   <b>THE REAL INTEGRATION</b>   │
+               │   <b>LAYER OF THE INDUSTRY:</b>  │
+               │   <b>EXCEL + POWERPOINT</b>      │
+               │   assembled monthly       │
+               └───────────────────────────┘</pre>
+    <p class="sub">The failure mode is <b style="color:var(--txt)">inter-party, cross-silo, and unstructured</b>. Previous software couldn't read text at scale. LLM-based agents can. That's the structural unlock — and it's why this problem is solvable now and wasn't in 2015.</p>
+  </div>
+</section>
+
+<!-- 6 COMPETITION -->
+<section class="slide">
+  <div class="kicker">Competitive landscape</div>
+  <h2>Every AI player misses the real problem</h2>
+  <div class="body">
+    <table>
+      <tr><th>Player</th><th>What they do</th><th>What they don't do</th></tr>
+      <tr><td><b>ALICE Technologies</b></td><td>Schedule simulation + optimization</td><td>Read correspondence, handle claims, cross-system</td></tr>
+      <tr><td><b>nPlan</b></td><td>ML schedule risk forecasting</td><td>Anything beyond the P6 file</td></tr>
+      <tr><td><b>Document Crunch</b> (Trimble)</td><td>Contract clause extraction</td><td>The live project record; static, not continuous</td></tr>
+      <tr><td><b>Nodes & Links</b></td><td>Schedule assurance + auditable AI Q&A</td><td>Contract mechanics, notices, cost; planner persona only</td></tr>
+      <tr><td><b>SuperHive</b> (AI71 / ATRC)</td><td>Sovereign-AI studios: design validation, permits, site monitoring</td><td>Contract, correspondence, claims. Buildings ICP, not process-industry owners</td></tr>
+    </table>
+    <p class="sub"><b style="color:var(--txt)">The open seat:</b> owner PMO, cross-system, full lifecycle, process-industry megaprojects. SuperHive is the most credible future competitor (schedule intelligence in development) — which is exactly why speed on the commercial wedge matters.</p>
+  </div>
+</section>
+
+<!-- 7 THESIS -->
+<section class="slide">
+  <div class="kicker">Product thesis</div>
+  <h2>Not a new product — the <em>capital-projects layer of NovaOS</em></h2>
+  <div class="body">
+    <pre class="diagram">
+                         ┌─────────────────────┐
+                         │     <b>ASSET NOVA</b>      │
+                         │ CPM-specific agents │
+                         │ + orchestration     │
+                         └──────────┬──────────┘
+                                    │ composes
+               ┌────────────────────┼────────────────────┐
+      ┌────────┴────────┐  ┌────────┴───────┐  ┌─────────┴───────┐
+      │   <b>COMPLY NOVA</b>   │  │   <b>FLOW NOVA</b>    │  │   <b>NOVA STUDIO</b>   │
+      │  evidence packs │  │  procurement   │  │  visual canvas  │
+      │  case routing   │  │  logistics     │  │  human gates    │
+      │  audit trail    │  │  contracting   │  │  agent registry │
+      └─────────────────┘  └────────────────┘  └─────────────────┘</pre>
+    <p class="sub">The real product is the <b style="color:var(--txt)">substrate</b>: a cross-system, document-grounded project record. Agents are composable skills on top. "Skills compound, dashboards decay" — Asset Nova is the purest expression of it: the skill is reading the record; views are rendered on demand and thrown away.</p>
+  </div>
+</section>
+
+<!-- 8 WEDGE -->
+<section class="slide">
+  <div class="kicker">The wedge</div>
+  <h2>Commercial Guardian first — by the value equation</h2>
+  <div class="body">
+    <p class="sub" style="margin-bottom:18px">Value = (Dream outcome × Likelihood) ÷ (Time to value × Effort)</p>
+    <table>
+      <tr><th></th><th>Commercial Guardian</th><th>Budget estimation</th><th>Schedule risk</th></tr>
+      <tr><td><b>Dream outcome</b></td><td>Protect $30–80M in disputes/leakage per project</td><td>Accurate FID budget</td><td>Earlier warning</td></tr>
+      <tr><td><b>Likelihood</b></td><td>High — every finding has a document evidence chain</td><td>Low — needs outcome data that doesn't exist</td><td>Medium</td></tr>
+      <tr><td><b>Time to value</b></td><td>Days (runs on historical archives)</td><td>Months (next gate)</td><td>Monthly (next XER)</td></tr>
+      <tr><td><b>Effort to start</b></td><td>Low — document upload, no ERP integration</td><td>High (SAP + history DB)</td><td>Medium</td></tr>
+      <tr class="hl"><td><b>Verdict</b></td><td><b class="green">Start here</b></td><td>Horizon 3 (crown jewel)</td><td>Fast-follow</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- 9 ARCHITECTURE -->
+<section class="slide">
+  <div class="kicker">How it works</div>
+  <h2>Agent architecture — deterministic where it must be</h2>
+  <div class="body">
+    <pre class="diagram" style="font-size:12.5px">
+ INPUTS (read-only)              AGENT PIPELINE                    OUTPUTS (human-approved)
+ ─────────────────               ──────────────                    ──────────────────────
+ Contracts + amendments ───────> <b>OBLIGATION EXTRACTOR</b> ──────────> clause registry + deadline
+ Aconex/CDE correspondence          (contract form parser)          rules (<b class="green">DETERMINISTIC</b>)
+ (letters, RFIs, minutes)                  │
+ P6 XER files ─────────────────> <b>EVENT DETECTOR</b> ────────────────> events + evidence chains
+ Daily / weekly reports             (cross-system correlation,      → weekly review ritual
+                                     LLM reasoning)
+                                           │
+                                 <b>NOTICE DRAFTER</b> ────────────────> draft notices w/ citations
+                                    (generation + citation check)   → named human approves → sent</pre>
+    <div class="cols" style="margin-top:18px">
+      <div class="card col"><h3>Model</h3><p>Open-weights (Llama/Qwen-class), fine-tuned on construction correspondence. Weights, not wrappers.</p></div>
+      <div class="card col"><h3>Deployment</h3><p>Sovereign GPU, in-Kingdom VPC. SACS-002 compliant, PDPL-aligned. Data never leaves.</p></div>
+      <div class="card col"><h3>Audit</h3><p>Full log of every read and inference. Glass Box by design.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 10 METRICS -->
+<section class="slide">
+  <div class="kicker">Success metrics</div>
+  <h2>Three layers — business, product, AI engineering</h2>
+  <div class="body">
+    <div class="cols">
+      <div class="card col"><h3 class="green">Business — does it pay?</h3><ul>
+        <li>$20M+ validated exposures surfaced per pilot (customer countersigned)</li>
+        <li>Zero notice deadlines missed on covered projects</li>
+        <li>$10–12M ARR at 24 months (5 pilots → 3 conversions → 6 projects)</li></ul></div>
+      <div class="card col"><h3 class="cyan">Product — is it trusted?</h3><ul>
+        <li>90%+ weekly review-ritual adoption — the habit IS the product</li>
+        <li>80%+ surfaced events actioned, not just seen</li>
+        <li>70%+ draft notices approved with minor/no edits</li></ul></div>
+      <div class="card col"><h3 class="purple">AI engineering — is it reliable?</h3><ul>
+        <li>85%+ event-detection precision (false alarms kill trust)</li>
+        <li>99.5%+ evidence-chain accuracy — deterministic citation verifier</li>
+        <li>Zero hallucinations in sent notices (entailment check + 100% human review)</li>
+        <li>Deadline math = rules engine, not LLM. &lt;$0.05/doc blended cost</li></ul></div>
+    </div>
+    <p class="sub"><b class="red">Kill criteria:</b> precision &lt; 60% after 8 weeks, or the team stops reviewing for 4 straight weeks → pause, return to backtest.</p>
+  </div>
+</section>
+
+<!-- 11 GOVERNANCE -->
+<section class="slide">
+  <div class="kicker">Governance</div>
+  <h2>The three questions, answered before deployment</h2>
+  <div class="body">
+    <table>
+      <tr><th>Question</th><th>Answer for Commercial Guardian</th></tr>
+      <tr><td><b>Who owns the agent's decisions?</b></td><td>Named Contracts Lead per project. Agent owner = PMO Director. Orbitron owns model behavior within contract.</td></tr>
+      <tr><td><b>What does it do outside its scope?</b></td><td>Nothing. Refuses, logs, escalates. Below-confidence items queue for triage. Escalation: agent → Contracts Lead → PMO → steering committee.</td></tr>
+      <tr><td><b>How do we measure value, not activity?</b></td><td>Dollar-validated exposures (customer countersigned). Notices sent on time. Edit-distance on drafts. <b>Documents processed is NOT a KPI.</b></td></tr>
+    </table>
+    <p class="sub">Agentic AI is organizational redesign, not a technical rollout. Governance isn't the appendix — it's the product.</p>
+  </div>
+</section>
+
+<!-- 12 ROADMAP -->
+<section class="slide">
+  <div class="kicker">Roadmap</div>
+  <h2>Three horizons, one compounding substrate</h2>
+  <div class="body">
+    <div class="cols">
+      <div class="card col"><h3>H1 · 0–6 mo — "Find the money leaks"</h3><ul>
+        <li><b>Commercial Guardian</b> — claims + notices</li>
+        <li><b>Schedule Interrogator</b> — XER forensics, early warning</li>
+        <li>Substrate v1: contracts + correspondence indexed & linked</li></ul></div>
+      <div class="card col"><h3>H2 · 6–18 mo — "Run the monthly grind"</h3><ul>
+        <li><b>EAC Reconciler</b> — live cost forecast, drafts monthly report</li>
+        <li><b>Deliverable Chaser</b> — critical-path-ranked chasing</li>
+        <li>Substrate v2: + cost + document register (daily habit = can't leave)</li></ul></div>
+      <div class="card col"><h3>H3 · 18+ mo — "Gatekeeper of capital"</h3><ul>
+        <li><b>FID Red Team</b> — audits new proposals vs portfolio history</li>
+        <li><b>Handover Assembler</b> — bridge to O&M / digital twin</li>
+        <li>Substrate v3: portfolio outcomes — the customer's own alpha, kept</li></ul></div>
+    </div>
+    <p class="sub">Each finished project's data trains the next FID review. <b style="color:var(--txt)">That's the flywheel.</b></p>
+  </div>
+</section>
+
+<!-- 13 GTM -->
+<section class="slide">
+  <div class="kicker">Go to market</div>
+  <h2>Land a project team, not a procurement cycle</h2>
+  <div class="body">
+    <table class="fromto">
+      <tr><th>Old enterprise AI sales</th><th>Asset Nova GTM</th></tr>
+      <tr><td>18-month RFP cycle</td><td>Phase 0 backtest on a closed project (6 wks, no live risk) → paid pilot on 1–2 active projects</td></tr>
+      <tr><td>Per-seat SaaS pricing</td><td>Outcome-anchored: ~0.1–0.3% of project value. On a $5B program = $5–15M. "ROI guaranteed" motion</td></tr>
+      <tr><td>Cloud-first, residency afterthought</td><td>In-Kingdom VPC / on-prem day 1. SACS-002. IKTVA-ready. Non-negotiable for Aramco-form contracts</td></tr>
+      <tr><td>Sell to IT</td><td>Sell to the Capital Projects Director who answers to the board for FID promises</td></tr>
+    </table>
+    <p class="sub"><b style="color:var(--txt)">One honest trade-off:</b> we don't replace P6, SAP or Aconex — we read them. If the source record is garbage, we read garbage faster. That's fine: on megaprojects the record is rich. It's just unread. <span class="pill">Land: one project team</span><span class="pill">Expand: program EPC packages</span><span class="pill">Defend: the substrate moat</span></p>
+  </div>
+</section>
+
+<!-- 14 RISKS -->
+<section class="slide">
+  <div class="kicker">Risks — stress-tested by 5 reviewer agents</div>
+  <h2>What could kill this, and what I'd do about it</h2>
+  <div class="body">
+    <table>
+      <tr><th>Risk</th><th>Sev</th><th>Mitigation</th></tr>
+      <tr><td>Exposure register is <b>discoverable in arbitration</b> — "known but unactioned" is ammunition</td><td class="red">Critical</td><td>Customer counsel as agent owner; customer-controlled retention; team dispositions; privilege labeling</td></tr>
+      <tr><td><b>Deadline computed wrong</b>, entitlement lost</td><td class="red">Critical</td><td>Deterministic rules engine; mandatory customer verification; liability cap + E&O; decision-support disclaimer</td></tr>
+      <tr><td>Value math stacks assumptions — <b>"surfaced" ≠ "recovered"</b></td><td class="amber">Serious</td><td>Anchor on backtest: one real lapsed time-bar with known arbitration outcome</td></tr>
+      <tr><td>Contracts teams <b>don't want their work graded</b></td><td class="amber">Serious</td><td>Frame as workload relief; backtest closed projects first; weekly triage cap</td></tr>
+      <tr><td><b>Unauthorized practice of law</b> risk in KSA</td><td class="amber">Serious</td><td>Document automation under counsel supervision; authorized-signatory approval; local counsel opinion</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- 15 90 DAYS -->
+<section class="slide">
+  <div class="kicker">Execution</div>
+  <h2>My first 90 days as PM</h2>
+  <div class="body">
+    <div class="cols">
+      <div class="card col"><h3>1–30 · Validate</h3><ul>
+        <li>5–8 discovery interviews: owner PMO leads + contracts managers in KSA</li>
+        <li>Competitor watch cadence (SuperHive schedule studio)</li>
+        <li>v0.1 scope: one contract form (FIDIC Yellow + Aramco amendments), one source (Aconex export)</li></ul></div>
+      <div class="card col"><h3>31–60 · Build & backtest</h3><ul>
+        <li>Ship v0.1 on one closed project</li>
+        <li>Measure recall/precision vs expert retrospective audit</li>
+        <li>Produce the "here's what you missed" sales artifact</li></ul></div>
+      <div class="card col"><h3>61–90 · Pilot & learn</h3><ul>
+        <li>Live pilot on one active project; embed the weekly review ritual</li>
+        <li>Track actioned rate, draft approval rate, triage volume</li>
+        <li>First customer-countersigned value memo → program license case</li></ul></div>
+    </div>
+    <div class="card" style="margin-top:18px"><h3 class="amber">Decision tree if things go wrong</h3>
+      <p>Owners won't share archives → pivot to contractor-side wedge · Precision &lt; 60% → narrow to time-bar notices only, retrain · Arabic blocks ingestion → scope v0.1 to English correspondence (~60–70% of the formal record), build Arabic pipeline in parallel</p></div>
+  </div>
+</section>
+
+<!-- 16 WHY ME -->
+<section class="slide">
+  <div class="kicker">Closing</div>
+  <h2>Why me</h2>
+  <div class="body">
+    <ul style="font-size:19px;line-height:2;color:var(--dim);padding-left:24px">
+      <li>[Your specific PM background — fill from personal context]</li>
+      <li>I understand the NovaOS architecture — this composes existing agents, it's not a point-solution pitch</li>
+      <li>I stress-tested it from five perspectives (engineering, legal, customer, executive, skeptic) before presenting</li>
+      <li>The wedge builds the data substrate for a platform, not a feature that dead-ends</li>
+      <li>I can ship this: the 90-day plan delivers a customer-validated artifact, not a pitch deck</li>
+    </ul>
+  </div>
+</section>
+
+<!-- A1 -->
+<section class="slide">
+  <div class="appendix-tag">APPENDIX</div>
+  <div class="kicker">A1 · Impact sizing</div>
+  <h2>The value math, floor to ceiling</h2>
+  <div class="body">
+    <div class="bignum">
+      <div><b>$50M</b><i>expected value protected per project per year</i></div>
+      <div><b style="color:var(--green)">2–5×</b><i>ROI in the worst case (avoided legal spend on one dispute)</i></div>
+      <div><b style="color:var(--cyan)">$100M+</b><i>best case — one preserved entitlement (Kashagan-class save)</i></div>
+    </div>
+    <p class="sub">Driver tree: $5B capex → ~$1B addressable disputed value (conservative haircut from HKA's 33%) → 70% detection vs ~40% manual → 3–8% value capture. Full analysis: <span style="font-family:var(--mono);font-size:13px">outputs/analyses/impact-sizing-commercial-guardian-2026-08-26.md</span></p>
+    <p class="sub">ARR bridge (bottoms-up): 40 target accounts → 12 qualified → 5 paid pilots ($300–500K) → 3 program licenses → 6 projects live at $1.5–3M ACV = <b style="color:var(--txt)">$10–12M ARR at month 24</b>. One Aramco program-wide deal (Jafurah-scale, 10+ EPC packages) changes the curve entirely.</p>
+  </div>
+</section>
+
+<!-- A2 -->
+<section class="slide">
+  <div class="appendix-tag">APPENDIX</div>
+  <div class="kicker">A2 · SuperHive (AI71) deep-dive</div>
+  <h2>The most credible future competitor</h2>
+  <div class="body">
+    <div class="cols">
+      <div class="card col"><h3>Who</h3><p>Enterprise-AI venture of Abu Dhabi's ATRC (Falcon LLMs, via TII). Chaired by H.E. Faisal Al Bannai. Sovereign, self-hosted AI positioning.</p></div>
+      <div class="card col"><h3>What ships</h3><p>Design Studio (live public beta: IFC/building-code validation), AiComply (permits), satellite/drone site monitoring, digital twins. Schedule intelligence in development.</p></div>
+      <div class="card col"><h3>Why the seat stays open</h3><p>Buildings/urban ICP — developers, consultants, municipalities. No contract mechanics, correspondence, notices or claims. UAE-first; no KSA/IKTVA posture.</p></div>
+    </div>
+    <p class="sub"><b style="color:var(--txt)">Threat: medium, rising.</b> If their schedule studio extends into contracts + documents, they become head-on with a sovereign-model advantage — est. 12–24 months away. Speed on the commercial wedge is the counter. Full analysis: <span style="font-family:var(--mono);font-size:13px">outputs/analyses/competitive-analysis-asset-nova-2026-08-26.md</span></p>
+  </div>
+</section>
+
+<!-- A3 tough questions -->
+<section class="slide">
+  <div class="appendix-tag">APPENDIX</div>
+  <div class="kicker">A3 · Tough questions, prepared</div>
+  <h2>The three hardest questions</h2>
+  <div class="body">
+    <div class="card" style="margin-bottom:14px"><h3>"What if people are deliberately not acting on what you surface?"</h3>
+      <p>That's the product working. The disposition ("no action — relationship management") becomes a documented decision instead of a silent omission. Right call → it's on record. Wrong call → the trail shows judgment, not negligence. The agent forces awareness, not action. Customer controls register visibility.</p></div>
+    <div class="card" style="margin-bottom:14px"><h3>"Your two key assumptions are both low-confidence."</h3>
+      <p>The floor case still works: even if the agent catches nothing new, it saves weeks of correspondence reconstruction per event — $5–10M/project, 2–5× ROI. The low-confidence assumptions decide good vs transformational, and the backtest resolves them before any commercial commitment.</p></div>
+    <div class="card"><h3>"Document Crunch / Trimble already does contract AI."</h3>
+      <p>They read the contract. We read the contract <b>against the live project record</b> — continuously. Clause highlighter vs commercial early-warning system. Trimble's acquisition validates the market; the dynamic, cross-system piece is unoccupied.</p></div>
+  </div>
+</section>
+
+<div class="nav-hint">← → navigate · F fullscreen</div>
+
+<script>
+const slides=[...document.querySelectorAll('.slide')];
+let cur=0;
+function show(n){
+  cur=Math.max(0,Math.min(slides.length-1,n));
+  slides.forEach((s,i)=>s.classList.toggle('active',i===cur));
+  document.getElementById('prog').style.width=((cur+1)/slides.length*100)+'%';
+}
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')show(cur+1);
+  else if(e.key==='ArrowLeft'||e.key==='PageUp')show(cur-1);
+  else if(e.key==='Home')show(0);
+  else if(e.key==='f'||e.key==='F')document.documentElement.requestFullscreen?.();
+});
+document.addEventListener('click',e=>{if(e.target.closest('a'))return;show(cur+1)});
+show(0);
+</script>
+</body>
+</html>
