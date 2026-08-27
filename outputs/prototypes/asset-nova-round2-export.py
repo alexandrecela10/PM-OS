@@ -76,7 +76,13 @@ CSS = r"""  :root{
   .slide-4 .markdown-list{font-size:18px;line-height:1.48}
   .slide-5 pre.diagram,.slide-6 pre.diagram{font-size:12px;line-height:1.3;padding:18px 22px;white-space:pre;overflow:hidden}
   .slide-8 table,.slide-10 table,.slide-12 table{font-size:14px}
+  .slide-8 .roi-table{table-layout:fixed;font-size:12px}
+  .slide-8 .roi-table th,.slide-8 .roi-table td{padding:5px 8px}
+  .slide-8 .roi-table th:first-child,.slide-8 .roi-table td:first-child{width:48%}
+  .slide-8 .roi-table th:nth-child(2),.slide-8 .roi-table td:nth-child(2){width:24%}
+  .slide-8 .roi-table th:nth-child(3),.slide-8 .roi-table td:nth-child(3){width:28%}
   .roi-table tr.money td:not(:first-child){font-family:var(--mono);color:var(--amber);white-space:nowrap}
+  .slide-8 .roi-table tr.money td:not(:first-child){white-space:normal}
   .roi-table tr.money td b,.roi-table tr.money td strong{color:var(--amber)}
   .roi-table tr.verdict td{background:#13261f;color:var(--green)}
   .roi-table tr.verdict td:nth-child(4){background:#2b2410;color:var(--amber)}
