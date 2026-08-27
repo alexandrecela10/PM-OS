@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Commercial Guardian — How the Agent Works</title>
+<style>
+  :root{
+    --bg:#0a0e14; --panel:#11161f; --panel2:#161d29; --line:#1f2937;
+    --txt:#e5eaf2; --dim:#8b95a7; --faint:#5b6474;
+    --accent:#4f8ef7; --green:#34d399; --amber:#fbbf24; --red:#f87171;
+    --purple:#a78bfa; --cyan:#22d3ee;
+    --mono:'SF Mono',ui-monospace,Menlo,monospace;
+    --sans:-apple-system,'Inter',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{background:var(--bg);color:var(--txt);font-family:var(--sans);overflow:hidden}
+  .slide{display:none;position:absolute;inset:0;padding:48px 72px 64px;flex-direction:column;overflow:hidden}
+  .slide.active{display:flex;animation:fade .45s}
+  @keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  .kicker{font-family:var(--mono);font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+  h1{font-size:50px;line-height:1.1;font-weight:700;letter-spacing:-.5px}
+  h2{font-size:30px;line-height:1.2;font-weight:700;letter-spacing:-.3px;margin-bottom:18px}
+  h2 em{font-style:normal;color:var(--accent)}
+  .sub{font-size:18px;color:var(--dim);margin-top:14px;line-height:1.5;max-width:900px}
+  .body{flex:1;display:flex;flex-direction:column;justify-content:center}
+  .foot{position:absolute;bottom:20px;left:72px;right:72px;display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:var(--faint)}
+  .nav-hint{position:fixed;bottom:20px;right:24px;font-family:var(--mono);font-size:11px;color:var(--faint)}
+  .progress{position:fixed;top:0;left:0;height:2px;background:var(--accent);transition:width .3s;z-index:10}
+  .green{color:var(--green)} .amber{color:var(--amber)} .red{color:var(--red)} .purple{color:var(--purple)} .cyan{color:var(--cyan)}
+
+  /* input → throughput → output layout */
+  .ito{display:flex;gap:18px;align-items:stretch}
+  .ito .box{flex:1;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;display:flex;flex-direction:column}
+  .ito .box.in{border-left:3px solid var(--cyan)}
+  .ito .box.th{border-left:3px solid var(--purple)}
+  .ito .box.out{border-left:3px solid var(--green)}
+  .ito .tag{font-family:var(--mono);font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px}
+  .ito .in .tag{color:var(--cyan)} .ito .th .tag{color:var(--purple)} .ito .out .tag{color:var(--green)}
+  .ito .arrow{align-self:center;font-size:22px;color:var(--faint)}
+  .ito p,.ito li{font-size:13px;color:var(--dim);line-height:1.55}
+  .ito ul{padding-left:16px}
+  .ito b{color:var(--txt)}
+  pre.src{font-family:var(--mono);font-size:11.5px;line-height:1.5;color:var(--dim);background:#0d1420;border:1px solid var(--line);border-radius:8px;padding:12px 14px;overflow:auto;white-space:pre-wrap;margin-top:8px}
+  pre.src b{color:var(--amber);font-weight:600}
+  pre.src i{font-style:normal;color:var(--green)}
+  .fileref{font-family:var(--mono);font-size:10.5px;color:var(--faint);margin-top:auto;padding-top:10px}
+  .pill{display:inline-block;font-size:11px;padding:3px 10px;border-radius:12px;background:#1a2333;color:var(--accent);border:1px solid #24344f;margin-right:8px}
+  table{border-collapse:collapse;width:100%;font-size:13.5px}
+  th{font-size:10.5px;text-transform:uppercase;letter-spacing:1px;color:var(--faint);text-align:left;padding:7px 12px;border-bottom:1px solid var(--line)}
+  td{padding:9px 12px;border-bottom:1px solid var(--line);color:var(--dim);line-height:1.45;vertical-align:top}
+  td b{color:var(--txt)}
+  .steps-map{display:flex;gap:10px;margin-top:26px}
+  .steps-map .s{flex:1;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 13px}
+  .steps-map .s b{display:block;font-family:var(--mono);color:var(--accent);font-size:11px;margin-bottom:6px}
+  .steps-map .s p{font-size:12px;color:var(--dim);line-height:1.45}
+  .callout{border-left:3px solid var(--amber);background:var(--panel);border-radius:0 10px 10px 0;padding:12px 18px;font-size:14px;color:var(--dim);line-height:1.55;margin-top:18px;max-width:1000px}
+  .callout b{color:var(--txt)}
+  .demo-link{display:inline-block;margin-top:22px;background:var(--accent);color:#fff;font-weight:600;padding:12px 24px;border-radius:10px;text-decoration:none;font-size:15px}
+  @media print{
+    @page{size:338.7mm 190.5mm;margin:0}
+    html,body{overflow:visible;height:auto}
+    .slide{display:flex !important;position:relative;inset:auto;width:338.7mm;height:190.5mm;page-break-after:always;animation:none}
+    .nav-hint,.progress{display:none}
+    .foot{position:absolute}
+  }
+</style>
+</head>
+<body>
+<div class="progress" id="prog"></div>
+
+<!-- 1 · Title -->
+<section class="slide">
+  <div class="body">
+    <div class="kicker">Asset Nova · Commercial Guardian · Technical walkthrough</div>
+    <h1>How the agent works</h1>
+    <p class="sub">Input → throughput → output at every step, on a synthetic project record you can open and read. Event EV-047: differing site conditions, Area 7 pipe rack, Jubail Gas Processing Expansion, EPC Package 3.</p>
+    <p class="sub" style="font-size:14px;color:var(--faint)">All source files are synthetic and live in <span style="font-family:var(--mono)">outputs/prototypes/synthetic-data/</span>. Companion to the live demo (<span style="font-family:var(--mono)">commercial-guardian-demo.html</span>).</p>
+  </div>
+  <div class="foot"><span>Asset Nova — agent walkthrough</span><span>Alexandre Cela · August 2026</span></div>
+</section>
+
+<!-- 2 · The record -->
+<section class="slide">
+  <div class="kicker">Step 0 — The raw material</div>
+  <h2>The project record the agent reads</h2>
+  <div class="body">
+    <table>
+      <tr><th>Synthetic file</th><th>Simulates</th><th>System of record</th><th>What's inside</th></tr>
+      <tr><td><b>01-contract-extract-gc-4.12.md</b></td><td>Conditions of contract + Amendment 2</td><td>Contract repo / CLM</td><td>GC 4.12 unforeseeable conditions, 28-day bar, <b class="amber">Amendment 2 cuts it to 21 days for Areas 6-8</b></td></tr>
+      <tr><td><b>02-geotech-baseline-extract.md</b></td><td>Geotechnical Baseline Report</td><td>Document control</td><td>Rippable ground baselined to 6.5 m in Area 7</td></tr>
+      <tr><td><b>03-daily-reports-area7.md</b></td><td>Contractor daily reports</td><td>Aconex</td><td>Rock refusal at 2.1-4.5 m, production collapse 14/46 piles</td></tr>
+      <tr><td><b>04-correspondence-log.md</b></td><td>Letters + meeting minutes</td><td>Aconex / email</td><td>C-1187 bare "reservation of rights", MM-088 unclosed action</td></tr>
+      <tr><td><b>05-schedule-extract-p6.csv</b></td><td>P6 export (XER)</td><td>Primavera P6</td><td>Area 7 piling on the critical path, float = 0</td></tr>
+      <tr><td><b>06-change-register.csv</b></td><td>Change / variation register</td><td>Cost system</td><td>Four changes — <b class="red">Area 7 event absent</b></td></tr>
+    </table>
+    <div class="callout"><b>The point:</b> no single system contains the event. The contract, the ground truth, the letters, the schedule and the register each hold one fragment. Today a human assembles this by hand, if at all.</div>
+  </div>
+  <div class="foot"><span>Step 0 · The record</span><span>synthetic-data/README.md has the full timeline</span></div>
+</section>
+
+<!-- 3 · Pipeline map -->
+<section class="slide">
+  <div class="kicker">The pipeline</div>
+  <h2>Seven steps, each with a visible input and output</h2>
+  <div class="body">
+    <div class="steps-map">
+      <div class="s"><b>1 · INGEST</b><p>Parse and index every document with provenance</p></div>
+      <div class="s"><b>2 · DETECT</b><p>Compare field reality against the contractual baseline</p></div>
+      <div class="s"><b>3 · MAP CONTRACT</b><p>Find the governing clause, including amendments</p></div>
+      <div class="s"><b>4 · COMPUTE DEADLINES</b><p>Deterministic date math, never LLM-generated</p></div>
+      <div class="s"><b>5 · BUILD EVIDENCE</b><p>Chain every claim to a cited source line</p></div>
+      <div class="s"><b>6 · DRAFT + IMPACT</b><p>Notice draft, schedule and cost impact via peer agents</p></div>
+      <div class="s"><b>7 · HUMAN GATE</b><p>Named approver; nothing leaves without sign-off</p></div>
+    </div>
+    <div class="callout">Steps 2, 3, 5 and 6 use the LLM to read and reason. <b>Step 4 is plain code</b> — a date calculation from extracted anchors, checkable by hand. The split is deliberate: judgment where language is the problem, determinism where being wrong is unrecoverable.</div>
+  </div>
+  <div class="foot"><span>Pipeline overview</span><span>each following slide = one step</span></div>
+</section>
+
+<!-- 4 · Step 1 ingest -->
+<section class="slide">
+  <div class="kicker">Step 1 — Ingest</div>
+  <h2>Everything becomes an indexed, citable record</h2>
+  <div class="body">
+    <div class="ito">
+      <div class="box in"><span class="tag">Input</span>
+        <p>6 synthetic files: contract md, GBR extract, 4 daily reports, 5 correspondence items, 7 schedule activities, 4 change records.</p>
+        <pre class="src">DR-1042 · 04 Aug 2026 · Area 7 grid E12-E15
+Piling rig PR-07 refusal at <b>2.1 m</b> on pile
+group E13. Trial pit confirms cemented caprock…</pre>
+        <span class="fileref">03-daily-reports-area7.md</span>
+      </div>
+      <div class="arrow">→</div>
+      <div class="box th"><span class="tag">Throughput</span>
+        <ul>
+          <li>Chunk by document structure (clause, report entry, letter)</li>
+          <li>Extract entities: dates, areas, refs, depths, activity IDs</li>
+          <li>Every chunk keeps <b>file + section provenance</b> so later claims can cite exactly</li>
+        </ul>
+      </div>
+      <div class="arrow">→</div>
+      <div class="box out"><span class="tag">Output</span>
+        <pre class="src">{ "doc": "DR-1042", "date": "2026-08-04",
+  "area": "Area 7", "signal": "pile refusal",
+  "depth_m": 2.1,
+  "source": "03-daily-reports-area7.md#DR-1042" }</pre>
+        <p style="margin-top:8px">Indexed record: <b>37 docs read</b>, entity graph linking areas, dates and refs.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>Step 1 · Ingest</span><span>provenance is the foundation of everything after</span></div>
+</section>
+
+<!-- 5 · Step 2 detect -->
+<section class="slide">
+  <div class="kicker">Step 2 — Detect</div>
+  <h2>Field reality vs contractual baseline</h2>
+  <div class="body">
+    <div class="ito">
+      <div class="box in"><span class="tag">Input</span>
+        <pre class="src">GBR 5.3.4: "Rippable material is anticipated
+to a minimum depth of <i>6.5 m</i> across the
+Area 7 corridor."</pre>
+        <pre class="src">DR-1049: "continuous cemented horizon
+<b>2.1-4.5 m</b> across ~60% of the pipe rack
+corridor… production 14 vs planned 46."</pre>
+        <span class="fileref">02-geotech-baseline-extract.md · 03-daily-reports-area7.md</span>
+      </div>
+      <div class="arrow">→</div>
+      <div class="box th"><span class="tag">Throughput</span>
+        <ul>
+          <li>LLM pairs baseline statements with field observations for the same area</li>
+          <li>Tests materiality: 2.1-4.5 m vs 6.5 m baseline, 60% of corridor, production collapse</li>
+          <li>Checks the change register: <b class="red">no CR covers Area 7 ground conditions</b></li>
+        </ul>
+      </div>
+      <div class="arrow">→</div>
+      <div class="box out"><span class="tag">Output</span>
+        <pre class="src">EVENT EV-047
+type: differing_site_conditions
+area: Area 7 pipe rack, grids E12-E22
+variance: rock at 2.1-4.5 m vs 6.5 m baseline
+in_change_register: <b>false</b>
+confidence: 96%</pre>
+      </div>
+    </div>
+    <div class="callout"><b>Why this wasn't caught:</b> the geotech team saw the reports, the commercial team owns the register. The signal crossed a team boundary — exactly where events die today.</div>
+  </div>
+  <div class="foot"><span>Step 2 · Detect</span><span>the 1 alert among 3 watch items</span></div>
+</section>
+
+<!-- 6 · Step 3 map contract -->
+<section class="slide">
+  <div class="kicker">Step 3 — Map to the contract</div>
+  <h2>Which clause governs, and what did the amendments change?</h2>
+  <div class="body">
+    <div class="ito">
+      <div class="box in"><span class="tag">Input</span>
+        <pre class="src">GC 4.12(b): "Formal notice with particulars
+shall be given no later than <b>28 days</b> after
+the Contractor became aware…"</pre>
+        <pre class="src">Amendment 2 (14 Mar 2026): "28 days"
+replaced with "<b>21 days</b>" for events in
+Areas 6-8 after Area 7 access handover.</pre>
+        <span class="fileref">01-contract-extract-gc-4.12.md</span>
+      </div>
+      <div class="arrow">→</div>
+      <div class="box th"><span class="tag">Throughput</span>
+        <ul>
+          <li>Retrieve clauses matching event type: GC 4.10, 4.12, 20.1</li>
+          <li>Apply amendments in date order — the base clause alone is <b>wrong</b></li>
+          <li>Extract obligations for both sides: contractor's bar and the Owner's GC 20.1 notice duty</li>
+        </ul>
+      </div>
+      <div class="arrow">→</div>
+      <div class="box out"><span class="tag">Output</span>
+        <pre class="src">governing: GC 4.12(b) as amended (Amd 2)
+contractor_bar_days: 21  <i>(not 28)</i>
+owner_notice: GC 20.1, 28 days
+anchors: awareness = DR-1042 (04 Aug 2026)</pre>
+      </div>
+    </div>
+    <div class="callout"><b>The amendment catch is the demo moment.</b> A team working from the base contract assumes 28 days. The agent reads Amendment 2 and knows the real bar in Area 7 is 21.</div>
+  </div>
+  <div class="foot"><span>Step 3 · Map contract</span><span>amendments applied in date order</span></div>
+</section>
+
+<!-- 7 · Step 4 deadlines -->
+<section class="slide">
+  <div class="kicker">Step 4 — Compute deadlines</div>
+  <h2>Deterministic date math. The LLM never touches this.</h2>
+  <div class="body">
+    <div class="ito">
+      <div class="box in"><span class="tag">Input</span>
+        <p>Structured anchors from step 3:</p>
+        <pre class="src">awareness_date = 2026-08-04  (DR-1042)
+contractor_bar = 21 days    (GC 4.12(b) amended)
+owner_notice   = 28 days    (GC 20.1)
+today          = 2026-08-26</pre>
+      </div>
+      <div class="arrow">→</div>
+      <div class="box th"><span class="tag">Throughput</span>
+        <pre class="src">contractor_deadline
+  = 2026-08-04 + 21d = <b>2026-08-25</b>
+owner_deadline
+  = 2026-08-04 + 28d = <b>2026-09-01</b>
+days_remaining(owner)
+  = 2026-09-01 − 2026-08-26 = <b>6</b></pre>
+        <p style="margin-top:8px">Plain code. Auditable, testable, reproducible.</p>
+      </div>
+      <div class="arrow">→</div>
+      <div class="box out"><span class="tag">Output</span>
+        <pre class="src">contractor bar: <i>EXPIRED 25 Aug 2026</i>
+owner GC 20.1 deadline: 01 Sep 2026
+status: <b>6 days remaining</b> → ALERT</pre>
+        <p style="margin-top:8px">This is the "6 days" banner in the live demo.</p>
+      </div>
+    </div>
+    <div class="callout"><b>Design rule:</b> anything where an error is unrecoverable (dates, sums, deadline math) is computed by code from extracted anchors, with the anchors themselves human-checkable via citations.</div>
+  </div>
+  <div class="foot"><span>Step 4 · Deadlines</span><span>deterministic by design</span></div>
+</section>
+
+<!-- 8 · Step 5 evidence -->
+<section class="slide">
+  <div class="kicker">Step 5 — Build the evidence chain</div>
+  <h2>Every claim gets a source you can click</h2>
+  <div class="body">
+    <div class="ito">
+      <div class="box in"><span class="tag">Input</span>
+        <p>Event EV-047 + indexed record + correspondence log.</p>
+        <pre class="src">C-1187 (12 Aug): "We reserve our rights
+regarding ground conditions in Area 7…
+A detailed submission will follow."
+<b>No particulars, no records attached.</b></pre>
+        <span class="fileref">04-correspondence-log.md</span>
+      </div>
+      <div class="arrow">→</div>
+      <div class="box th"><span class="tag">Throughput</span>
+        <ul>
+          <li>Assemble chronology: GBR → DR-1042 → C-1181 → C-1187 → DR-1053 → MM-088</li>
+          <li>Judge C-1187 against GC 4.12(b)(i-iii): <b>bare reservation ≠ notice with particulars</b></li>
+          <li>Flag MM-088's unassigned "assess contractual position" action</li>
+        </ul>
+      </div>
+      <div class="arrow">→</div>
+      <div class="box out"><span class="tag">Output</span>
+        <pre class="src">EVIDENCE PACK EP-047 (7 items, cited)
+1. GBR 5.3.4 baseline 6.5 m
+2. DR-1042 refusal 2.1 m (awareness)
+3. DR-1049 60% corridor affected
+4. C-1187 insufficient as notice
+5. Contractor bar expired 25 Aug
+6. A7-PIL-010 float = 0 (critical path)
+7. Event absent from change register</pre>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>Step 5 · Evidence</span><span>the pack the reviewer opens in the demo</span></div>
+</section>
+
+<!-- 9 · Step 6 draft + impact -->
+<section class="slide">
+  <div class="kicker">Step 6 — Draft the notice, size the impact</div>
+  <h2>Peer agents contribute: schedule, cost, compliance</h2>
+  <div class="body">
+    <div class="ito">
+      <div class="box in"><span class="tag">Input</span>
+        <pre class="src">A7-PIL-010, float 0, critical: Y
+rem_dur 48d at 3/day actual vs 11/day plan
+→ downstream: pile caps, steel, pipe, MC</pre>
+        <span class="fileref">05-schedule-extract-p6.csv + evidence pack EP-047</span>
+      </div>
+      <div class="arrow">→</div>
+      <div class="box th"><span class="tag">Throughput</span>
+        <ul>
+          <li><b class="cyan">Schedule Interrogator</b>: production-rate delta on zero-float chain → ~11 weeks critical-path exposure</li>
+          <li><b class="purple">FlowNova</b>: hold Area 7 steel call-off (A7-STL-005) → $1.8M avoidable commitment</li>
+          <li><b class="green">ComplyNova</b>: notice draft checked against GC 20.1 form requirements</li>
+          <li>Commercial Guardian drafts the Owner's notice with EP-047 attached</li>
+        </ul>
+      </div>
+      <div class="arrow">→</div>
+      <div class="box out"><span class="tag">Output</span>
+        <pre class="src">DRAFT Owner notice (GC 20.1) + EP-047
+exposure estimate: $42.3M
+critical path: ~11 weeks
+recommended action: hold steel call-off
+9 schedule challenge questions for
+Thursday's progress review</pre>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>Step 6 · Draft + impact</span><span>composition, not a monolith: 4 agents, 1 record</span></div>
+</section>
+
+<!-- 10 · Step 7 human gate -->
+<section class="slide">
+  <div class="kicker">Step 7 — Human gate</div>
+  <h2>Nothing leaves the building without a named approver</h2>
+  <div class="body">
+    <div class="ito">
+      <div class="box in"><span class="tag">Input</span>
+        <p>Draft notice + evidence pack + impact estimates, presented to the Contracts Manager.</p>
+      </div>
+      <div class="arrow">→</div>
+      <div class="box th"><span class="tag">Throughput</span>
+        <ul>
+          <li>Reviewer opens each cited source, edits the draft, or rejects with a reason</li>
+          <li>Entitlement strategy and quantum stay <b>human decisions</b></li>
+          <li>Every action is written to the audit log</li>
+        </ul>
+      </div>
+      <div class="arrow">→</div>
+      <div class="box out"><span class="tag">Output</span>
+        <pre class="src">Notice N-024 approved: Rania Khalid,
+Contracts Manager · 26 Aug 2026 16:42
+audit: detect → evidence → draft →
+approve, all cited, all replayable</pre>
+      </div>
+    </div>
+    <div class="callout">Afterwards, any stakeholder can ask for a <b>stewardship brief rendered on demand</b> from the same record — the throwaway view in the live demo. No dashboard to maintain; the record is the product.</div>
+    <a class="demo-link" href="commercial-guardian-demo.html" target="_blank">▶ See it live in the prototype</a>
+  </div>
+  <div class="foot"><span>Step 7 · Human gate</span><span>governance is a feature, not a disclaimer</span></div>
+</section>
+
+<!-- 11 · Recap -->
+<section class="slide">
+  <div class="kicker">Recap</div>
+  <h2>Input → output, end to end</h2>
+  <div class="body">
+    <table>
+      <tr><th>Step</th><th>Input</th><th>Output</th><th>Who does the work</th></tr>
+      <tr><td><b>1 Ingest</b></td><td>6 raw files, 5 systems</td><td>Indexed record with provenance</td><td>Parsers + embeddings</td></tr>
+      <tr><td><b>2 Detect</b></td><td>GBR baseline + daily reports</td><td>EV-047, 96% confidence, not in register</td><td>LLM comparison</td></tr>
+      <tr><td><b>3 Map contract</b></td><td>GC 4.12 + Amendment 2</td><td>Governing clause, 21-day bar (not 28)</td><td>LLM retrieval + reading</td></tr>
+      <tr><td><b>4 Deadlines</b></td><td>Anchors: 04 Aug, 21d, 28d</td><td>Contractor bar expired · owner 6 days left</td><td class="green">Deterministic code</td></tr>
+      <tr><td><b>5 Evidence</b></td><td>Chronology + C-1187</td><td>EP-047, 7 cited items</td><td>LLM + citation checks</td></tr>
+      <tr><td><b>6 Draft + impact</b></td><td>EP-047 + P6 extract</td><td>Notice draft · $42.3M · 11 wks · hold steel</td><td>4 composed agents</td></tr>
+      <tr><td><b>7 Human gate</b></td><td>Draft + evidence</td><td>Approved notice N-024, audit trail</td><td class="amber">Named human</td></tr>
+    </table>
+    <div class="callout">Open the files in <span style="font-family:var(--mono)">synthetic-data/</span>, follow any output back to its source line, and re-run the date math by hand. <b>That auditability is the product.</b></div>
+  </div>
+  <div class="foot"><span>Recap</span><span>Asset Nova · Commercial Guardian</span></div>
+</section>
+
+<div class="nav-hint">← → navigate · F fullscreen</div>
+<script>
+const slides=[...document.querySelectorAll('.slide')];let cur=0;
+function show(n){if(n<0||n>=slides.length)return;slides[cur].classList.remove('active');cur=n;slides[cur].classList.add('active');
+document.getElementById('prog').style.width=((cur+1)/slides.length*100)+'%';}
+const m=location.hash.match(/slide=(\d+)/);const st=m?Math.min(+m[1],slides.length-1):0;
+slides[st].classList.add('active');cur=st;document.getElementById('prog').style.width=((st+1)/slides.length*100)+'%';
+if(location.hash.includes('export'))document.querySelector('.nav-hint').style.display='none';
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')show(cur+1);
+  else if(e.key==='ArrowLeft'||e.key==='PageUp')show(cur-1);
+  else if(e.key==='Home')show(0);
+  else if(e.key==='f'||e.key==='F')document.documentElement.requestFullscreen?.();
+});
+document.addEventListener('click',e=>{if(e.target.closest('a'))return;show(cur+1)});
+</script>
+</body>
+</html>
