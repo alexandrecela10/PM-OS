@@ -162,7 +162,7 @@ Now you can just type `pm` to start a PM session!
 ```
 pm-operating-system/
 ├── CLAUDE.md                 ← Master context (read this first!)
-├── .claude/skills/           ← 41 slash command skills
+├── skills/           ← 41 slash command skills
 ├── setup/                    ← You are here
 ├── context-library/          ← Fill these out for your situation
 ├── sub-agents/               ← Different reviewer perspectives

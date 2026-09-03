@@ -62,25 +62,45 @@ Pick whichever fits your day. Claude will ask clarifying questions and pull from
 pm-operating-system/
 ├── README.md                    # You are here
 ├── CLAUDE.md                    # Master instructions for Claude
+├── AGENTS.md                    # Short always-on rule (loaded as a Devin plugin)
+├── .devin-plugin/plugin.json    # Devin plugin manifest (name: pm-os)
 │
-├── .claude/                     # Claude Code configuration
-│   └── skills/                  # 41 registered slash commands
+│   ── shared engine: same for every product repo ──
+├── skills/                      # 42 slash commands (.claude/skills is a symlink here)
+├── agents/                      # 7 reviewer personas (sub-agents/ is a symlink here)
+├── templates/                   # Blank templates: PRD, roadmap, OKR, launch, retro, interview, business info, stakeholders
+├── frameworks/                  # 7 Powers, JTBD, PLG iceberg, growth loops, Hook-Retain-Expand, AI strategy, counter-positioning
+├── voice/                       # Writing styles (internal/exec/technical/customer) + personal PM context
+├── setup/  advanced/            # Installation guides, advanced workflows
 │
-├── setup/                       # Installation and configuration
-├── context-library/             # Your company/product context
-│   ├── strategy/                # Strategy docs + frameworks (7 Powers, JTBD, etc.)
-│   ├── prds/                    # Your PRDs (reference)
-│   ├── research/                # User research, competitive analysis
-│   ├── decisions/               # Decision logs
-│   ├── launches/                # Launch plans, release notes
-│   ├── metrics/                 # Analytics reports, A/B tests
-│   ├── meetings/                # Meeting notes
+│   ── per-product workspace: lives in each product repo (scaffold with /pm-init) ──
+├── context-library/             # Product context: strategy, prds, research, decisions, launches, metrics, meetings
 │   └── example-prds/            # Real PRD examples
-├── sub-agents/                  # Specialized review agents (7 perspectives)
-├── templates/                   # Empty templates (5 templates)
-├── advanced/                    # Advanced workflows & automation
 └── outputs/                     # Active work (PRDs, notes, updates)
 ```
+
+## Use PM OS From Any Repo (Devin Plugin)
+
+This repo is also a [Devin plugin](https://docs.devin.ai/product-guides/plugins). Installed once, every skill is available inside every product repo as `/pm-os:<skill>`, reading that repo's `context-library/` and writing to its `outputs/`.
+
+**Devin Cloud (all sessions, all repos):** an admin adds to the managed manifest at Settings → Resources → Plugins:
+```json
+{ "requiredPlugins": ["alexandrecela10/PM-OS"] }
+```
+
+**Devin CLI / Desktop (your machine, all projects):**
+```bash
+devin plugins install alexandrecela10/PM-OS
+devin plugins update pm-os      # pull the latest skills later
+```
+
+**In a product repo, first time:**
+```
+/pm-os:pm-init                  # creates context-library/ + outputs/ with .gitkeep files and blank context templates
+```
+Then fill `context-library/business-info-template.md` and run `/pm-os:prd-draft`, `/pm-os:impact-sizing`, and so on.
+
+Skills refer to shared assets as `{pm-os}/templates/...`, `{pm-os}/frameworks/...`, `{pm-os}/voice/...`, `{pm-os}/agents/...`; `{pm-os}` is wherever the plugin is materialized. Everything under `context-library/` and `outputs/` is relative to the repo you're working in.
 
 ## How This System Works
 
@@ -94,9 +114,9 @@ Unlike ChatGPT or regular Claude:
 
 ### Three Layers of Context
 
-1. **Project Knowledge** (`context-library/`) - Company info, writing styles, stakeholder profiles that apply across all your work
-2. **Skills** (`.claude/skills/`) - 41 registered slash commands for recurring tasks
-3. **Sub-Agents** (`sub-agents/`) - Specialized reviewers for different perspectives
+1. **Project Knowledge** (`context-library/` in each product repo, plus shared `voice/` and `frameworks/`) - Company info, writing styles, stakeholder profiles
+2. **Skills** (`skills/`) - 42 registered slash commands for recurring tasks
+3. **Sub-Agents** (`agents/`) - Specialized reviewers for different perspectives
 
 When you ask Claude to draft a PRD, it automatically:
 - References your company's business info
@@ -152,7 +172,7 @@ Claude will automatically route your question to the right tool and return resul
 
 - [ ] Install Claude Code
 - [ ] Fill out `context-library/business-info-template.md` with your product details
-- [ ] Add your writing styles to `context-library/writing-style-*.md`
+- [ ] Add your writing styles to `{pm-os}/voice/writing-style-*.md`
 - [ ] **Connect your MCPs** with `/connect-mcps connect to [tool]` (Recommended!)
 - [ ] Create your first PRD with `/prd-draft`
 - [ ] Customize the slash commands for your workflow
