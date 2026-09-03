@@ -408,7 +408,7 @@ Start with:
 1. **Upload more documents** - Add more PRDs, research, strategy docs to `context-library/`
 2. **Fill out remaining context** - Complete stakeholder profiles, writing styles
 3. **Try real tasks** - Use it for your next meeting, PRD, or update
-4. **Customize skills** - Edit the skills in `.claude/skills/` to match your style
+4. **Customize skills** - Edit the skills in `skills/` to match your style
 5. **Add tools** - Set up MCPs for Slack, Google Drive, etc. (run `/connect-mcps` in Claude Code)
 
 ### If Some Tests Failed ❌
@@ -472,7 +472,7 @@ Customize the PM OS to match your actual workflow!
 - **Documentation:** README.md and CLAUDE.md
 - **Examples:** Check context-library/example-prds/
 - **Templates:** Browse templates/
-- **Workflows:** See `.claude/skills/` for slash command workflows
+- **Workflows:** See `skills/` for slash command workflows
 - **Advanced:** Look at advanced/ for power features
 
 ---

@@ -1,0 +1,11 @@
+{
+  "name": "pm-os",
+  "version": "1.0.0",
+  "description": "PM Operating System: 41 product-management workflows (PRDs, strategy, research, metrics, meetings, launches), reviewer personas, templates, and strategy frameworks. Reads product context from the working repo's context-library/ and writes to its outputs/.",
+  "author": { "name": "Alexandre Cela", "email": "alex@belvederedatasolutions.com" },
+  "license": "MIT",
+  "keywords": ["devin", "plugin", "product-management", "prd", "strategy", "research"],
+  "requiredPlugins": [],
+  "optionalPlugins": [],
+  "forbiddenPlugins": []
+}

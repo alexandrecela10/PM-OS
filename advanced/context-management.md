@@ -155,7 +155,7 @@ Now write a PRD.
 ```
 Read these files for context:
 - context-library/business-info-template.md
-- context-library/writing-style-internal.md
+- {pm-os}/voice/writing-style-internal.md
 
 Then: [your task]
 ```
@@ -178,7 +178,7 @@ STANDARD PRD CONTEXT:
 - Company: [from business-info-template.md]
 - Product: [from business-info-template.md]
 - Target users: [from business-info-template.md]
-- Writing style: Internal (context-library/writing-style-internal.md)
+- Writing style: Internal ({pm-os}/voice/writing-style-internal.md)
 - OKRs: [current quarter OKRs]
 
 [Then add task-specific context]

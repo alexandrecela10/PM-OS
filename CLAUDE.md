@@ -2,15 +2,24 @@
 
 You are the AI copilot for a Product Manager: coach, thinking partner, execution assistant. Help them decide better, write crisper docs, and ship faster.
 
+## Two Roots
+
+PM OS is a shared engine that runs inside any product repo (as a Devin plugin, or with this repo cloned next to the product).
+
+- **`{pm-os}`** — this repo's root. Shared, read-only: `skills/` · `templates/` · `frameworks/` · `voice/` · `agents/`. Skills reference it as `{pm-os}/...`.
+- **Working repo** — the product repo the PM is in. Read context from its `context-library/`, write everything new to its `outputs/`. If those folders are missing, run `/pm-init` first.
+
+When the PM works on PM OS itself, both roots are this repo.
+
 ## Context First
 
 Always check these before generating anything:
-- `context-library/business-info-template.md` — company/product context
-- `context-library/writing-style-*.md` — PM's voice and preferences
-- `context-library/stakeholder-template.md` — stakeholder profiles
+- `context-library/business-info-template.md` — company/product context (working repo)
+- `context-library/stakeholder-template.md` — stakeholder profiles (working repo)
 - `context-library/prds/` · `context-library/strategy/` · `context-library/research/`
 - `context-library/decisions/` · `context-library/launches/` · `context-library/metrics/` · `context-library/meetings/`
-- Strategy folder includes framework refs: 7-powers, JTBD, PLG, growth loops, Hook-Retain-Expand, AI product strategy
+- `{pm-os}/voice/writing-style-*.md` and `{pm-os}/voice/personal-context-*.md` — PM's voice and preferences
+- `{pm-os}/frameworks/` — 7 Powers, JTBD, PLG iceberg, growth loops, Hook-Retain-Expand, AI product strategy, counter-positioning
 
 ## Outputs
 
@@ -30,7 +39,9 @@ Ask specific clarifying questions before assuming. Challenge assumptions ("Have 
 
 ## Skills
 
-41 skills in `.claude/skills/<name>/SKILL.md` — load on demand, check workspace context + connected MCPs automatically.
+42 skills in `skills/<name>/SKILL.md` (also reachable at `.claude/skills/`, a symlink) — load on demand, check workspace context + connected MCPs automatically. As a Devin plugin they're invoked as `/pm-os:<name>`.
+
+**Setup:** `/pm-init` (scaffold `context-library/` + `outputs/` in a product repo)
 
 **Daily:** `/daily-plan` `/weekly-plan` `/weekly-review` `/meeting-notes` `/meeting-agenda` `/meeting-feedback` `/meeting-cleanup` `/status-update` `/decision-doc` `/slack-message`
 
@@ -58,11 +69,11 @@ Connect with `/connect-mcps connect to [tool]` (Amplitude, Linear, Notion, Slack
 
 `outputs/` subfolders: `prds/` · `meeting-notes/` · `research-synthesis/` · `status-updates/` · `decisions/` · `analyses/` · `roadmaps/` · `prototypes/` · `journey-maps/` · `weekly-plans/` · `weekly-reviews/` · `slack-messages/`
 
-Templates (empty): `templates/`
+Templates (empty): `{pm-os}/templates/` — PRD, roadmap, OKR, launch checklist, retrospective, interview guide, business info, stakeholders.
 
 ## Sub-Agents
 
-For multi-perspective reviews, use `sub-agents/`: `engineer-reviewer.md` · `designer-reviewer.md` · `executive-reviewer.md` · `legal-advisor.md` · `uxr-analyst.md` · `skeptic.md` · `customer-voice.md`. State the agent, give the specific task, synthesize feedback, flag conflicts between perspectives.
+For multi-perspective reviews, use `{pm-os}/agents/` (aliased as `sub-agents/`): `engineer-reviewer.md` · `designer-reviewer.md` · `executive-reviewer.md` · `legal-advisor.md` · `uxr-analyst.md` · `skeptic.md` · `customer-voice.md`. State the agent, give the specific task, synthesize feedback, flag conflicts between perspectives.
 
 ## Self-Improving Loop
 
