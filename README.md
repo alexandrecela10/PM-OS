@@ -85,12 +85,12 @@ This repo is also a [Devin plugin](https://docs.devin.ai/product-guides/plugins)
 
 **Devin Cloud (all sessions, all repos):** an admin adds to the managed manifest at Settings → Resources → Plugins:
 ```json
-{ "requiredPlugins": ["alexandrecela10/orbitron_pm_os"] }
+{ "requiredPlugins": ["alexandrecela10/PM-OS"] }
 ```
 
 **Devin CLI / Desktop (your machine, all projects):**
 ```bash
-devin plugins install alexandrecela10/orbitron_pm_os
+devin plugins install alexandrecela10/PM-OS
 devin plugins update pm-os      # pull the latest skills later
 ```
 
