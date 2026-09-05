@@ -1,0 +1,6 @@
+{
+  "name": "PM-OS",
+  "owner": { "name": "Alexandre Cela" },
+  "description": "Alexandre Cela's personal PM operating system for Claude Code",
+  "plugins": [{ "name": "pm-os", "source": "./" }]
+}
