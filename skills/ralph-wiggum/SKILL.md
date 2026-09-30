@@ -321,7 +321,7 @@ Use these consistently:
 
 **Ralph is the Skeptic sub-agent from CLAUDE.md:**
 - When `/prd-draft` Step 3 offers multi-agent review and the PM picks "Skeptic," invoke Ralph's approach.
-- Ralph complements `{pm-os}/agents/engineer-reviewer.md`, `{pm-os}/agents/designer-reviewer.md`, and `{pm-os}/agents/executive-reviewer.md`.
+- Ralph complements `{pm-os}/sub-agents/engineer-reviewer.md`, `{pm-os}/sub-agents/designer-reviewer.md`, and `{pm-os}/sub-agents/executive-reviewer.md`.
 
 ---
 

@@ -186,7 +186,7 @@ I'll create a structured summary with:
 - Next steps
 
 Output format: [Standard / Detailed / Minimal]
-(I'll use your preferred writing style from {pm-os}/voice/writing-style-*.md)
+(I'll use your preferred writing style from context-library/writing-style-*.md)
 
 Processing now...
 ```
@@ -349,7 +349,7 @@ I'll automatically adjust the format based on meeting type:
 
 ### By Writing Style
 
-I'll match your preferred style from `{pm-os}/voice/writing-style-*.md`:
+I'll match your preferred style from `context-library/writing-style-*.md`:
 
 **Internal Audience:**
 - Conversational, direct tone

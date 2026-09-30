@@ -22,7 +22,7 @@ Catches gaps, challenges assumptions, and surfaces conflicts before stakeholder 
 **Check these files first:**
 1. `outputs/prds/` - Active PRDs to review
 2. `context-library/prds/` - Reference PRDs and past reviews
-3. `{pm-os}/agents/` - The 7 reviewer personas
+3. `{pm-os}/sub-agents/` - The 7 reviewer personas
 4. `context-library/strategy/` - Strategic context for executive review
 5. `context-library/research/` - User research for UXR validation
 

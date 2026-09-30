@@ -543,7 +543,7 @@ When the PM uses `/slack-message`, I automatically:
 - **Example:** If messaging a detail-oriented CFO, I'll include numbers and source links. If messaging a busy CEO, I'll use BLUF format.
 
 ### 2. Reference Writing Style
-**Source:** `{pm-os}/voice/writing-style-*.md`
+**Source:** `context-library/writing-style-*.md`
 - **What I look for:** Your preferred communication voice (formal/casual/direct/collaborative)
 - **How I use it:** Match your authentic voice, not corporate-speak
 - **Example:** If your style is "conversational but professional," I won't use buzzwords like "leverage" or "synergize"
