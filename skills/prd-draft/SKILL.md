@@ -58,9 +58,16 @@ When this skill is invoked, immediately check:
 
 ## Step 0: Understanding Your Feature Context
 
+**First, check for an opportunity analysis (added 2026-09-07, PM correction).** Look in `outputs/opportunity-analyses/` (or this project's override path) for `[feature-name]-opportunity.md`.
+
+- **If one exists and its Recommendation is Go:** read it fully. Its Problem Statement, Current Situation, Example, and Hypothesis answer most of Step 1's clarifying questions already, don't re-ask them. Carry its Value Equation section forward into this PRD's own Value Equation section (below) rather than re-deriving it, unless scope has changed enough to warrant revisiting.
+- **If one exists and its Recommendation is No-go or Parked:** stop and surface this to the PM before drafting anything, say so plainly and ask if something's changed.
+- **If none exists:** ask the PM whether this idea has cleared `/opportunity-analysis` yet. If not, recommend running it first, it's a ~300-word gate, not a detour. Proceed to draft anyway only if the PM explicitly says to skip the gate (e.g., "I know this is worth a PRD, skip the gate").
+
 Before we draft, let me check what context exists...
 
 **Checking:**
+- `outputs/opportunity-analyses/` for an existing opportunity analysis on this feature
 - `context-library/prds/` for any related feature PRDs
 - `context-library/strategy/` for strategic alignment
 - `context-library/research/` for user validation
@@ -140,7 +147,7 @@ When the PM types `/prd-draft` with no additional context, start with:
 ```
 Let's create a modern PRD together. I'll reference your company context and PRD template from this workspace.
 
-Before I draft anything, I need to understand the initiative. Don't worry about structure—just talk through it. Use dictation if that's easier.
+Before I draft anything, I need to understand the initiative. Don't worry about structure, just talk through it. Use dictation if that's easier.
 
 **Required context:**
 1. What problem are we solving? (Be specific about the user pain)
@@ -219,6 +226,11 @@ After you review, we can iterate or get multi-perspective feedback.
 
 [Problem Statement - What user pain are we solving?]
 
+**Sub-problems:** [numbered causes of the problem, one line each, marked tackled in v1 or not. Carry from `/opportunity-analysis` if it exists.]
+
+One hypothesis per tackled sub-problem, each with its own one-row before → after:
+
+**Sub-problem [N]:**
 **If we** [build X],
 **then** [Y will happen],
 **because** [Z assumption about user behavior].
@@ -269,14 +281,59 @@ This supports our [Q# Goal/Strategy] by [specific connection].
 
 ---
 
+## Expected Impact (Team Kickoff stage, added 2026-09-06)
+
+> Short, plain English, 2-4 sentences. What changes if this ships; what stays broken if it doesn't. If the actual size of the impact is unknown, say so explicitly rather than inventing a number, an honest "we don't know yet, here's how we'd find out" beats a confident guess at this stage.
+
+[2-4 sentences]
+
+---
+
+## Value Equation (Hormozi, every PRD, added 2026-09-07)
+
+> Value = (Dream Outcome × Perceived Likelihood of Achievement) / (Time Delay × Effort & Sacrifice), from Alex Hormozi's *$100M Offers*. A desirability gut-check, separate from feasibility, would the people this is for actually want it. Built for a customer with a choice not to buy; for an internal tool, read "would they actually use it" wherever it says "would they buy it." **If `/opportunity-analysis` already produced this table for this feature, carry it forward here instead of re-deriving it**, only redo it if scope has changed enough to matter.
+
+| Factor | This solution |
+|---|---|
+| **Dream outcome** | [what success feels like for them, in their own words, not a feature description] |
+| **Perceived likelihood** | [will they believe, before using it, that this actually works] |
+| **Time delay** | [how long until they feel the benefit] |
+| **Effort & sacrifice** | [what they have to do, learn, or give up to get it] |
+
+**Verdict:** [strong or weak ratio, if weak, name the cheapest lever: usually belief, delay, or effort, rarely the outcome itself]
+
+---
+
 ## Non-Goals
 
-What we are explicitly NOT doing in v1:
+What we are explicitly NOT doing in v1 (always includes every untackled sub-problem):
 - [Non-goal 1] - [Why it's out of scope]
 - [Non-goal 2] - [Why it's out of scope]
 
 **Trade-offs Made:**
 - [Trade-off] - [Rationale]
+
+---
+
+## Annex A, Napkin Sketch (Team Kickoff stage, added 2026-09-06)
+
+> Illustrative and low fidelity, layout and flow are the spec, not final visual style. Cap at 2 screens for Team Kickoff (more belongs at XFN Kickoff or later). Tell it through one concrete, named example (a real customer/user/club), not an abstract persona.
+
+### Screen 1, [name]
+**JTBD.** [One sentence: when the user does X, they want Y, so they can Z]
+**Primary CTA.** [One action, must not imply a capability the PRD hasn't actually decided on]
+
+```
+[ASCII wireframe]
+```
+
+### Screen 2, [name]
+**JTBD.** [...]
+**Primary CTA.** [...]
+
+```
+[ASCII wireframe]
+```
 
 ---
 
@@ -378,7 +435,7 @@ If [scenario], we will [specific action].
 ### Writing Guidelines for the Draft
 
 **Tone:**
-- Use the appropriate writing style from `{pm-os}/voice/writing-style-*.md`
+- Use the appropriate writing style from `context-library/writing-style-*.md`
 - Write like the PM would write (human, not AI-generated)
 - Be direct and crisp
 
@@ -499,7 +556,7 @@ When the PM requests review:
 1. **Invoke each sub-agent explicitly:**
    ```
    I'll review this from [Engineer / Designer / Executive] perspective.
-   Reading from `{pm-os}/agents/[agent-name].md`...
+   Reading from `{pm-os}/sub-agents/[agent-name].md`...
    ```
 
 2. **For each agent, provide:**
@@ -564,10 +621,13 @@ Match document length to stage. Shorter is always better -- expand only as the i
 - Focus on: Problem, hypothesis, high-level approach
 - Skip: Detailed metrics, rollout plan
 - Include: Lots of open questions
+- Add expected numeric objectives when an observed baseline or defensible target exists. If either is missing, name the metric and direction, mark the value unobserved, and make measurement a discovery task. Never invent a number to complete the template.
+- Include (added 2026-09-06, PM correction): a short **Expected Impact** section (2-4 sentences, plain English, no jargon, no invented numbers, if the impact size is genuinely unknown, say so rather than asserting a figure) and a **2-screen napkin sketch** (ASCII wireframes, `/napkin-sketch` style) told through one concrete example, a real or realistic named customer/user/club, never an abstract persona. Cap at 2 screens; more belongs at a later stage. Every screen states one JTBD sentence and one primary CTA, and a CTA must not imply a capability (e.g. a write/retry action) the PRD hasn't actually decided on.
 
 ### Planning Review Stage
 - Focus on: Strategic fit, impact sizing, alternatives considered
 - Include: Rough success metrics, estimated effort
+- Require a baseline and target for each material objective, or name the owner and pre-delivery trigger for measuring any value that remains unobserved.
 - Skip: Detailed behavior examples
 
 ### XFN Kickoff Stage
@@ -686,12 +746,17 @@ After creating PRD:
 
 ## Output Quality Self-Check
 
-Before presenting the PRD draft to the PM, verify:
+Before presenting the PRD draft to the PM, first run the root `CLAUDE.md` Voice check (no em dashes, no unearned superlatives, no sales-style reassurance), then verify:
 
 - [ ] **Filename follows convention:** `[feature-name-kebab-case]-[stage].md` (e.g., `voice-task-capture-team-kickoff.md`)
-- [ ] **Saved to correct location:** `outputs/prds/` (NOT `context-library/prds/`)
+- [ ] **Saved to correct location:** `outputs/prds/` (NOT `context-library/prds/`), unless this project's own `CLAUDE.md`/`AGENTS.md` overrides the output path
 - [ ] **Word count matches stage:** Check against the Stage-Specific Length Guidance table
+- [ ] **Team Kickoff only:** Expected Impact section present (short, plain English, honest if impact size is unknown) and Annex A has exactly 2 screens, each with one JTBD + one CTA, told through a named concrete example
+- [ ] **Every stage:** Value Equation table present, all four factors filled (no placeholders), carried forward from `/opportunity-analysis` if one exists rather than re-derived from scratch
+- [ ] An approved (`Go`) opportunity analysis exists for this feature, or the PM explicitly said to skip that gate
+- [ ] **Companion files exist:** a goals file (binary exit criteria) and a state file (decisions + open items) saved alongside the PRD, required for every output, not just graph/loop work
 - [ ] **Hypothesis is testable:** Contains a clear "If we... then... because..." statement
+- [ ] **One hypothesis per tackled sub-problem:** each targets one sub-problem; untackled sub-problems appear in Non-Goals
 - [ ] **Strategic fit references actual strategy:** Cites specific goals from `context-library/strategy/`, not generic strategy language
 - [ ] **Non-goals are specific:** Each non-goal explains WHY it's excluded, not just what it is
 - [ ] **Success metrics have baselines and targets:** Not just "increase X" but "X from [current] to [target] by [date]"

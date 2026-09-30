@@ -107,12 +107,12 @@ Strategy doesn't always need to be a month-long exercise. Depending on your time
 1. **Jobs-to-Be-Done Analysis**
    - What job is the customer hiring our product to do?
    - What progress are they trying to make?
-   - Reference: `@{pm-os}/frameworks/jtbd-canvas.md`
+   - Reference: `@context-library/strategy/jtbd-canvas.md`
 
 2. **Competitive Positioning**
    - How do we differentiate?
    - What's our unfair advantage?
-   - Reference: `@{pm-os}/frameworks/7-powers-framework.md`
+   - Reference: `@context-library/strategy/7-powers-framework.md`
 
 3. **User Research Validation**
    - 5-10 customer interviews
@@ -175,7 +175,7 @@ Strategy doesn't always need to be a month-long exercise. Depending on your time
 3. **7 Powers Analysis**
    - Which power(s) does this unlock?
    - Network effects, brand, scale, switching costs?
-   - Reference: `@{pm-os}/frameworks/7-powers-framework.md`
+   - Reference: `@context-library/strategy/7-powers-framework.md`
 
 4. **Financial Model**
    - Revenue projections
@@ -278,7 +278,7 @@ Help me work through the appropriate framework step by step.
 - Schedule stakeholder reviews in weeks 2-3, not week 4
 - Build in time to incorporate feedback
 - Create a FAQ doc as you go (capture all questions you get)
-- Use sub-agents for multiple perspectives: `@{pm-os}/agents/engineer-reviewer.md`, `@{pm-os}/agents/executive-reviewer.md`
+- Use sub-agents for multiple perspectives: `@{pm-os}/sub-agents/engineer-reviewer.md`, `@{pm-os}/sub-agents/executive-reviewer.md`
 
 **Universal tip:**
 - Always include "What we're NOT doing" - strategy is about tradeoffs
@@ -337,8 +337,8 @@ Help me work through the appropriate framework step by step.
 - `/prd-draft` - Turn strategy into PRDs
 - `/competitor-analysis` - Research competitors
 - `/user-research-synthesis` - Process customer insights
-- `{pm-os}/frameworks/jtbd-canvas.md` - Understand customer jobs
-- `{pm-os}/frameworks/7-powers-framework.md` - Identify unfair advantages
+- `context-library/strategy/jtbd-canvas.md` - Understand customer jobs
+- `context-library/strategy/7-powers-framework.md` - Identify unfair advantages
 
 ---
 

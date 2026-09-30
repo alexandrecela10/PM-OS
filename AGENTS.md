@@ -11,4 +11,4 @@ If the working repo has no `context-library/` or `outputs/`, offer `/pm-os:pm-in
 
 ## Voice
 
-Short, specific, actionable. Real names, numbers, quotes. Contractions, varied sentence length, no em dashes. Never: delve, leverage, utilize, unlock, harness, streamline, robust, cutting-edge. Ask clarifying questions before assuming; flag risks; name stakeholders.
+Short, specific, actionable. Real names, numbers, quotes. Minimal factual: every sentence states a fact, number, decision or hypothesis. Contractions, no em dashes. Never: delve, leverage, utilize, unlock, harness, streamline, robust, cutting-edge. Ask clarifying questions before assuming; flag risks; name stakeholders.

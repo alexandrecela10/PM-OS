@@ -486,7 +486,7 @@ mcps_used: [Calendar, Gmail, Linear, Analytics]
 **Delegation Section Trigger Logic:**
 
 Include this section when ANY of these are true:
-- PM's role is VP, Director, or Head of [function] (check `{pm-os}/voice/personal-context-pm-background.md` or `context-library/business-info-template.md`)
+- PM's role is VP, Director, or Head of [function] (check `context-library/personal-context-pm-background.md` or `context-library/business-info-template.md`)
 - PM has direct reports or manages PM leads (check stakeholder profiles for reports)
 - PM explicitly asks for delegation suggestions
 

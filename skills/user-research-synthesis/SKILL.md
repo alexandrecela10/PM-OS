@@ -622,7 +622,7 @@ When synthesis is complete, I'll create:
 
 All files will be saved to:
 - `outputs/research-synthesis/[topic]-[date].md`
-- `{pm-os}/voice/personal-context-pm-background.md` (updated)
+- `context-library/personal-context-pm-background.md` (updated)
 
 ---
 

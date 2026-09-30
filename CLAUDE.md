@@ -25,7 +25,36 @@ Always check these before generating anything:
 
 Short, specific, actionable. Minimum viable document — appendices for supporting detail. Real names, numbers, and quotes over generic statements. Every section helps someone decide or act. Documents are drafts. Ship, get feedback, iterate.
 
-**Voice:** Human. Contractions. Varied sentence length. No em dashes. Lead positive ("Use X" not "Don't use Y"). Never: delve, leverage, utilize, unlock, harness, streamline, robust, cutting-edge. Write so AI detectors wouldn't flag it.
+**Voice:** Human. Contractions. Varied sentence length. No em dashes, ever, under any circumstance, in any document this produces, including this file. Lead positive ("Use X" not "Don't use Y"). Never: delve, leverage, utilize, unlock, harness, streamline, robust, cutting-edge. Write so AI detectors wouldn't flag it.
+
+**Factual over persuasive (added 2026-09-07, PM correction).** Business documents state what's true. They don't sell. Before presenting any output, scan it for:
+- **Em dashes.** Replace with a period, comma, or colon. This is the single most commonly missed rule in this file. Check every document, every time, not just when asked.
+- **Superlatives with nothing behind them:** instant, seamless, powerful, effortless. If the claim is true, state the plain fact instead ("a push notification" beats "instant visibility").
+- **Reassurance phrases that persuade rather than inform:** "with confidence," "you can trust," "no more guessing," "peace of mind." These are sales language. Cut them or replace with the fact they're standing in for.
+- **Manufactured urgency:** "worth your time," "don't miss," "act now." A business document states what's true and what it costs to find out; it doesn't nudge.
+
+If a sentence would work equally well in an ad, it doesn't belong in a PRD, an opportunity analysis, or any other output this produces. When a PM flags a section as "too salesy," fix only that section, minimally: swap the specific word or phrase, don't rewrite the surrounding document.
+
+**Causal, outcome-led writing (added 2026-09-08, PM correction).** Apply this reasoning to every artifact without forcing every artifact into the same template:
+- Put the bottom line first: state what must change or be decided before explaining how it could be delivered.
+- Lead with the outcome or decision, not the feature.
+- Keep the what and how separate. Put tools, channels, architecture, data sources, and build-versus-integrate choices in a later section unless one of them is the decision being made.
+- Explain the mechanism: if X changes, then Y should change, because Z.
+- For systems and processes, distinguish input → process → output → outcome when it clarifies the argument.
+- Name what should decrease or increase, and what must not get worse.
+- Quantify outcomes whenever an observed baseline or defensible target exists. If either is missing, name the metric and expected direction, mark the value unobserved, and make measurement a discovery task. Never invent precision.
+- Separate observed facts, assumptions, and hypotheses. Never imply precision the evidence doesn't support.
+- Separate ease of implementation from likelihood of delivering value.
+- Prefer concrete verbs and observable changes over adjectives and jargon.
+- Use the fewest words that preserve the causal chain, evidence, and trade-offs.
+- Preserve exact quotes and factual records. Do not rewrite source material into this structure when fidelity matters more than synthesis.
+- Split the problem into sub-problems. Write one hypothesis per sub-problem the work tackles, each with its own before → after. List untackled sub-problems under non-goals, with what's missing (added 2026-09-28, PM correction).
+
+**Minimal factual (added 2026-09-28, PM correction).** Every sentence states a fact, a number, a decision or a hypothesis. Full sentences, plain words, one idea each, about 20 words max. No intros, transitions or recaps. No adjective unless a number backs it. Bold label, then the fact. Lists for parallel items; a sentence when there's a "because". Test: delete the sentence. If the reader loses nothing, it was fluff.
+
+| Caveman | Fluff | Minimal factual |
+|---|---|---|
+| rank in head -> differs per analyst | Analysts often rely on intuition, which can lead to inconsistent outcomes | Each analyst ranks in their head, so two analysts can pick a different best deck |
 
 **By audience:** Internal → "we," bullets, conversational. Exec → "so what" first, numbers, clear ask. Technical → edge cases explicit, constraints upfront. User-facing → 8th grade reading level, benefits before features.
 
@@ -39,7 +68,7 @@ Ask specific clarifying questions before assuming. Challenge assumptions ("Have 
 
 ## Skills
 
-42 skills in `skills/<name>/SKILL.md` (also reachable at `.claude/skills/`, a symlink) — load on demand, check workspace context + connected MCPs automatically. As a Devin plugin they're invoked as `/pm-os:<name>`.
+48 skills in `skills/<name>/SKILL.md` (also reachable at `.claude/skills/`, a symlink) — load on demand, check workspace context + connected MCPs automatically. As a Devin plugin they're invoked as `/pm-os:<name>`.
 
 **Setup:** `/pm-init` (scaffold `context-library/` + `outputs/` in a product repo)
 
@@ -51,7 +80,13 @@ Ask specific clarifying questions before assuming. Challenge assumptions ("Have 
 
 **Analysis:** `/impact-sizing` `/feature-metrics` `/feature-results` `/activation-analysis` `/retention-analysis` `/expansion-strategy` `/experiment-decision` `/experiment-metrics`
 
+**Discovery (before a PRD exists):** `/opportunity-analysis`, the go/no-go gate before `/prd-draft`, condensed from Cagan's Opportunity Assessment (*INSPIRED*): problem, current situation + one concrete pain example, proposed solution, hypothesis, a Hormozi Value Equation gut-check, and an explicit Go/No-go/Parked call. `/prd-draft` checks for one before drafting and skips re-asking what it already answered.
+
 **Build:** `/prd-draft` `/prd-review-panel` `/create-tickets` `/launch-checklist` `/code-first-draft` `/prototype` `/generate-ai-prototype` `/napkin-sketch` `/prototype-feedback`
+
+**Graph & Loop:** `/goal-gate` (validate exit criteria before any graph runs) `/prd-graph` (maker → parallel reviewers → evaluator → router loop for PRD revision) `/prd-full` (chains draft → auto-derived goals → autonomous `/prd-graph` for a finished PRD in one sitting, one PM checkpoint at the brief)
+
+**Showcase:** `/portfolio-case-study` (turn a finished project into a public case study page + LinkedIn entry) `/name-audit` (find and replace real company names in a repo before it goes public)
 
 **Intel:** `/competitor-analysis` `/connect-mcps` `/ralph-wiggum` (devil's advocate reviewer with humor)
 
@@ -67,9 +102,26 @@ Connect with `/connect-mcps connect to [tool]` (Amplitude, Linear, Notion, Slack
 
 **CRITICAL: Claude writes ALL new files to `outputs/`. Never write to `context-library/` directly — the PM moves finalized work there manually.**
 
-`outputs/` subfolders: `prds/` · `meeting-notes/` · `research-synthesis/` · `status-updates/` · `decisions/` · `analyses/` · `roadmaps/` · `prototypes/` · `journey-maps/` · `weekly-plans/` · `weekly-reviews/` · `slack-messages/`
+`outputs/` subfolders: `opportunity-analyses/` · `portfolio/` · `prds/` · `meeting-notes/` · `research-synthesis/` · `status-updates/` · `decisions/` · `analyses/` · `roadmaps/` · `prototypes/` · `journey-maps/` · `weekly-plans/` · `weekly-reviews/` · `slack-messages/`
 
 Templates (empty): `{pm-os}/templates/` — PRD, roadmap, OKR, launch checklist, retrospective, interview guide, business info, stakeholders.
+
+## Every Output Ships With Its Success Criteria (added 2026-09-06, PM correction)
+
+**Every PRD or output, not just `/prd-graph` revision loops, is accompanied by two companion files:**
+
+1. A **goals file** (`[name]-goals.md`, `/goal-gate`'s format: exit criteria + passing bar) stating what "done" means for that specific output, in binary-resolvable terms.
+2. A **state file** (`[name]-state.json`) recording what was decided, what's still open, and why. So the next session has context without re-deriving it.
+
+This applies whenever the graph/loop architecture (`/prd-graph`, `/prd-full`) is used. The goals file already exists as the evaluator's rubric there, **and it applies to standalone outputs too** (a `/prd-draft` run with no graph, a `/impact-sizing` analysis, a `/decision-doc`): draft a short goals file and state file alongside it even without a review loop. Skip only when the PM explicitly says not to bother for a given piece of work.
+
+## Hormozi Value Equation In Every Business Case Doc (added 2026-09-07, PM correction)
+
+Every business case document (`/opportunity-analysis`, `/prd-draft`, and anything else arguing "we should build this") includes a **Value Equation** section: Value = (Dream Outcome × Perceived Likelihood of Achievement) / (Time Delay × Effort & Sacrifice), from Alex Hormozi's *$100M Offers*. It's a desirability gut-check, separate from technical feasibility: would the people this is for actually want it, not just is it buildable.
+
+Built for a paying customer with a choice not to buy. For an internal tool or a feature with no purchase decision, read "would they actually use it" wherever the source material says "would they buy it." Fill all four factors, no placeholders, and end with a verdict naming the cheapest lever if the ratio is weak (usually belief, delay, or effort, rarely the outcome itself, which is the expensive lever).
+
+`/opportunity-analysis` introduces it first, at the go/no-go stage; `/prd-draft` carries it forward from there rather than re-deriving it, unless the PRD's scope has changed enough that it needs revisiting.
 
 ## Sub-Agents
 
@@ -89,13 +141,37 @@ PM OS gets smarter every session through a four-part loop:
 
 Run "show me what you've learned" anytime to see the log. All learning stays in your workspace files — nothing leaves this environment.
 
+## Decision Storage
+
+After any session where a decision is made (in a review, a `/prd-graph` run, a stakeholder conversation, or a planning call), I will prompt you to file it.
+
+**What I capture automatically:**
+- Date, product area, feature, PRD stage
+- What was decided (one sentence)
+- What was NOT chosen and why
+- Consequences (enables / prevents)
+- Review trigger (when to revisit)
+- Who decided it
+
+**Where decisions live:**
+- Active filing: `outputs/decisions/[feature]-[slug].md` (using `templates/decision-template.md`)
+- Permanent record: move to `context-library/decisions/` once ratified, I will never move files there myself, you do it
+
+**How to trigger:**
+- Say "file that decision" at any point and I'll draft it with full metadata
+- After `/prd-graph` advances, I always remind you about unfiled decisions
+- After a meeting or planning call, I'll offer to file any decisions mentioned
+
+**What future sessions do with decisions:**
+Before any `/prd-graph` run or `/prd-draft`, I read `context-library/decisions/` and surface any decisions relevant to the feature being worked on. This prevents re-litigating settled choices.
+
 ## Recommended Workflows
 
 **Daily:** `/daily-plan` → take notes → `/meeting-notes` → `/slack-message` for follow-ups
 
 **Weekly:** `/weekly-plan` (Mon) → daily loop → `/weekly-review` + `/status-update` (Fri)
 
-**PRD lifecycle:** `/user-research-synthesis` → `/impact-sizing` → `/prd-draft` → `/prd-review-panel` → `/create-tickets` → `/launch-checklist` → `/feature-results` → feed learnings back
+**PRD lifecycle:** `/user-research-synthesis` → **`/opportunity-analysis` (go/no-go gate, do this before drafting, not `/impact-sizing`)** → `/prd-draft` → `/impact-sizing` (now with real detail to size, typically at Planning Review) → `/prd-review-panel` → `/create-tickets` → `/launch-checklist` → `/feature-results` → feed learnings back
 
 **Strategy:** `/define-north-star` → `/metrics-framework` → `/write-prod-strategy` → `/prioritize`
 

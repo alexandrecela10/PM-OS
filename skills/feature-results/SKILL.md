@@ -403,3 +403,5 @@ Before delivering the feature results doc, verify:
 - [ ] **Learnings** include at least one "apply elsewhere" insight
 - [ ] **No corporate jargon** -- results are written in plain, direct language
 - [ ] **Linked to original PRD** and any related experiments
+- [ ] **Claims checked against the source:** every "what shipped" claim and number is checked against code, logs, tests or the analytics query that produced it. A claim that only appears in a README, deck or PRD is marked "unverified" (added 2026-09-28, PM correction: a README said "no LLM call"; the log showed one)
+- [ ] **Links return 200:** every dashboard, demo and doc link is checked live

@@ -7,7 +7,7 @@ Your AI-powered copilot for modern product management. Built for Claude Code and
 Most PMs use AI the same way they use Google: one-off questions, zero context. This system works differently.
 
 - **Context over prompting.** AI is only as good as the context you give it. PM OS organizes your company knowledge, writing styles, stakeholder profiles, and past decisions so every output sounds like it came from someone who actually works there.
-- **Workflows, not chat.** 41 slash commands cover the full PM loop: strategy, research, PRDs, metrics, meetings, launches, and retrospectives. Each one builds on the others.
+- **Workflows, not chat.** 48 slash commands cover the full PM loop: strategy, research, PRDs, metrics, meetings, launches, and retrospectives. Each one builds on the others.
 - **Ship the draft, then iterate.** Documents are living artifacts. A 1-page PRD that ships Monday beats a 10-page spec that ships never.
 
 ## What You Get
@@ -66,7 +66,7 @@ pm-operating-system/
 ├── .devin-plugin/plugin.json    # Devin plugin manifest (name: pm-os)
 │
 │   ── shared engine: same for every product repo ──
-├── skills/                      # 42 slash commands (.claude/skills is a symlink here)
+├── skills/                      # 48 slash commands (.claude/skills is a symlink here)
 ├── agents/                      # 7 reviewer personas (sub-agents/ is a symlink here)
 ├── templates/                   # Blank templates: PRD, roadmap, OKR, launch, retro, interview, business info, stakeholders
 ├── frameworks/                  # 7 Powers, JTBD, PLG iceberg, growth loops, Hook-Retain-Expand, AI strategy, counter-positioning
@@ -115,7 +115,7 @@ Unlike ChatGPT or regular Claude:
 ### Three Layers of Context
 
 1. **Project Knowledge** (`context-library/` in each product repo, plus shared `voice/` and `frameworks/`) - Company info, writing styles, stakeholder profiles
-2. **Skills** (`skills/`) - 42 registered slash commands for recurring tasks
+2. **Skills** (`skills/`) - 48 registered slash commands for recurring tasks
 3. **Sub-Agents** (`agents/`) - Specialized reviewers for different perspectives
 
 When you ask Claude to draft a PRD, it automatically:
@@ -178,7 +178,7 @@ Claude will automatically route your question to the right tool and return resul
 - [ ] Customize the slash commands for your workflow
 - [ ] Add example PRDs from your company to `context-library/example-prds/`
 
-## Available Slash Commands (41 Total)
+## Available Slash Commands (48 Total)
 
 Type `/` in Claude Code to see autocomplete menu with all commands.
 
@@ -221,6 +221,14 @@ Type `/` in Claude Code to see autocomplete menu with all commands.
 - `/create-tickets` - Create Linear/Jira tickets
 - `/feature-results` - Post-launch analysis
 - `/code-first-draft` - Initial feature implementation
+
+### Discovery, Loop and Showcase
+- `/opportunity-analysis` - Go/no-go gate before a PRD, with a Value Equation check
+- `/goal-gate` - Check that exit criteria are binary before a review loop
+- `/prd-graph` - Maker, reviewers, evaluator and router loop for PRD revision
+- `/prd-full` - Draft, derive goals and run the review loop in one sitting
+- `/portfolio-case-study` - Public case study page + LinkedIn entry for a finished project
+- `/name-audit` - Find and replace real company names before a repo goes public
 
 ## Common Workflows
 
