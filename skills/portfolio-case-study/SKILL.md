@@ -29,6 +29,7 @@ Input: a project folder or repo path. Output: `outputs/portfolio/<slug>/` with `
 | Name | Punchy, says what it does. One-line description under it |
 | Problem | The private capital problem, one bold sentence. States the cost, not the symptoms |
 | For | The private capital player (e.g. early-stage VC fund) and the personas: user + buyer, with the decision each owns |
+| User stories | 2-3 stories, "As a ..., I want ..., so that ...". The demo, sub-problems and hypotheses are organised around them. Anything that serves no story goes to non-goals or details |
 | Try it | The interactive demo, or its link, with 3 numbered steps a visitor follows. Label real vs sample data |
 
 **Details (below, in collapsible sections):**
@@ -46,7 +47,7 @@ Input: a project folder or repo path. Output: `outputs/portfolio/<slug>/` with `
 | PM OS lifecycle | The stages this project went through and the artifact at each: discovery, opportunity, PRD, build, evaluation. Only stages with a real artifact |
 | Other side | Sibling project and a shared funnel dream, if any |
 | Links | Demo, repo, video. Live links only |
-| PM OS skills used | Last. Only skills confirmed by the PM or by files |
+| PM OS skills used | Last. If the build sessions weren't logged, map each lifecycle stage to the skill that produces its artifact, and say on the page that the skills are mapped. The point is to show repeatable PM work |
 
 ## Writing style
 
